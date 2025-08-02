@@ -5,23 +5,23 @@
 Cette application a été conçue pour faciliter la gestion, la communication et la logistique des AMAP (Associations pour le Maintien d’une Agriculture Paysanne) en mettant en relation adhérents, producteurs et bénévoles.
 Elle vise à réduire les frictions administratives et à favoriser l’autonomie via une interface simple et intuitive.
 
-### Gestion complète des adhérents
+### 👤 Gestion complète des adhérents
 
 Création de profil, gestion des cotisations, historique des paniers et gestion des remplaçants.
 
-### Organisation des distributions
+### 🚚 Organisation des distributions
 
 Planning partagé, inscription des bénévoles, gestion des invendus et des dons.
 
-### Catalogue de produits
+### 🍓 Catalogue de produits
 
 Gestion des produits proposés par les producteurs, avec possibilité de ventes exceptionnelles.
 
-### Communication interne
+### 📢 Communication interne
 
 Fil d’actualité, notifications, messagerie et gestion documentaire.
 
-### Suivi financier simplifié
+### 💰 Suivi financier simplifié
 
 Paiements, export comptable, statistiques.
 
@@ -29,7 +29,7 @@ Paiements, export comptable, statistiques.
 
 ## 📸 Captures d'écran
 
-*(à insérer)*
+<img width="300" src="https://github.com/user-attachments/assets/772f3fe7-3ef2-477d-8534-9d1ac43c7a3c" />
 
 ---
 
