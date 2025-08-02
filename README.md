@@ -1,23 +1,84 @@
-This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop (JVM).
+# Panier Local [![Kotlin Version](https://img.shields.io/badge/kotlin-2.2.0-blue.svg)](https://kotlinlang.org) [![API](https://img.shields.io/badge/API-35%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=35) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-* [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./composeApp/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./composeApp/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./composeApp/src/jvmMain/kotlin)
-    folder is the appropriate location.
+## 📖 Description
 
-* [/iosApp](./iosApp/iosApp) contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform,
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+Cette application a été conçue pour faciliter la gestion, la communication et la logistique des AMAP (Associations pour le Maintien d’une Agriculture Paysanne) en mettant en relation adhérents, producteurs et bénévoles.
+Elle vise à réduire les frictions administratives et à favoriser l’autonomie via une interface simple et intuitive.
 
+### Gestion complète des adhérents
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html),
-[Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform/#compose-multiplatform),
-[Kotlin/Wasm](https://kotl.in/wasm/)…
+Création de profil, gestion des cotisations, historique des paniers et gestion des remplaçants.
 
-We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public Slack channel [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web).
-If you face any issues, please report them on [YouTrack](https://youtrack.jetbrains.com/newIssue?project=CMP).
+### Organisation des distributions
 
-You can open the web application by running the `:composeApp:wasmJsBrowserDevelopmentRun` Gradle task.
+Planning partagé, inscription des bénévoles, gestion des invendus et des dons.
+
+### Catalogue de produits
+
+Gestion des produits proposés par les producteurs, avec possibilité de ventes exceptionnelles.
+
+### Communication interne
+
+Fil d’actualité, notifications, messagerie et gestion documentaire.
+
+### Suivi financier simplifié
+
+Paiements, export comptable, statistiques.
+
+---
+
+## 📸 Captures d'écran
+
+*(à insérer)*
+
+---
+
+## 📐 Architecture logicielle
+
+- **Language**: Kotlin Multiplatform Mobile (KMM)
+- **Modèle d'architecture**: MVVM avec Compose Multiplatform pour l’UI
+
+---
+
+## 🚀 Librairies utilisées
+
+* Jetpack Compose Multiplatform (UI, Material3)
+* Kotlinx Coroutines
+* Multiplatform Settings (gestion preferences)
+
+---
+
+## 📲 Guide d'installation
+
+### 📝 Prérequis
+
+Avant de commencer, assurez-vous d'avoir les éléments suivants :
+- Un smartphone Android fonctionnel
+- Accès au dépôt GitHub de l'application
+
+### 📦 Installation
+
+1. Téléchargez la dernière version de l'application à partir de la section "Releases" de ce dépôt GitHub.
+2. Sur votre appareil Android, accédez aux paramètres de sécurité et activez l'option "Sources inconnues" ou "Installation à partir de sources inconnues". Cela vous permettra d'installer des applications depuis des sources autres que le Google Play Store.
+3. Ouvrez le fichier APK téléchargé depuis votre gestionnaire de fichiers ou depuis la barre de notifications.
+4. Suivez les instructions à l'écran pour installer l'application.
+5. Une fois l'installation terminée, vous pouvez ouvrir l'application en appuyant sur son icône dans le lanceur d'applications de votre appareil.
+
+### ℹ️ Remarques
+
+- Cette version de l'application est une version de prototypage et peut contenir des bugs ou des fonctionnalités non finalisées.
+- N'hésitez pas à me faire part de vos retours d'expérience en signalant tout bug que vous rencontrez ou toute suggestion d'amélioration que vous pourriez avoir (vous pouvez soumettre un bug via la section "Issues" de ce dépôt GitHub)
+
+---
+
+## 🤝 Contributing
+
+### Voulez-vous contribuer au code ?
+
+1. [Fork PanierLocal](https://github.com/davf392/panier-local/)
+2. Créez une nouvelle branche ([via GitHub](https://help.github.com/articles/creating-and-deleting-branches-within-your-repository/) ou localement :
+
+   ```bash
+   git checkout -b nom-de-votre-branche develop
+   ```
+3. [Soumettez une Pull Request](https://github.com/davf392/panier-local/compare)
