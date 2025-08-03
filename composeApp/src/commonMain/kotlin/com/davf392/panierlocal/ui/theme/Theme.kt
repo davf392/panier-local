@@ -22,10 +22,10 @@ private val LightColorScheme = lightColorScheme(
     onTertiaryContainer = Yellow40,
     background = Beige95,
     onBackground = Beige10,
-    surface = Beige99, // Couleur de surface pour les Cards
-    onSurface = Beige10, // Couleur du texte sur les Cards
+    surface = Beige99,
+    onSurface = Beige10,
     surfaceVariant = Beige95,
-    onSurfaceVariant = Color(0xFF707070),
+    onSurfaceVariant = Color(0xFF606060),
 )
 
 private val DarkColorScheme = darkColorScheme(
@@ -43,10 +43,10 @@ private val DarkColorScheme = darkColorScheme(
     onTertiaryContainer = Yellow80,
     background = DarkGray10,
     onBackground = DarkGray90,
-    surface = DarkGray20, // Couleur de surface pour les Cards
-    onSurface = DarkGray90, // Couleur du texte principal sur les Cards
+    surface = DarkGray20,
+    onSurface = DarkGray90,
     surfaceVariant = DarkGray20,
-    onSurfaceVariant = DarkGray80, // Couleur du texte secondaire sur les Cards
+    onSurfaceVariant = DarkGray80,
 )
 
 @Composable
