@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.davf392.panierlocal.data.ExchangeItem
 import com.davf392.panierlocal.data.ProductItem
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -42,7 +41,7 @@ fun BasketContentSection(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(items) { item ->
-                BasketSection(
+                ProductBasketSection(
                     item = item,
                     onExchangeClicked = onExchangeClicked
                 )

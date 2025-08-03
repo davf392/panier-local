@@ -1,17 +1,11 @@
 package com.davf392.panierlocal.ui.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -29,7 +23,7 @@ import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-fun BasketSection(
+fun ProductBasketSection(
     item: ProductItem,
     onExchangeClicked: (ProductItem) -> Unit = {},
     modifier: Modifier = Modifier
@@ -68,7 +62,7 @@ fun BasketSection(
 
 @Preview
 @Composable
-fun BasketSectionPreview() {
+fun ProductBasketSectionPreview() {
     PanierLocalTheme {
         val sampleProductItem = ProductItem(
             name = "Concombre",
@@ -79,7 +73,7 @@ fun BasketSectionPreview() {
             totalPrice = 1.80,
         )
 
-        BasketSection(
+        ProductBasketSection(
             item = sampleProductItem,
             onExchangeClicked = {},
             modifier = Modifier.background(color = MaterialTheme.colorScheme.background)

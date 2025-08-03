@@ -12,21 +12,20 @@ private val LightColorScheme = lightColorScheme(
     onPrimary = Color.White,
     primaryContainer = Green80,
     onPrimaryContainer = Green40,
-
     secondary = Olive40,
     onSecondary = Color.White,
     secondaryContainer = Olive80,
     onSecondaryContainer = Olive40,
-
     tertiary = Yellow40,
     onTertiary = Color.Black,
     tertiaryContainer = Yellow80,
     onTertiaryContainer = Yellow40,
-
-    background = Beige80,
-    onBackground = Color(0xFF3E3E3E),
-    surface = Color.White,
-    onSurface = Color(0xFF3E3E3E),
+    background = Beige95,
+    onBackground = Beige10,
+    surface = Beige99, // Couleur de surface pour les Cards
+    onSurface = Beige10, // Couleur du texte sur les Cards
+    surfaceVariant = Beige95,
+    onSurfaceVariant = Color(0xFF707070),
 )
 
 private val DarkColorScheme = darkColorScheme(
@@ -34,21 +33,20 @@ private val DarkColorScheme = darkColorScheme(
     onPrimary = Green40,
     primaryContainer = Green40,
     onPrimaryContainer = Green80,
-
     secondary = Olive80,
     onSecondary = Olive40,
     secondaryContainer = Olive40,
     onSecondaryContainer = Olive80,
-
     tertiary = Yellow80,
     onTertiary = Yellow40,
     tertiaryContainer = Yellow40,
     onTertiaryContainer = Yellow80,
-
-    background = Color(0xFF1C1C1C),
-    onBackground = Color(0xFFECECEC),
-    surface = Color(0xFF2C2C2C),
-    onSurface = Color(0xFFECECEC),
+    background = DarkGray10,
+    onBackground = DarkGray90,
+    surface = DarkGray20, // Couleur de surface pour les Cards
+    onSurface = DarkGray90, // Couleur du texte principal sur les Cards
+    surfaceVariant = DarkGray20,
+    onSurfaceVariant = DarkGray80, // Couleur du texte secondaire sur les Cards
 )
 
 @Composable

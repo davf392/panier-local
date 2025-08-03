@@ -1,6 +1,5 @@
 package com.amap.app.ui.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,6 +8,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -17,8 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.amap.app.viewmodel.BasketViewModel
-import com.davf392.panierlocal.data.ProductItem
-import com.davf392.panierlocal.data.WeeklyBasketItem
 import com.davf392.panierlocal.state.BasketUiState
 import com.davf392.panierlocal.ui.components.BasketContentSection
 import com.davf392.panierlocal.ui.components.WeeklyBasketSection
@@ -67,12 +65,26 @@ fun BasketScreen(
 
 @Preview
 @Composable
-fun BasketScreenPreview() {
-    PanierLocalTheme {
-        BasketScreen(
-            modifier = Modifier.background(
-                color = MaterialTheme.colorScheme.background
-            )
-        )
+fun BasketScreenLightPreview() {
+    PanierLocalTheme(useDarkTheme = false) {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            BasketScreen()
+        }
+    }
+}
+
+@Preview
+@Composable
+fun BasketScreenDarkPreview() {
+    PanierLocalTheme(useDarkTheme = true) {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            BasketScreen()
+        }
     }
 }

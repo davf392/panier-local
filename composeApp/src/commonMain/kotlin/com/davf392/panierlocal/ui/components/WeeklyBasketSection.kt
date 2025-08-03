@@ -36,7 +36,7 @@ fun WeeklyBasketSection(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
-            .background(Color(0xFFE2F3E4)) // Couleur de fond de l'en-tête
+            .background(MaterialTheme.colorScheme.onSecondaryContainer) // Couleur de fond de l'en-tête
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
@@ -46,7 +46,7 @@ fun WeeklyBasketSection(
                 Icon(
                     imageVector = ShoppingCartIcon,
                     contentDescription = "Panier",
-                    tint = Color(0xFF388E3C),
+                    tint = MaterialTheme.colorScheme.onSecondary,
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
@@ -54,21 +54,21 @@ fun WeeklyBasketSection(
                     text = basket?.name ?: "",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFF388E3C)
+                    color = MaterialTheme.colorScheme.onSecondary
                 )
             }
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = "Semaine ${basket?.weekNumber} (${basket?.year})",
                 fontSize = 14.sp,
-                color = Color.DarkGray
+                color = MaterialTheme.colorScheme.onSecondary
             )
         }
         Text(
             text = basket?.displayTotalPrice ?: "0 €",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
-            color = Color(0xFF388E3C)
+            color = MaterialTheme.colorScheme.onSecondary
         )
     }
 }
