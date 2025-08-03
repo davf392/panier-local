@@ -40,10 +40,10 @@ Paiements, export comptable, statistiques.
   </tr>
   <tr>
     <td style="text-align:center">
-      <img width="300" src="https://github.com/user-attachments/assets/dd5e94af-e256-4f42-9ff3-0d8e72e60fd1" />
+      <img width="300" src="https://github.com/user-attachments/assets/7855fc50-e37b-497b-aceb-92062aadfd56" />
     </td>
     <td style="text-align:center">
-      <img width="300" src="https://github.com/user-attachments/assets/02a9a5ca-e671-4dab-bcbd-c482eaef117e" />
+      <img width="300" src="https://github.com/user-attachments/assets/6c571875-34cc-4faa-bc56-a822891472ba" />
     </td>
   </tr>
 </table>
