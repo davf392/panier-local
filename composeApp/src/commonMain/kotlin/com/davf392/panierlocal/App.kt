@@ -1,7 +1,9 @@
 package com.davf392.panierlocal
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.amap.app.ui.screens.BasketScreen
@@ -13,10 +15,11 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Preview
 fun App() {
     PanierLocalTheme {
-        BasketScreen(
-            modifier = Modifier.background(
-                color = MaterialTheme.colorScheme.background
-            )
-        )
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            BasketScreen()
+        }
     }
 }
