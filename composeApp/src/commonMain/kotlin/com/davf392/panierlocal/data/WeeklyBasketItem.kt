@@ -3,12 +3,13 @@ package com.davf392.panierlocal.data
 import com.davf392.panierlocal.formatDecimal
 
 data class WeeklyBasketItem(
-    val name: String,
-    val weekNumber: Int,
-    val year: Int,
-    val formula: String,
-    val totalPrice: Double,
-    val productsList: List<ProductItem>
+    val id: String = "",
+    val name: String = "",
+    val weekNumber: Int = 0,
+    val year: Int = 0,
+    val formula: String = "",
+    val totalPrice: Double = 0.0,
+    val productsList: List<ProductItem> = emptyList()
 ) {
     val displayWeek: String
         get() = "Semaine $weekNumber ($year)"

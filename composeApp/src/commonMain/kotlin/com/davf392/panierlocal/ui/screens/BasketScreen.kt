@@ -1,11 +1,10 @@
-package com.amap.app.ui.screens
+package com.davf392.panierlocal.ui.screens
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -13,14 +12,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.amap.app.viewmodel.BasketViewModel
+import com.davf392.panierlocal.data.ProductItem
 import com.davf392.panierlocal.state.BasketUiState
-import com.davf392.panierlocal.ui.components.BasketContentSection
-import com.davf392.panierlocal.ui.components.WeeklyBasketSection
+import com.davf392.panierlocal.ui.components.BasketHistoryButton
+import com.davf392.panierlocal.ui.components.WeeklyBasketDeliverySection
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
+import com.davf392.panierlocal.viewmodel.BasketViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 
@@ -28,37 +29,33 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun BasketScreen(
     viewModel: BasketViewModel = viewModel(),
-    onExchangeClicked: () -> Unit = {},
+    onExchangeClicked: (ProductItem) -> Unit = {},
     onViewHistoryClicked: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     // Collect the UI state from the ViewModel
     val uiState by viewModel.uiState.collectAsState()
-    val currentBasketIndex by viewModel.currentBasketIndex.collectAsState()
-    val baskets = (uiState as BasketUiState.Success).baskets
-    val currentBasket = baskets[currentBasketIndex]
 
-    Column(modifier = modifier.padding(top = 52.dp).fillMaxSize()) {
-        WeeklyBasketSection(
-            basket = currentBasket,
-            modifier = Modifier.padding(16.dp)
-        )
-        BasketContentSection(
-            items = currentBasket.productsList,
-            onExchangeClicked = {
-                // navigate to ExchangeSimulatorScreen
+    when (val state = uiState) {
+        is BasketUiState.Loading -> {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
             }
-        )
-        Button(
-            onClick = onExchangeClicked,
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary
-            )
-        ) {
-            Text(
-                text = "Historique des anciens paniers"
-            )
+        }
+        is BasketUiState.Error -> {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Text(text = state.message, color = MaterialTheme.colorScheme.error)
+            }
+        }
+        is BasketUiState.Success -> {
+            Column(modifier = modifier.padding(top = 52.dp).fillMaxSize()) {
+                WeeklyBasketDeliverySection(
+                    items = state.baskets,
+                    modifier = Modifier.weight(1f),
+                    onExchangeClicked = onExchangeClicked
+                )
+                BasketHistoryButton(onViewHistoryClicked = onViewHistoryClicked)
+            }
         }
     }
 }

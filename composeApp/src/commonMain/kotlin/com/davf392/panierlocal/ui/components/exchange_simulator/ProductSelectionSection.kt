@@ -1,4 +1,4 @@
-package com.davf392.panierlocal.ui.components
+package com.davf392.panierlocal.ui.components.exchange_simulator
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.davf392.panierlocal.data.ExchangeItem
+import com.davf392.panierlocal.ui.components.ProductExchangeSection
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 

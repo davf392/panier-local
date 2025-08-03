@@ -16,9 +16,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.davf392.panierlocal.data.ExchangeItem
 import com.davf392.panierlocal.state.ExchangeSimulationState
-import com.davf392.panierlocal.ui.components.ProductSelectionSection
-import com.davf392.panierlocal.ui.components.ResultDisplaySection
-import com.davf392.panierlocal.ui.components.WeightInputSection
+import com.davf392.panierlocal.ui.components.exchange_simulator.ProductSelectionSection
+import com.davf392.panierlocal.ui.components.exchange_simulator.ResultDisplaySection
+import com.davf392.panierlocal.ui.components.exchange_simulator.WeightInputSection
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
