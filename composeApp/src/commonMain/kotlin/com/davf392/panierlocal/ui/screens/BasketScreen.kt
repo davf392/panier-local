@@ -40,7 +40,7 @@ fun BasketScreen(
 
     val baskets = (uiState as BasketUiState.Success).baskets
     val currentBasket = baskets[currentBasketIndex]
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(modifier = modifier.padding(top = 48.dp).fillMaxSize()) {
         WeeklyBasketSection(
             currentBasket,
             modifier = Modifier.padding(16.dp)

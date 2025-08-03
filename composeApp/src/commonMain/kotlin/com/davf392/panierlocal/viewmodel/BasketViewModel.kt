@@ -21,25 +21,24 @@ class BasketViewModel(
         totalPrice = 10.90,
         formula = "Tandem",
         productsList = listOf(
-            ProductItem(name = "Salade", quantity = 1.0, unit = "pièce", pricePerUnit = 2.50, totalPrice = 4.7, emoji = "🥬"),
-            ProductItem(name = "Concombre", quantity = 1.0, unit = "pièce", pricePerUnit = 1.80, totalPrice = 4.7, emoji = "🥒"),
-            ProductItem(name = "Oignon blanc", quantity = 200.0, unit = "g", pricePerUnit = 1.60, totalPrice = 4.7, emoji = "🧅"),
-            ProductItem(name = "Tomate cerise", quantity = 150.0, unit = "g", pricePerUnit = 1.80, totalPrice = 4.7, emoji = "🍅"),
-            ProductItem(name = "Aubergine", quantity = 800.0, unit = "g", pricePerUnit = 3.20, totalPrice = 4.7, emoji = "🍆")
+            ProductItem(name = "Salade", quantity = 1.0, unit = "pièce", pricePerUnit = 2.50, totalPrice = 2.50, emoji = "🥬"),
+            ProductItem(name = "Concombre", quantity = 1.0, unit = "pièce", pricePerUnit = 1.80, totalPrice = 1.80, emoji = "🥒"),
+            ProductItem(name = "Oignon blanc", quantity = 200.0, unit = "g", pricePerUnit = 1.60, totalPrice = 1.60, emoji = "🧅"),
+            ProductItem(name = "Tomate cerise", quantity = 150.0, unit = "g", pricePerUnit = 1.80, totalPrice = 1.80, emoji = "🍅"),
+            ProductItem(name = "Aubergine", quantity = 800.0, unit = "g", pricePerUnit = 3.20, totalPrice = 3.20, emoji = "🍆")
         )
     )
     private val soloBasket = WeeklyBasketItem(
         name = "Formule Solo Fruits",
         weekNumber = 15,
         year = 2024,
-        totalPrice = 10.90,
+        totalPrice = 10.90, // Le total correspond à la somme des produits ci-dessous
         formula = "Solo",
         productsList = listOf(
-            ProductItem(name = "Salade", quantity = 1.0, unit = "pièce", pricePerUnit = 2.50, totalPrice = 4.7, emoji = "🥬"),
-            ProductItem(name = "Concombre", quantity = 1.0, unit = "pièce", pricePerUnit = 1.80, totalPrice = 4.7, emoji = "🥒"),
-            ProductItem(name = "Oignon blanc", quantity = 200.0, unit = "g", pricePerUnit = 1.60, totalPrice = 4.7, emoji = "🧅"),
-            ProductItem(name = "Tomate cerise", quantity = 150.0, unit = "g", pricePerUnit = 1.80, totalPrice = 4.7, emoji = "🍅"),
-            ProductItem(name = "Aubergine", quantity = 800.0, unit = "g", pricePerUnit = 3.20, totalPrice = 4.7, emoji = "🍆")
+            ProductItem(name = "Banane", quantity = 500.0, unit = "g", pricePerUnit = 3.0, totalPrice = 1.50, emoji = "🍌"), // 3€/kg
+            ProductItem(name = "Pomme", quantity = 1.0, unit = "kg", pricePerUnit = 3.50, totalPrice = 3.50, emoji = "🍎"), // 3.50€/kg
+            ProductItem(name = "Poire", quantity = 500.0, unit = "g", pricePerUnit = 6.0, totalPrice = 3.00, emoji = "🍐"), // 6€/kg
+            ProductItem(name = "Orange", quantity = 1.0, unit = "kg", pricePerUnit = 2.90, totalPrice = 2.90, emoji = "🍊") // 2.90€/kg
         )
     )
     private val basketList = listOf(tandemBasket, soloBasket)
