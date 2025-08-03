@@ -29,7 +29,7 @@ Paiements, export comptable, statistiques.
 
 ## 📸 Captures d'écran
 
-<img width="300" src="https://github.com/user-attachments/assets/371145b9-216d-4887-ae35-86237ea83855" />
+<img width="300" src="https://github.com/user-attachments/assets/74a63684-882c-4ab0-9c97-8c0469d77c13" />
 
 ---
 
