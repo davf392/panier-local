@@ -1,5 +1,6 @@
 package com.davf392.panierlocal.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,19 +26,19 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun WeightInputSection(
-    itemToExchange: ExchangeItem,
-    defaultWeightGrams: Int,
-    onWeightConfirmed: (Int) -> Unit
+    itemToExchange: ExchangeItem = ExchangeItem(),
+    defaultWeightGrams: Int = 0,
+    onWeightConfirmed: (Int) -> Unit = {},
+    modifier: Modifier = Modifier
 ) {
     var weightText by remember { mutableStateOf(defaultWeightGrams.toString()) }
     var isError by remember { mutableStateOf(false) }
 
     Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = modifier.fillMaxWidth()
     ) {
         Text(
-            text = "Saisissez le poids de ${itemToExchange.name} que vous rendez :",
+            text = "Saisissez le poids que vous rendez :",
             fontSize = 16.sp
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -76,6 +77,10 @@ fun WeightInputSection(
 @Composable
 fun WeightInputSection() {
     PanierLocalTheme {
-        WeightInputSection()
+        WeightInputSection(
+            modifier = Modifier.background(
+                color = MaterialTheme.colorScheme.background
+            )
+        )
     }
 }

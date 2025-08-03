@@ -3,13 +3,13 @@ package com.davf392.panierlocal.data
 import com.davf392.panierlocal.formatDecimal
 
 data class ProductItem(
-    val name: String,
+    override val name: String,
+    override val emoji: String,
     val quantity: Double,
     val unit: String,
     val pricePerUnit: Double,
-    val totalPrice: Double,
-    val emoji: String
-) {
+    val totalPrice: Double
+) : CommonProduct {
     val displayQuantity: String
         get() = when {
             quantity == 1.0 && unit == "pièce" -> "1 pièce"

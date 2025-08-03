@@ -40,8 +40,9 @@ fun ExchangeSimulatorScreen(
             .padding(16.dp)
     ) {
         Text(
-            text = "Échange de ${itemToExchange.name}",
-            fontWeight = FontWeight.Bold
+            text = "Échange de ${itemToExchange.name} ${itemToExchange.emoji}",
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(vertical = 8.dp)
         )
         when (val state = currentState) {
             is ExchangeSimulationState.InputWeight -> {
@@ -92,16 +93,21 @@ fun ExchangeSimulatorScreenPreview() {
     PanierLocalTheme {
         ExchangeSimulatorScreen(
             itemToExchange = ExchangeItem(
-                id = "1",
                 name = "Concombre",
-                pricePerKg = 3.45,
-                emoji = "🥒"
+                emoji = "🥒",
+                pricePerKg = 3.45
             ),
             itemDefaultWeightGrams = 300,
             availableProducts = listOf(
-                ExchangeItem(id = "1", name = "Patate", pricePerKg = 1.08, emoji = "🥔")
+                ExchangeItem(
+                    name = "Patate",
+                    emoji = "🥔",
+                    pricePerKg = 1.08
+                )
             ),
-            modifier = Modifier.background(MaterialTheme.colorScheme.background)
+            modifier = Modifier.background(
+                color = MaterialTheme.colorScheme.background
+            )
         )
     }
 }

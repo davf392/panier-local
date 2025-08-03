@@ -1,5 +1,6 @@
 package com.davf392.panierlocal.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,9 +21,10 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun ProductSelectionSection(
     availableProducts: List<ExchangeItem>,
-    onProductSelected: (ExchangeItem) -> Unit
+    onProductSelected: (ExchangeItem) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = modifier.fillMaxWidth()) {
         Text(
             text = "Sélectionnez le produit souhaité en échange :",
             fontSize = 16.sp
@@ -34,7 +37,7 @@ fun ProductSelectionSection(
             items(availableProducts) { product ->
                 ProductExchangeItem(
                     product = product,
-                    onClick = { onProductSelected(product) }
+                    onProductSelected = { onProductSelected(product) }
                 )
             }
         }
@@ -45,6 +48,15 @@ fun ProductSelectionSection(
 @Composable
 fun ProductSelectionSection() {
     PanierLocalTheme {
-        ProductSelectionSection()
+        ProductSelectionSection(
+            availableProducts = listOf(
+                ExchangeItem(name = "Patate", emoji = "🥔", pricePerKg = 0.7),
+                ExchangeItem(name = "Gingembre", emoji = "🫚", pricePerKg = 3.4),
+            ),
+            onProductSelected = {},
+            modifier = Modifier.background(
+                color = MaterialTheme.colorScheme.background
+            )
+        )
     }
 }

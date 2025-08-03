@@ -1,4 +1,4 @@
-rootProject.name = "Panierlocal"
+rootProject.name = "PanierLocal"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {

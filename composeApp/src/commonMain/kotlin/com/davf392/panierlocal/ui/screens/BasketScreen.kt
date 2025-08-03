@@ -67,22 +67,6 @@ fun BasketScreen(
 @Composable
 fun BasketScreenPreview() {
     PanierLocalTheme {
-        val basketItems = listOf(
-            ProductItem(name = "Salade", quantity = 1.0, unit = "pièce", pricePerUnit = 2.50, totalPrice = 4.7, emoji = "🥬"),
-            ProductItem(name = "Concombre", quantity = 1.0, unit = "pièce", pricePerUnit = 1.80, totalPrice = 4.7, emoji = "🥒"),
-            ProductItem(name = "Oignon blanc", quantity = 200.0, unit = "g", pricePerUnit = 1.60, totalPrice = 4.7, emoji = "🧅"),
-            ProductItem(name = "Tomate cerise", quantity = 150.0, unit = "g", pricePerUnit = 1.80, totalPrice = 4.7, emoji = "🍅"),
-            ProductItem(name = "Aubergine", quantity = 800.0, unit = "g", pricePerUnit = 3.20, totalPrice = 4.7, emoji = "🍆")
-        )
-        val weeklyBasket = WeeklyBasketItem(
-            name = "Tandem Légumes",
-            weekNumber = 15,
-            year = 2024,
-            totalPrice = 10.90,
-            formula = "Tandem",
-            productsList = basketItems,
-        )
-
         BasketScreen(
             modifier = Modifier.background(
                 color = MaterialTheme.colorScheme.background

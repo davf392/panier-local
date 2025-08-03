@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -84,6 +85,9 @@ fun WeeklyBasketSectionPreview() {
                 formula = "Tandem",
                 totalPrice = 64.0,
                 productsList = emptyList()
+            ),
+            modifier = Modifier.background(
+                color = MaterialTheme.colorScheme.background
             )
         )
     }

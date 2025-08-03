@@ -1,16 +1,18 @@
 package com.davf392.panierlocal.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.davf392.panierlocal.data.ExchangeItem
@@ -20,30 +22,30 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun ResultDisplaySection(
-    itemToExchange: ExchangeItem,
-    returnedWeightGrams: Int,
-    exchangedProduct: ExchangeItem,
-    maxWeightGrams: Int
+    itemToExchange: ExchangeItem = ExchangeItem(),
+    returnedWeightGrams: Int = 0,
+    exchangedProduct: ExchangeItem = ExchangeItem(),
+    maxWeightGrams: Int = 0,
+    modifier: Modifier = Modifier
 ) {
-    val maxWeightKg = maxWeightGrams / 1000.0
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Vous avez rendu ${formatDecimal(returnedWeightGrams.toDouble(), 0)} de ${itemToExchange.name}  ${itemToExchange.emoji}",
+            text = "Vous avez rendu ${formatDecimal(returnedWeightGrams.toDouble(), 0)} g de ${itemToExchange.name}  ${itemToExchange.emoji}",
             fontSize = 16.sp,
             modifier = Modifier.fillMaxWidth(),
-            textAlign = androidx.compose.ui.text.style.TextAlign.Center
+            textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "Vous pouvez prendre jusqu'à ${formatDecimal(maxWeightGrams.toDouble(),0)} de ${exchangedProduct.name} ${exchangedProduct.emoji}",
+            text = "Vous pouvez prendre jusqu'à\n${formatDecimal(maxWeightGrams.toDouble(),0)} g de ${exchangedProduct.name} ${exchangedProduct.emoji}",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             color = Color(0xFF388E3C),
             modifier = Modifier.fillMaxWidth(),
-            textAlign = androidx.compose.ui.text.style.TextAlign.Center
+            textAlign = TextAlign.Center
         )
         // Vous pouvez ajouter d'autres informations ou un bouton "Terminer"
     }
@@ -53,6 +55,14 @@ fun ResultDisplaySection(
 @Composable
 fun ResultDisplaySection() {
     PanierLocalTheme {
-        ResultDisplaySection()
+        ResultDisplaySection(
+            itemToExchange = ExchangeItem(name = "Patate", emoji = "🥔", pricePerKg = 0.7),
+            returnedWeightGrams = 300,
+            exchangedProduct = ExchangeItem(name = "Concombre", emoji = "🥒", pricePerKg = 3.45),
+            maxWeightGrams = 150,
+            modifier = Modifier.background(
+            color = MaterialTheme.colorScheme.background
+            ),
+        )
     }
 }

@@ -34,57 +34,33 @@ fun BasketSection(
     onExchangeClicked: (ProductItem) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        )
+    ProductItemCard(
+        item = item,
+        modifier = modifier,
+        onClick = {}
     ) {
-        Row(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Column {
                 Text(
-                    text = item.emoji,
-                    fontSize = 24.sp,
-                    modifier = Modifier.padding(end = 12.dp)
+                    text = item.displayQuantity,
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                Spacer(modifier = Modifier.width(16.dp))
-                Column {
-                    Text(
-                        text = item.name,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Medium
-                    )
-                    Text(
-                        text = item.displayQuantity,
-                        fontSize = 14.sp,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-            }
-
-            Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = item.displayPrice,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary
                 )
-                Spacer(modifier = Modifier.width(8.dp))
-                IconButton(onClick = { onExchangeClicked(item) }) {
-                    Icon(
-                        imageVector = RefreshIcon,
-                        contentDescription = "Échanger",
-                        tint = Color.Gray,
-                        modifier = Modifier.size(24.dp)
-                    )
-                }
+            }
+            Spacer(modifier = Modifier.width(8.dp))
+            IconButton(onClick = { onExchangeClicked(item) }) {
+                Icon(
+                    imageVector = RefreshIcon,
+                    contentDescription = "Échanger",
+                    tint = Color.Gray,
+                    modifier = Modifier.size(24.dp)
+                )
             }
         }
     }
