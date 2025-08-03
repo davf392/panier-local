@@ -37,12 +37,12 @@ fun BasketScreen(
     // Collect the UI state from the ViewModel
     val uiState by viewModel.uiState.collectAsState()
     val currentBasketIndex by viewModel.currentBasketIndex.collectAsState()
-
     val baskets = (uiState as BasketUiState.Success).baskets
     val currentBasket = baskets[currentBasketIndex]
+
     Column(modifier = modifier.padding(top = 52.dp).fillMaxSize()) {
         WeeklyBasketSection(
-            currentBasket,
+            basket = currentBasket,
             modifier = Modifier.padding(16.dp)
         )
         BasketContentSection(
@@ -58,7 +58,9 @@ fun BasketScreen(
                 containerColor = MaterialTheme.colorScheme.primary
             )
         ) {
-            Text(text = "Historique des anciens paniers")
+            Text(
+                text = "Historique des anciens paniers"
+            )
         }
     }
 }

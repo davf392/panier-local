@@ -35,8 +35,8 @@ fun ProductSelectionSection(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(availableProducts) { product ->
-                ProductExchangeItem(
-                    product = product,
+                ProductExchangeSection(
+                    item = product,
                     onProductSelected = { onProductSelected(product) }
                 )
             }
