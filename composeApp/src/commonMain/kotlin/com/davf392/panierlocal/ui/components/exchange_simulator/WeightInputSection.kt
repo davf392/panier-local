@@ -58,7 +58,7 @@ fun WeightInputSection(
 
 @Preview
 @Composable
-fun WeightInputSection() {
+fun WeightInputSectionPreview() {
     PanierLocalTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
