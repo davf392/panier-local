@@ -1,14 +1,14 @@
 package com.davf392.panierlocal.ui.components.exchange_simulator
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -19,15 +19,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.davf392.panierlocal.data.ExchangeItem
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun WeightInputSection(
-    itemToExchange: ExchangeItem = ExchangeItem(),
     defaultWeightGrams: Int = 0,
-    onWeightConfirmed: (Int) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     var weightText by remember { mutableStateOf(defaultWeightGrams.toString()) }
@@ -38,7 +35,7 @@ fun WeightInputSection(
     ) {
         Text(
             text = "Saisissez le poids que vous rendez :",
-            fontSize = 16.sp
+            fontSize = 16.sp,
         )
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
@@ -56,19 +53,6 @@ fun WeightInputSection(
         if (isError) {
             Text(text = "Veuillez entrer un poids valide.", color = MaterialTheme.colorScheme.error)
         }
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(
-            onClick = {
-                val weight = weightText.toIntOrNull()
-                if (weight != null && weight > 0) {
-                    onWeightConfirmed(weight)
-                }
-            },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = !isError
-        ) {
-            Text("Confirmer le poids")
-        }
     }
 }
 
@@ -76,10 +60,11 @@ fun WeightInputSection(
 @Composable
 fun WeightInputSection() {
     PanierLocalTheme {
-        WeightInputSection(
-            modifier = Modifier.background(
-                color = MaterialTheme.colorScheme.background
-            )
-        )
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            WeightInputSection()
+        }
     }
 }

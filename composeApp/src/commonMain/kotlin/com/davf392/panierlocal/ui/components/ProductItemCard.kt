@@ -33,16 +33,26 @@ fun ProductItemCard(
     item: CommonProduct,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
-    content: @Composable () -> Unit
+    isSelected: Boolean = false,
+    content: @Composable (contentColor: Color) -> Unit,
 ) {
+    val backgroundColor = if (isSelected) {
+        MaterialTheme.colorScheme.onSurface
+    } else {
+        MaterialTheme.colorScheme.surface
+    }
+    val contentColor = if (isSelected) {
+        MaterialTheme.colorScheme.surface
+    } else {
+        MaterialTheme.colorScheme.onSurface
+    }
+
     Card(
         modifier = modifier
             .fillMaxWidth()
             .clickable(onClick = onClick),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        )
+        colors = CardDefaults.cardColors(containerColor = backgroundColor)
     ) {
         Row(
             modifier = Modifier
@@ -56,18 +66,20 @@ fun ProductItemCard(
                 Text(
                     text = item.emoji,
                     fontSize = 24.sp,
-                    modifier = Modifier.padding(end = 12.dp)
+                    modifier = Modifier.padding(end = 12.dp),
+                    color = contentColor
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Text(
                     text = item.name,
                     fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium
+                    fontWeight = FontWeight.Medium,
+                    color = contentColor
                 )
             }
 
             // Le slot de contenu (le contenu à droite)
-            content()
+            content(contentColor)
         }
     }
 }

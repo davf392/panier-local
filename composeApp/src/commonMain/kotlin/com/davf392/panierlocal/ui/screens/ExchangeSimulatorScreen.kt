@@ -1,10 +1,14 @@
 package com.davf392.panierlocal.ui.screens
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -15,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.davf392.panierlocal.data.ExchangeItem
-import com.davf392.panierlocal.state.ExchangeSimulationState
+import com.davf392.panierlocal.data.ProductItem
 import com.davf392.panierlocal.ui.components.exchange_simulator.ProductSelectionSection
 import com.davf392.panierlocal.ui.components.exchange_simulator.ResultDisplaySection
 import com.davf392.panierlocal.ui.components.exchange_simulator.WeightInputSection
@@ -24,63 +28,50 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun ExchangeSimulatorScreen(
-    itemToExchange: ExchangeItem,
-    itemDefaultWeightGrams: Int,
-    availableProducts: List<ExchangeItem>,
+    itemToExchange: ProductItem,
+    availableProducts: List<ExchangeItem> = emptyList(),
     modifier: Modifier = Modifier
 ) {
-    var currentState by remember {
-        mutableStateOf<ExchangeSimulationState>(
-            ExchangeSimulationState.InputWeight(itemToExchange, itemDefaultWeightGrams)
-        )
+    var returnedWeightGrams by remember { mutableStateOf(itemToExchange.quantity.toInt()) }
+    var selectedProduct by remember { mutableStateOf<ExchangeItem?>(null) }
+
+    // each time a product is selected we compute the max weight
+    val maxWeightGrams = remember(returnedWeightGrams, selectedProduct) {
+        if (selectedProduct != null) {
+            val valueToExchange = (returnedWeightGrams.toDouble() / 1000.0) * itemToExchange.pricePerUnit
+            val maxWeightGrams = (valueToExchange / selectedProduct!!.pricePerKg) * 1000
+            maxWeightGrams.toInt()
+        } else {
+            null
+        }
     }
+
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp)
+        modifier = modifier.fillMaxSize().padding(16.dp)
     ) {
         Text(
             text = "Échange de ${itemToExchange.name} ${itemToExchange.emoji}",
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(vertical = 8.dp)
+            modifier = Modifier.padding(vertical = 8.dp),
         )
-        when (val state = currentState) {
-            is ExchangeSimulationState.InputWeight -> {
-                WeightInputSection(
-                    itemToExchange = state.itemToExchange,
-                    defaultWeightGrams = state.defaultWeightGrams,
-                    onWeightConfirmed = { weight ->
-                        currentState = ExchangeSimulationState.SelectProduct(
-                            itemToExchange = state.itemToExchange,
-                            returnedWeightGrams = weight,
-                            availableProducts = availableProducts
-                        )
-                    }
-                )
+        WeightInputSection(defaultWeightGrams = returnedWeightGrams)
+        ProductSelectionSection(
+            availableProducts = availableProducts,
+            onProductSelected = { product ->
+                selectedProduct = product
             }
-            is ExchangeSimulationState.SelectProduct -> {
-                ProductSelectionSection(
-                    availableProducts = state.availableProducts,
-                    onProductSelected = { selectedProduct ->
-                        val valueToExchange = (state.returnedWeightGrams / 1000.0) * state.itemToExchange.pricePerKg
-                        val maxWeightKg = valueToExchange / selectedProduct.pricePerKg
-                        val maxWeightGrams = (maxWeightKg * 1000).toInt()
+        )
 
-                        currentState = ExchangeSimulationState.ShowResult(
-                            itemToExchange = state.itemToExchange,
-                            returnedWeightGrams = state.returnedWeightGrams,
-                            exchangedProduct = selectedProduct,
-                            maxWeightGrams = maxWeightGrams
-                        )
-                    }
-                )
-            }
-            is ExchangeSimulationState.ShowResult -> {
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // display result only if a product is selected
+        AnimatedVisibility(visible = selectedProduct != null) {
+            if (selectedProduct != null && maxWeightGrams != null) {
                 ResultDisplaySection(
-                    itemToExchange = state.itemToExchange,
-                    returnedWeightGrams = state.returnedWeightGrams,
-                    exchangedProduct = state.exchangedProduct,
-                    maxWeightGrams = state.maxWeightGrams
+                    itemToExchange = itemToExchange,
+                    returnedWeightGrams = returnedWeightGrams,
+                    exchangedProduct = selectedProduct!!,
+                    maxWeightGrams = maxWeightGrams
                 )
             }
         }
@@ -91,23 +82,27 @@ fun ExchangeSimulatorScreen(
 @Composable
 fun ExchangeSimulatorScreenPreview() {
     PanierLocalTheme {
-        ExchangeSimulatorScreen(
-            itemToExchange = ExchangeItem(
-                name = "Concombre",
-                emoji = "🥒",
-                pricePerKg = 3.45
-            ),
-            itemDefaultWeightGrams = 300,
-            availableProducts = listOf(
-                ExchangeItem(
-                    name = "Patate",
-                    emoji = "🥔",
-                    pricePerKg = 1.08
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            ExchangeSimulatorScreen(
+                itemToExchange = ProductItem(
+                    id = "1",
+                    name = "Concombre",
+                    emoji = "🥒",
+                    quantity = 200.0,
+                    unit = "g",
+                    pricePerUnit = 1.5,
+                    totalPrice = 4.2,
+                ),
+                availableProducts = listOf(
+                    ExchangeItem(id = "2", name = "Patate", emoji = "🥔", pricePerKg = 1.08),
+                    ExchangeItem(id = "3", name = "Radis", emoji = "🫜", pricePerKg = .95),
+                    ExchangeItem(id = "4", name = "Broccoli", emoji = "🥦", pricePerKg = 1.25),
+                    ExchangeItem(id = "5", name = "Poivron", emoji = "🫑", pricePerKg = 2.9)
                 )
-            ),
-            modifier = Modifier.background(
-                color = MaterialTheme.colorScheme.background
             )
-        )
+        }
     }
 }

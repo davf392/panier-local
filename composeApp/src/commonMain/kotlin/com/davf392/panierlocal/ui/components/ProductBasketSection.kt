@@ -32,19 +32,19 @@ fun ProductBasketSection(
         item = item,
         modifier = modifier,
         onClick = {}
-    ) {
+    ) { contentColor ->
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column {
                 Text(
                     text = item.displayQuantity,
                     fontSize = 14.sp,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = contentColor
                 )
                 Text(
                     text = item.displayPrice,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = contentColor
                 )
             }
             Spacer(modifier = Modifier.width(8.dp))
@@ -52,7 +52,7 @@ fun ProductBasketSection(
                 Icon(
                     imageVector = RefreshIcon,
                     contentDescription = "Échanger",
-                    tint = Color.Gray,
+                    tint = contentColor,
                     modifier = Modifier.size(24.dp)
                 )
             }

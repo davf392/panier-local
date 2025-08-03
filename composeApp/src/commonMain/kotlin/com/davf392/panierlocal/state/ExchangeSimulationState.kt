@@ -1,10 +1,11 @@
 package com.davf392.panierlocal.state
 
 import com.davf392.panierlocal.data.ExchangeItem
+import com.davf392.panierlocal.data.ProductItem
 
 sealed interface ExchangeSimulationState {
     data class InputWeight(
-        val itemToExchange: ExchangeItem,
+        val itemToExchange: ProductItem,
         val defaultWeightGrams: Int
     ) : ExchangeSimulationState
 

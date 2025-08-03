@@ -16,13 +16,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.davf392.panierlocal.data.ExchangeItem
+import com.davf392.panierlocal.data.ProductItem
 import com.davf392.panierlocal.formatDecimal
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun ResultDisplaySection(
-    itemToExchange: ExchangeItem = ExchangeItem(),
+    itemToExchange: ProductItem = ProductItem(),
     returnedWeightGrams: Int = 0,
     exchangedProduct: ExchangeItem = ExchangeItem(),
     maxWeightGrams: Int = 0,
@@ -56,7 +57,15 @@ fun ResultDisplaySection(
 fun ResultDisplaySection() {
     PanierLocalTheme {
         ResultDisplaySection(
-            itemToExchange = ExchangeItem(name = "Patate", emoji = "🥔", pricePerKg = 0.7),
+            itemToExchange = ProductItem(
+                id = "1",
+                name = "Patate",
+                emoji = "🥔",
+                quantity = 200.0,
+                unit = "g",
+                pricePerUnit = 0.7,
+                totalPrice = 3.7
+            ),
             returnedWeightGrams = 300,
             exchangedProduct = ExchangeItem(name = "Concombre", emoji = "🥒", pricePerKg = 3.45),
             maxWeightGrams = 150,

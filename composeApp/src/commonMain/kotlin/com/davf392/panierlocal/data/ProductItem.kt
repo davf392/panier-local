@@ -3,12 +3,13 @@ package com.davf392.panierlocal.data
 import com.davf392.panierlocal.formatDecimal
 
 data class ProductItem(
-    override val name: String,
-    override val emoji: String,
-    val quantity: Double,
-    val unit: String,
-    val pricePerUnit: Double,
-    val totalPrice: Double
+    override val id: String = "",
+    override val name: String = "",
+    override val emoji: String = "",
+    val quantity: Double = 0.0,
+    val unit: String = "",
+    val pricePerUnit: Double = 0.0,
+    val totalPrice: Double = 0.0
 ) : CommonProduct {
     val displayQuantity: String
         get() = when {
