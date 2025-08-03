@@ -1,13 +1,14 @@
-package com.amap.app.data
+package com.davf392.panierlocal.data
 
-data class Product(
-    val id: String,
+import com.davf392.panierlocal.formatDecimal
+
+data class ProductItem(
     val name: String,
-    val emoji: String,
     val quantity: Double,
     val unit: String,
     val pricePerUnit: Double,
-    val totalPrice: Double
+    val totalPrice: Double,
+    val emoji: String
 ) {
     val displayQuantity: String
         get() = when {
@@ -17,7 +18,7 @@ data class Product(
             unit == "kg" -> "${quantity} kg"
             else -> "$quantity $unit"
         }
-    
+
     val displayPrice: String
-        get() = "%.2f €".format(totalPrice)
+        get() = "${formatDecimal(totalPrice, 2)} €"
 }
