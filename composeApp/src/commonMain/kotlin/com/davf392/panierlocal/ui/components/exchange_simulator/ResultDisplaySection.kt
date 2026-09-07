@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.davf392.panierlocal.data.ExchangeItem
 import com.davf392.panierlocal.data.ProductItem
+import com.davf392.panierlocal.data.ProductUnit
 import com.davf392.panierlocal.formatDecimal
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -30,7 +32,9 @@ fun ResultDisplaySection(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .padding(12.dp)
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
@@ -62,12 +66,12 @@ fun ResultDisplaySection() {
                 name = "Patate",
                 emoji = "🥔",
                 quantity = 200.0,
-                unit = "g",
+                unit = ProductUnit.GRAM,
                 pricePerUnit = 0.7,
                 totalPrice = 3.7
             ),
             returnedWeightGrams = 300,
-            exchangedProduct = ExchangeItem(name = "Concombre", emoji = "🥒", pricePerKg = 3.45),
+            exchangedProduct = ExchangeItem(name = "Concombre", emoji = "🥒", pricePerUnit = 3.45),
             maxWeightGrams = 150,
             modifier = Modifier.background(
             color = MaterialTheme.colorScheme.background

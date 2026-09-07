@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.davf392.panierlocal.data.ProductItem
+import com.davf392.panierlocal.data.ProductUnit
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -40,11 +41,11 @@ fun BasketContentSectionPreview() {
     PanierLocalTheme {
         BasketContentSection(
             items = listOf(
-                ProductItem(name = "Salade", quantity = 1.0, unit = "pièce", pricePerUnit = 2.50, totalPrice = 2.50, emoji = "🥬"),
-                ProductItem(name = "Concombre", quantity = 1.0, unit = "pièce", pricePerUnit = 1.80, totalPrice = 1.80, emoji = "🥒"),
-                ProductItem(name = "Oignon blanc", quantity = 200.0, unit = "g", pricePerUnit = 1.60, totalPrice = 1.60, emoji = "🧅"),
-                ProductItem(name = "Tomate cerise", quantity = 150.0, unit = "g", pricePerUnit = 1.80, totalPrice = 1.80, emoji = "🍅"),
-                ProductItem(name = "Aubergine", quantity = 800.0, unit = "g", pricePerUnit = 3.20, totalPrice = 3.20, emoji = "🍆")
+                ProductItem(name = "Salade", quantity = 1.0, unit = ProductUnit.PIECE, pricePerUnit = 2.50, totalPrice = 2.50, emoji = "🥬"),
+                ProductItem(name = "Concombre", quantity = 1.0, unit = ProductUnit.PIECE, pricePerUnit = 1.80, totalPrice = 1.80, emoji = "🥒"),
+                ProductItem(name = "Oignon blanc", quantity = 200.0, unit = ProductUnit.GRAM, pricePerUnit = 1.60, totalPrice = 1.60, emoji = "🧅"),
+                ProductItem(name = "Tomate cerise", quantity = 150.0, unit = ProductUnit.GRAM, pricePerUnit = 1.80, totalPrice = 1.80, emoji = "🍅"),
+                ProductItem(name = "Aubergine", quantity = 800.0, unit = ProductUnit.GRAM, pricePerUnit = 3.20, totalPrice = 3.20, emoji = "🍆")
             ),
             onExchangeClicked = {},
             modifier = Modifier.background(

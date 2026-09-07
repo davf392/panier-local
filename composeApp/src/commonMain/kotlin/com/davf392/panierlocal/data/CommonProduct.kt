@@ -4,4 +4,6 @@ interface CommonProduct {
     val id: String
     val name: String
     val emoji: String
+    val unit: ProductUnit?
+    val pricePerUnit: Double
 }

@@ -8,18 +8,24 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.davf392.panierlocal.data.ProductItem
+import com.davf392.panierlocal.repository.ProductRepository
+import com.davf392.panierlocal.state.BasketUiState
+import com.davf392.panierlocal.state.ExchangeUiState
 import com.davf392.panierlocal.ui.navigation.Routes
-import com.davf392.panierlocal.ui.screens.BasketScreen
-import com.davf392.panierlocal.ui.screens.ExchangeSimulatorScreen
+import com.davf392.panierlocal.ui.components.screens.BasketScreen
+import com.davf392.panierlocal.ui.components.screens.ExchangeSimulatorScreen
+import com.davf392.panierlocal.ui.navigation.rememberAppNavController
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
+import com.davf392.panierlocal.usecase.CalculateExchangeUseCase
 import com.davf392.panierlocal.viewmodel.BasketViewModel
+import com.davf392.panierlocal.viewmodel.BasketViewModelFactory
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,12 +46,17 @@ fun PanierLocalApp() {
             color = MaterialTheme.colorScheme.background
         ) {
             val navController = rememberNavController()
-            val basketViewModel: BasketViewModel = viewModel()
+            val basketViewModel = viewModel<BasketViewModel>(
+                factory = BasketViewModelFactory(
+                    productRepository = ProductRepository(),
+                    calculateExchangeUseCase = CalculateExchangeUseCase()
+                )
+            )
 
             NavHost(navController = navController, startDestination = Routes.WEEKLY_BASKET) {
                 composable(Routes.WEEKLY_BASKET) {
                     BasketScreen(
-                        navController = navController,
+                        uiState = basketViewModel.uiState.collectAsState().value,
                         onViewHistoryClicked = { navController.navigate(Routes.BASKET_HISTORY) },
                         onExchangeClicked = { productItem ->
                             navController.navigate("${Routes.EXCHANGE_SIMULATOR}/${productItem.id}")
@@ -53,10 +64,12 @@ fun PanierLocalApp() {
                     )
                 }
                 composable(route = "${Routes.EXCHANGE_SIMULATOR}/{itemId}") { backStackEntry ->
-                    val itemId = backStackEntry.arguments?.getString("itemId")
+                    basketViewModel.navigateToExchangeSimulatorScreen(
+                        itemId = backStackEntry.arguments?.getString("itemId")
+                    )
                     ExchangeSimulatorScreen(
-                        itemToExchange = basketViewModel.getItemToExchange(itemId) ?: ProductItem(),
-                        availableProducts = basketViewModel.getAvailableProducts(),
+                        uiState = basketViewModel.exchangeUiState.collectAsState().value,
+                        onProductSelected = { product -> basketViewModel.selectProduct(product) },
                     )
                 }
             }

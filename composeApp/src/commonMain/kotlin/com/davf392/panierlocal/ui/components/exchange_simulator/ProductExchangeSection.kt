@@ -1,11 +1,11 @@
-package com.davf392.panierlocal.ui.components
+package com.davf392.panierlocal.ui.components.exchange_simulator
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.davf392.panierlocal.data.ExchangeItem
+import com.davf392.panierlocal.ui.components.ProductItemCard
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -21,7 +21,7 @@ fun ProductExchangeSection(
         isSelected = isSelected
     ) { contentColor ->
         Text(
-            text = "${item.pricePerKg} €/kg",
+            text = "${item.pricePerUnit} €/kg",
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
             color = contentColor
@@ -37,7 +37,7 @@ fun ProductExchangeSectionPreview() {
             item = ExchangeItem(
                 name = "Patate",
                 emoji = "🥔",
-                pricePerKg = 0.7
+                pricePerUnit = 0.7
             ),
             onProductSelected = {}
         )

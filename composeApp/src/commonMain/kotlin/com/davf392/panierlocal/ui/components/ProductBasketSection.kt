@@ -13,11 +13,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.davf392.panierlocal.data.ProductItem
+import com.davf392.panierlocal.data.ProductUnit
 import com.davf392.panierlocal.ui.RefreshIcon
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -68,7 +68,7 @@ fun ProductBasketSectionPreview() {
             name = "Concombre",
             emoji = "🥒",
             quantity = 1.0,
-            unit = "pièce",
+            unit = ProductUnit.PIECE,
             pricePerUnit = 1.80,
             totalPrice = 1.80,
         )

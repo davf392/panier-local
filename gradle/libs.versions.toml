@@ -15,7 +15,7 @@ compose-icons-extended = "1.5.4"
 junit = "4.13.2"
 kotlin = "2.2.0"
 kotlinx-coroutines = "1.10.2"
-compose-navigation = "2.9.3"
+compose-navigation = "2.9.4"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }

@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.davf392.panierlocal.data.ExchangeItem
-import com.davf392.panierlocal.ui.components.ProductExchangeSection
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -33,7 +32,9 @@ fun ProductSelectionSection(
     var selectedExchangedItem by remember { mutableStateOf<String?>(null) }
 
     Column(
-        modifier = modifier.fillMaxWidth().padding(top = 12.dp)
+        modifier = modifier
+            .padding(12.dp)
+            .fillMaxWidth()
     ) {
         Text(
             text = "Sélectionnez le produit souhaité en échange :",
@@ -64,8 +65,8 @@ fun ProductSelectionSection() {
     PanierLocalTheme {
         ProductSelectionSection(
             availableProducts = listOf(
-                ExchangeItem(name = "Patate", emoji = "🥔", pricePerKg = 0.7),
-                ExchangeItem(name = "Gingembre", emoji = "🫚", pricePerKg = 3.4),
+                ExchangeItem(name = "Patate", emoji = "🥔", pricePerUnit = 0.7),
+                ExchangeItem(name = "Gingembre", emoji = "🫚", pricePerUnit = 3.4),
             ),
             onProductSelected = {},
             modifier = Modifier.background(

@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.davf392.panierlocal.data.CommonProduct
 import com.davf392.panierlocal.data.ProductItem
+import com.davf392.panierlocal.data.ProductUnit
 import com.davf392.panierlocal.ui.RefreshIcon
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -88,7 +89,14 @@ fun ProductItemCard(
 @Composable
 fun ProductItemCardPreview() {
     PanierLocalTheme {
-        val item = ProductItem(name = "Concombre", emoji = "🥒", quantity = 300.0, unit = "g", pricePerUnit = 3.4, totalPrice = 4.6)
+        val item = ProductItem(
+            name = "Concombre",
+            emoji = "🥒",
+            quantity = 300.0,
+            unit = ProductUnit.GRAM,
+            pricePerUnit = 3.4,
+            totalPrice = 4.6
+        )
         ProductItemCard(
             item = item,
             content =

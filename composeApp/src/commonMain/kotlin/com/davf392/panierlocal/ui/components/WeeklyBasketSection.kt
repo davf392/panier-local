@@ -58,11 +58,16 @@ fun WeeklyBasketSection(
         )
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+            ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = ShoppingCartIcon,
@@ -85,7 +90,10 @@ fun WeeklyBasketSection(
                     color = MaterialTheme.colorScheme.onSecondary
                 )
             }
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                modifier = Modifier.padding(start = 8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text(
                     text = basket?.displayTotalPrice ?: "0 €",
                     fontSize = 20.sp,
@@ -113,7 +121,7 @@ fun WeeklyBasketSectionPreview() {
     PanierLocalTheme {
         WeeklyBasketSection(
             basket = WeeklyBasketItem(
-                name = "Panier Tandem Légumes",
+                name = "Tandem Légumes",
                 weekNumber = 34,
                 year = 2025,
                 formula = "Tandem",

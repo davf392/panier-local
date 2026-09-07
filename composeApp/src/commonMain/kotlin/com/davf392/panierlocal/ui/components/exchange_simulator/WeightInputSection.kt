@@ -2,9 +2,9 @@ package com.davf392.panierlocal.ui.components.exchange_simulator
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -31,7 +31,9 @@ fun WeightInputSection(
     var isError by remember { mutableStateOf(false) }
 
     Column(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .padding(12.dp)
+            .fillMaxWidth()
     ) {
         Text(
             text = "Saisissez le poids que vous rendez :",
@@ -51,7 +53,10 @@ fun WeightInputSection(
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
         if (isError) {
-            Text(text = "Veuillez entrer un poids valide.", color = MaterialTheme.colorScheme.error)
+            Text(
+                text = "Veuillez entrer un poids valide.",
+                color = MaterialTheme.colorScheme.error
+            )
         }
     }
 }
@@ -61,7 +66,7 @@ fun WeightInputSection(
 fun WeightInputSectionPreview() {
     PanierLocalTheme {
         Surface(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxWidth(),
             color = MaterialTheme.colorScheme.background
         ) {
             WeightInputSection()
