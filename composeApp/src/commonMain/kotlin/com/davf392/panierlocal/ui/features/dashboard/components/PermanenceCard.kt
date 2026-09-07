@@ -13,7 +13,7 @@ fun PermanenceCard(slots: List<PermanenceSlot>) {
     Card(modifier = Modifier.fillMaxWidth()) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text("Permanence", style = MaterialTheme.typography.titleMedium)
-            Spacer(modifier = Modifier.height(8.dp))
+            HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.5f))
             slots.forEach { slot ->
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),

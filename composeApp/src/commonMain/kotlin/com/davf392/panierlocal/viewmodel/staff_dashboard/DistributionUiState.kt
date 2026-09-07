@@ -1,17 +1,13 @@
-package com.davf392.panierlocal.data.staff_dashboard
+package com.davf392.panierlocal.viewmodel.staff_dashboard
 
+import com.davf392.panierlocal.data.staff_dashboard.*
 import kotlinx.datetime.LocalDateTime
 
-enum class DistributionStatus {
-    PREPARATION, IN_PROGRESS, COMPLETED
-}
-
-data class Distribution(
+data class DistributionUiState(
     val id: String,
+    val location: String,
     val startTime: LocalDateTime,
     val endTime: LocalDateTime,
-    val location: String,
-    val status: DistributionStatus,
     val permanenceSlots: List<PermanenceSlot>,
     val basketSummaries: List<BasketFormulaSummary>,
     val alerts: List<DashboardAlert>

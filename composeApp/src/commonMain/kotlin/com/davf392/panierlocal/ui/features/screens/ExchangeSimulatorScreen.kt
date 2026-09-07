@@ -5,28 +5,16 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.davf392.panierlocal.data.ExchangeItem
 import com.davf392.panierlocal.data.ProductItem
 import com.davf392.panierlocal.data.ProductUnit
 import com.davf392.panierlocal.state.ExchangeUiState
-import com.davf392.panierlocal.ui.features.PanierLocalTopAppBar
 import com.davf392.panierlocal.ui.features.exchange_simulator.ProductSelectionSection
 import com.davf392.panierlocal.ui.features.exchange_simulator.ResultDisplaySection
 import com.davf392.panierlocal.ui.features.exchange_simulator.WeightDisplaySection
@@ -42,72 +30,58 @@ enum class ExchangeStep {
 fun ExchangeSimulatorScreen(
     uiState: ExchangeUiState,
     onProductSelected: (ExchangeItem) -> Unit = {},
-    onBackClicked: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     var step by remember { mutableStateOf(ExchangeStep.SELECT_PRODUCT) }
 
-    Scaffold(
-        topBar = {
-            PanierLocalTopAppBar(
-                title = "Simulateur d'échange",
-                onBackClicked = {
-                    if (step == ExchangeStep.CONFIRMATION) {
-                        step = ExchangeStep.SELECT_PRODUCT
-                    } else {
-                        onBackClicked()
-                    }
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp)
+    ) {
+        WeightDisplaySection(
+            item = uiState.itemToExchange,
+            weightGrams = uiState.returnedWeightGrams
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        AnimatedContent(
+            targetState = step,
+            transitionSpec = {
+                fadeIn(animationSpec = tween(300)) togetherWith fadeOut(animationSpec = tween(300))
+            },
+            label = "ExchangeStepAnimation"
+        ) { targetStep ->
+            when (targetStep) {
+                ExchangeStep.SELECT_PRODUCT -> {
+                    ProductSelectionSection(
+                        availableProducts = uiState.availableProducts,
+                        onProductSelected = { product ->
+                            onProductSelected(product)
+                            step = ExchangeStep.CONFIRMATION
+                        }
+                    )
                 }
-            )
-        },
-        modifier = modifier.fillMaxSize()
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding)
-                .padding(horizontal = 16.dp)
-                .fillMaxSize()
-        ) {
-            // Progress Indicator
-            LinearProgressIndicator(
-                progress = { if (step == ExchangeStep.SELECT_PRODUCT) 0.5f else 1.0f },
-                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
-                color = MaterialTheme.colorScheme.primary
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-            
-            // Header
-            WeightDisplaySection(
-                item = uiState.itemToExchange,
-                weightGrams = uiState.returnedWeightGrams
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            AnimatedContent(
-                targetState = step,
-                transitionSpec = {
-                    fadeIn(animationSpec = tween(300)) togetherWith fadeOut(animationSpec = tween(300))
-                },
-                label = "ExchangeStepAnimation"
-            ) { targetStep ->
-                when (targetStep) {
-                    ExchangeStep.SELECT_PRODUCT -> {
-                        ProductSelectionSection(
-                            availableProducts = uiState.availableProducts,
-                            onProductSelected = { product ->
-                                onProductSelected(product)
-                                step = ExchangeStep.CONFIRMATION
-                            }
-                        )
-                    }
-                    ExchangeStep.CONFIRMATION -> {
+                ExchangeStep.CONFIRMATION -> {
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
                         uiState.selectedProduct?.let { selectedProduct ->
                             ResultDisplaySection(
                                 exchangedProduct = selectedProduct,
                                 maxWeightGrams = uiState.exchangeResult
                             )
+                        }
+                        
+                        Spacer(modifier = Modifier.height(24.dp))
+                        
+                        OutlinedButton(
+                            onClick = { step = ExchangeStep.SELECT_PRODUCT },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Modifier ma sélection")
                         }
                     }
                 }

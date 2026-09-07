@@ -27,14 +27,13 @@ fun BasketScreen(
     onViewHistoryClicked: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier.padding(top = 52.dp).fillMaxSize()) {
+    Column(modifier = modifier.fillMaxSize()) {
         WeeklyBasketDeliverySection(
             items = uiState.baskets,
             modifier = Modifier.weight(1f),
             onExchangeClicked = onExchangeClicked
         )
         BasketHistoryButton(onViewHistoryClicked = onViewHistoryClicked)
-        Spacer(modifier = Modifier.height(32.dp))
     }
 }
 
