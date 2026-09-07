@@ -1,4 +1,4 @@
-package com.davf392.panierlocal.ui.components.exchange_simulator
+package com.davf392.panierlocal.ui.features.exchange_simulator
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

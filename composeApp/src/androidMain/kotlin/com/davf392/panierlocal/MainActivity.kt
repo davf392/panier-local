@@ -17,9 +17,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.davf392.panierlocal.repository.ProductRepository
+import com.davf392.panierlocal.ui.features.screens.BasketScreen
+import com.davf392.panierlocal.ui.features.screens.ExchangeSimulatorScreen
 import com.davf392.panierlocal.ui.navigation.Routes
-import com.davf392.panierlocal.ui.components.screens.BasketScreen
-import com.davf392.panierlocal.ui.components.screens.ExchangeSimulatorScreen
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import com.davf392.panierlocal.usecase.CalculateExchangeUseCase
 import com.davf392.panierlocal.viewmodel.BasketViewModel

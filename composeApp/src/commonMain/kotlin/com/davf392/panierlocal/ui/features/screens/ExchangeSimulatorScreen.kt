@@ -1,4 +1,4 @@
-package com.davf392.panierlocal.ui.components.screens
+package com.davf392.panierlocal.ui.features.screens
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.tween
@@ -26,10 +26,10 @@ import com.davf392.panierlocal.data.ExchangeItem
 import com.davf392.panierlocal.data.ProductItem
 import com.davf392.panierlocal.data.ProductUnit
 import com.davf392.panierlocal.state.ExchangeUiState
-import com.davf392.panierlocal.ui.components.PanierLocalTopAppBar
-import com.davf392.panierlocal.ui.components.exchange_simulator.ProductSelectionSection
-import com.davf392.panierlocal.ui.components.exchange_simulator.ResultDisplaySection
-import com.davf392.panierlocal.ui.components.exchange_simulator.WeightDisplaySection
+import com.davf392.panierlocal.ui.features.PanierLocalTopAppBar
+import com.davf392.panierlocal.ui.features.exchange_simulator.ProductSelectionSection
+import com.davf392.panierlocal.ui.features.exchange_simulator.ResultDisplaySection
+import com.davf392.panierlocal.ui.features.exchange_simulator.WeightDisplaySection
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 

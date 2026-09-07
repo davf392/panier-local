@@ -1,4 +1,4 @@
-package com.davf392.panierlocal.ui.components.exchange_simulator
+package com.davf392.panierlocal.ui.features.exchange_simulator
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -6,7 +6,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.davf392.panierlocal.data.ExchangeItem
 import com.davf392.panierlocal.data.toLabel
-import com.davf392.panierlocal.ui.components.ProductGridItemCard
+import com.davf392.panierlocal.ui.features.ProductGridItemCard
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 

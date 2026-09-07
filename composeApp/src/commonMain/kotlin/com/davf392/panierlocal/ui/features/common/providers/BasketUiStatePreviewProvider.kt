@@ -1,4 +1,4 @@
-package com.davf392.panierlocal.ui.components.providers
+package com.davf392.panierlocal.ui.features.common.providers
 
 import com.davf392.panierlocal.data.ProductItem
 import com.davf392.panierlocal.data.ProductUnit

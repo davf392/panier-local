@@ -1,4 +1,4 @@
-package com.davf392.panierlocal.ui.components
+package com.davf392.panierlocal.ui.features
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

@@ -1,4 +1,4 @@
-package com.davf392.panierlocal.ui.components.screens
+package com.davf392.panierlocal.ui.features.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -12,9 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.davf392.panierlocal.data.ProductItem
 import com.davf392.panierlocal.state.BasketUiState
-import com.davf392.panierlocal.ui.components.BasketHistoryButton
-import com.davf392.panierlocal.ui.components.WeeklyBasketDeliverySection
-import com.davf392.panierlocal.ui.components.providers.BasketUiStatePreviewProvider
+import com.davf392.panierlocal.ui.features.BasketHistoryButton
+import com.davf392.panierlocal.ui.features.WeeklyBasketDeliverySection
+import com.davf392.panierlocal.ui.features.common.providers.BasketUiStatePreviewProvider
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
