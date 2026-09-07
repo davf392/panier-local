@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -16,12 +17,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.davf392.panierlocal.repository.ProductRepository
-import com.davf392.panierlocal.state.BasketUiState
-import com.davf392.panierlocal.state.ExchangeUiState
 import com.davf392.panierlocal.ui.navigation.Routes
 import com.davf392.panierlocal.ui.components.screens.BasketScreen
 import com.davf392.panierlocal.ui.components.screens.ExchangeSimulatorScreen
-import com.davf392.panierlocal.ui.navigation.rememberAppNavController
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import com.davf392.panierlocal.usecase.CalculateExchangeUseCase
 import com.davf392.panierlocal.viewmodel.BasketViewModel
@@ -67,10 +65,16 @@ fun PanierLocalApp() {
                     basketViewModel.navigateToExchangeSimulatorScreen(
                         itemId = backStackEntry.arguments?.getString("itemId")
                     )
-                    ExchangeSimulatorScreen(
-                        uiState = basketViewModel.exchangeUiState.collectAsState().value,
-                        onProductSelected = { product -> basketViewModel.selectProduct(product) },
-                    )
+                    val uiState = basketViewModel.exchangeUiState.collectAsState().value
+                    if (uiState != null) {
+                        ExchangeSimulatorScreen(
+                            uiState = uiState,
+                            onProductSelected = { product -> basketViewModel.selectProduct(product) },
+                            onBackClicked = { navController.popBackStack() },
+                        )
+                    } else {
+                        Text("Chargement...")
+                    }
                 }
             }
         }
@@ -80,5 +84,5 @@ fun PanierLocalApp() {
 @Preview
 @Composable
 fun AppAndroidPreview() {
-    App()
+    PanierLocalApp()
 }

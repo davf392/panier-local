@@ -43,14 +43,14 @@ class ProductRepository: IProductRepository {
 
     override suspend fun getAvailableProductsForExchange(selectedItem: ProductItem): List<ExchangeItem> {
         return listOf(
-            ExchangeItem(id = "1", name = "Salade", emoji = "🥬", pricePerUnit = 2.50),
-            ExchangeItem(id = "2", name = "Concombre", emoji = "🥒", pricePerUnit = 1.00),
-            ExchangeItem(id = "3", name = "Oignon blanc", emoji = "🧅", pricePerUnit = 1.60),
-            ExchangeItem(id = "4", name = "Tomate", emoji = "🍅", pricePerUnit = 1.80),
-            ExchangeItem(id = "5", name = "Aubergine", emoji = "🍆", pricePerUnit = 3.20),
-            ExchangeItem(id = "6", name = "Banane", emoji = "🍌", pricePerUnit = 1.50),
-            ExchangeItem(id = "7", name = "Pomme", emoji = "🍎", pricePerUnit = 3.50),
-            ExchangeItem(id = "8", name = "Poire", emoji = "🍐", pricePerUnit = 3.50),
+            ExchangeItem(id = "1", name = "Salade", emoji = "🥬", unit = ProductUnit.PIECE, pricePerUnit = 2.50),
+            ExchangeItem(id = "2", name = "Concombre", emoji = "🥒", unit = ProductUnit.PIECE, pricePerUnit = 1.80),
+            ExchangeItem(id = "3", name = "Oignon blanc", emoji = "🧅", unit = ProductUnit.GRAM, pricePerUnit = 1.60),
+            ExchangeItem(id = "4", name = "Tomate", emoji = "🍅", unit = ProductUnit.GRAM, pricePerUnit = 1.80),
+            ExchangeItem(id = "5", name = "Aubergine", emoji = "🍆", unit = ProductUnit.GRAM, pricePerUnit = 3.20),
+            ExchangeItem(id = "6", name = "Banane", emoji = "🍌", unit = ProductUnit.GRAM, pricePerUnit = 3.0),
+            ExchangeItem(id = "7", name = "Pomme", emoji = "🍎", unit = ProductUnit.KILOGRAM, pricePerUnit = 3.50),
+            ExchangeItem(id = "8", name = "Poire", emoji = "🍐", unit = ProductUnit.GRAM, pricePerUnit = 7.0),
         )
             .filter { item -> item.name != selectedItem.name }
     }

@@ -9,11 +9,13 @@ import com.davf392.panierlocal.repository.ProductRepository
 import com.davf392.panierlocal.state.BasketUiState
 import com.davf392.panierlocal.state.ExchangeUiState
 import com.davf392.panierlocal.usecase.CalculateExchangeUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class BasketViewModel(
     private val productRepository: ProductRepository,
@@ -36,18 +38,16 @@ class BasketViewModel(
         viewModelScope.launch {
             productRepository.getWeeklyBasketList().let { baskets ->
                 allBaskets = baskets
-                _uiState.update { it -> it.copy(baskets = baskets) }
+                _uiState.update { it.copy(baskets = baskets) }
             }
         }
     }
 
     fun onProductItemExchangeClicked(item: ProductItem) {
-        // Here you would navigate to the exchange screen, passing the item data
         println("Exchange button clicked for: ${item.name}")
     }
 
     fun onViewHistoryClicked() {
-        // Here you would navigate to the history screen.
         println("View history button clicked.")
     }
 
@@ -61,7 +61,7 @@ class BasketViewModel(
     }
 
     fun selectProduct(product: ExchangeItem) {
-        _exchangeUiState.update { it ->
+        _exchangeUiState.update {
             it?.copy(selectedProduct = product)
         }
         calculateResult()
@@ -81,10 +81,21 @@ class BasketViewModel(
     }
 
     fun navigateToExchangeSimulatorScreen(itemId: String?) {
-        _exchangeUiState.update { it ->
-            it?.copy(
-                itemToExchange = getItemToExchange(itemId) ?: ProductItem()
-            )
+        val itemToExchange = getItemToExchange(itemId) ?: ProductItem()
+        viewModelScope.launch {
+            val availableProducts = productRepository.getAvailableProductsForExchange(itemToExchange)
+            _exchangeUiState.update { currentState ->
+                currentState?.copy(
+                    itemToExchange = itemToExchange,
+                    availableProducts = availableProducts,
+                    returnedWeightGrams = itemToExchange.quantity.toInt()
+                ) ?: ExchangeUiState(
+                    itemToExchange = itemToExchange,
+                    availableProducts = availableProducts,
+                    returnedWeightGrams = itemToExchange.quantity.toInt(),
+                    exchangeResult = 0
+                )
+            }
         }
     }
 
@@ -92,16 +103,19 @@ class BasketViewModel(
         val state = _exchangeUiState.value ?: return
         val itemToExchange = state.itemToExchange
         val selectedProduct = state.selectedProduct ?: return
-
+        
         viewModelScope.launch {
-            val maxQuantity = calculateExchangeUseCase.execute(
-                itemToExchange = itemToExchange,
-                exchangedAgainst = selectedProduct,
-                returnedQuantity = itemToExchange.quantity
-            )
+            val resultAsInt = withContext(Dispatchers.Default) {
+                calculateExchangeUseCase.execute(
+                    itemToExchange = itemToExchange,
+                    exchangedAgainst = selectedProduct,
+                    returnedQuantity = state.returnedWeightGrams.toDouble()
+                )
+            }
 
-            _exchangeUiState.update { it -> it?.copy(
-                    exchangeResult = maxQuantity?.toInt() ?: 0
+            _exchangeUiState.update {
+                it?.copy(
+                    exchangeResult = resultAsInt
                 )
             }
         }

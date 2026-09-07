@@ -1,62 +1,116 @@
 package com.davf392.panierlocal.ui.components.screens
 
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.davf392.panierlocal.data.ExchangeItem
 import com.davf392.panierlocal.data.ProductItem
 import com.davf392.panierlocal.data.ProductUnit
 import com.davf392.panierlocal.state.ExchangeUiState
+import com.davf392.panierlocal.ui.components.PanierLocalTopAppBar
 import com.davf392.panierlocal.ui.components.exchange_simulator.ProductSelectionSection
 import com.davf392.panierlocal.ui.components.exchange_simulator.ResultDisplaySection
-import com.davf392.panierlocal.ui.components.exchange_simulator.WeightInputSection
+import com.davf392.panierlocal.ui.components.exchange_simulator.WeightDisplaySection
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
+enum class ExchangeStep {
+    SELECT_PRODUCT,
+    CONFIRMATION
+}
+
 @Composable
 fun ExchangeSimulatorScreen(
-    uiState: ExchangeUiState?,
+    uiState: ExchangeUiState,
     onProductSelected: (ExchangeItem) -> Unit = {},
+    onBackClicked: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier
-            .padding(horizontal = 16.dp)
-            .fillMaxSize()
-    ) {
-        Spacer(modifier = Modifier.height(64.dp))
-        Text(
-            text = "Échange de ${uiState?.itemToExchange?.name} ${uiState?.itemToExchange?.emoji}",
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(vertical = 8.dp),
-        )
-        WeightInputSection(defaultWeightGrams = uiState?.returnedWeightGrams!!)
-        ProductSelectionSection(
-            availableProducts = uiState.availableProducts,
-            onProductSelected = { onProductSelected }
-        )
+    var step by remember { mutableStateOf(ExchangeStep.SELECT_PRODUCT) }
 
-        Spacer(modifier = Modifier.height(16.dp))
+    Scaffold(
+        topBar = {
+            PanierLocalTopAppBar(
+                title = "Simulateur d'échange",
+                onBackClicked = {
+                    if (step == ExchangeStep.CONFIRMATION) {
+                        step = ExchangeStep.SELECT_PRODUCT
+                    } else {
+                        onBackClicked()
+                    }
+                }
+            )
+        },
+        modifier = modifier.fillMaxSize()
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .padding(horizontal = 16.dp)
+                .fillMaxSize()
+        ) {
+            // Progress Indicator
+            LinearProgressIndicator(
+                progress = { if (step == ExchangeStep.SELECT_PRODUCT) 0.5f else 1.0f },
+                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                color = MaterialTheme.colorScheme.primary
+            )
 
-        // display result only if a product is selected
-        AnimatedVisibility(visible = uiState.selectedProduct != null) {
-            uiState.selectedProduct?.let { selectedProduct ->
-                ResultDisplaySection(
-                    itemToExchange = uiState.itemToExchange,
-                    returnedWeightGrams = uiState.returnedWeightGrams,
-                    exchangedProduct = selectedProduct,
-                    maxWeightGrams = uiState.exchangeResult
-                )
+            Spacer(modifier = Modifier.height(16.dp))
+            
+            // Header
+            WeightDisplaySection(
+                item = uiState.itemToExchange,
+                weightGrams = uiState.returnedWeightGrams
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            AnimatedContent(
+                targetState = step,
+                transitionSpec = {
+                    fadeIn(animationSpec = tween(300)) togetherWith fadeOut(animationSpec = tween(300))
+                },
+                label = "ExchangeStepAnimation"
+            ) { targetStep ->
+                when (targetStep) {
+                    ExchangeStep.SELECT_PRODUCT -> {
+                        ProductSelectionSection(
+                            availableProducts = uiState.availableProducts,
+                            onProductSelected = { product ->
+                                onProductSelected(product)
+                                step = ExchangeStep.CONFIRMATION
+                            }
+                        )
+                    }
+                    ExchangeStep.CONFIRMATION -> {
+                        uiState.selectedProduct?.let { selectedProduct ->
+                            ResultDisplaySection(
+                                exchangedProduct = selectedProduct,
+                                maxWeightGrams = uiState.exchangeResult
+                            )
+                        }
+                    }
+                }
             }
         }
     }

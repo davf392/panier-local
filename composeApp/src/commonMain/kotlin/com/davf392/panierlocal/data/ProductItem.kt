@@ -12,11 +12,10 @@ data class ProductItem(
     val totalPrice: Double = 0.0
 ) : CommonProduct {
     val displayQuantity: String
-        get() = when {
-            quantity == 1.0 && unit == ProductUnit.PIECE -> "1 pièce"
-            unit == ProductUnit.PIECE -> "${quantity.toInt()} pièces"
-            unit == ProductUnit.GRAM -> "${quantity.toInt()} g"
-            unit == ProductUnit.KILOGRAM -> "$quantity kg"
+        get() = when (unit) {
+            ProductUnit.PIECE -> "${quantity.toInt()} ${unit.toLabel(quantity)}"
+            ProductUnit.GRAM -> "${quantity.toInt()} g"
+            ProductUnit.KILOGRAM -> "$quantity kg"
             else -> "$quantity $unit"
         }
 
