@@ -8,11 +8,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.davf392.panierlocal.data.staff_dashboard.BasketFormulaSummary
+import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -34,12 +36,29 @@ fun BasketCard(summaries: List<BasketFormulaSummary>) {
     }
 }
 
+// --- Previews ---
+
 @Preview
 @Composable
-fun PreviewBasketCard() {
-    val summaries = listOf(
-        BasketFormulaSummary("b1", "Mini", 20, 15),
-        BasketFormulaSummary("b2", "Solo", 30, 30)
-    )
-    BasketCard(summaries)
+fun BasketCardLightPreview() {
+    PanierLocalTheme(useDarkTheme = false) {
+        Surface {
+            BasketCard(mockSummaries)
+        }
+    }
 }
+
+@Preview
+@Composable
+fun BasketCardDarkPreview() {
+    PanierLocalTheme(useDarkTheme = true) {
+        Surface {
+            BasketCard(mockSummaries)
+        }
+    }
+}
+
+private val mockSummaries = listOf(
+    BasketFormulaSummary("b1", "Mini", 20, 15),
+    BasketFormulaSummary("b2", "Solo", 30, 30)
+)

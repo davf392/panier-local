@@ -3,9 +3,7 @@ package com.davf392.panierlocal.ui.features.screens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
@@ -27,8 +25,8 @@ import com.davf392.panierlocal.ui.composition.DistributionContext
 import com.davf392.panierlocal.ui.composition.LocalDistributionContext
 import com.davf392.panierlocal.ui.features.basket.BasketHistoryButton
 import com.davf392.panierlocal.ui.features.basket.WeeklyBasketSection
-import com.davf392.panierlocal.ui.features.dashboard.components.DistributionHeaderCard
 import com.davf392.panierlocal.ui.features.common.providers.BasketUiStatePreviewProvider
+import com.davf392.panierlocal.ui.features.dashboard.components.DistributionHeaderCard
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import com.davf392.panierlocal.viewmodel.location.Location
 import kotlinx.datetime.LocalDateTime
@@ -114,26 +112,41 @@ private fun BasketScreenContent(
     }
 }
 
+// --- Previews ---
+
 @Preview
 @Composable
-fun BasketScreenPreview(
+fun BasketScreenLightPreview(
     @PreviewParameter(BasketUiStatePreviewProvider::class) uiState: BasketUiState
 ) {
-    PanierLocalTheme {
+    PanierLocalTheme(useDarkTheme = false) {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-            CompositionLocalProvider(
-                LocalDistributionContext provides DistributionContext(
-                    currentLocation = Location("dist-001", "Le Croiseur (Lyon 7)"),
-                    locations = emptyList(),
-                    onLocationSelected = {},
-                    startTime = LocalDateTime(2026, 9, 8, 14, 0),
-                    endTime = LocalDateTime(2026, 9, 8, 18, 0)
-                )
-            ) {
-                BasketScreen(
-                    uiState = uiState
-                )
+            CompositionLocalProvider(LocalDistributionContext provides MockDistributionContext) {
+                BasketScreen(uiState)
             }
         }
     }
 }
+
+@Preview
+@Composable
+fun BasketScreenDarkPreview(
+    @PreviewParameter(BasketUiStatePreviewProvider::class) uiState: BasketUiState
+) {
+    PanierLocalTheme(useDarkTheme = true) {
+        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+            CompositionLocalProvider(LocalDistributionContext provides MockDistributionContext) {
+                BasketScreen(uiState)
+            }
+        }
+    }
+}
+
+
+private val MockDistributionContext = DistributionContext(
+    currentLocation = Location("dist-001", "Le Croiseur (Lyon 7)"),
+    locations = emptyList(),
+    onLocationSelected = {},
+    startTime = LocalDateTime(2026, 9, 8, 14, 0),
+    endTime = LocalDateTime(2026, 9, 8, 18, 0)
+)

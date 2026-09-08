@@ -1,6 +1,5 @@
 package com.davf392.panierlocal.ui.features.basket
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,6 +8,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -68,22 +68,32 @@ fun ProductBasketSection(
     }
 }
 
+// --- Previews ---
+
 @Preview
 @Composable
-fun ProductBasketSectionPreview() {
-    PanierLocalTheme {
-        val sampleProductItem = ProductItem(
-            name = "Concombre",
-            quantity = 1.0,
-            unit = ProductUnit.PIECE,
-            pricePerUnit = 1.80,
-            totalPrice = 1.80,
-        )
-
-        ProductBasketSection(
-            item = sampleProductItem,
-            onExchangeClicked = {},
-            modifier = Modifier.background(color = MaterialTheme.colorScheme.background)
-        )
+fun ProductBasketSectionLightPreview() {
+    PanierLocalTheme(useDarkTheme = false) {
+        Surface {
+            ProductBasketSection(item = mockProductItem)
+        }
     }
 }
+
+@Preview
+@Composable
+fun ProductBasketSectionDarkPreview() {
+    PanierLocalTheme(useDarkTheme = true) {
+        Surface {
+            ProductBasketSection(item = mockProductItem)
+        }
+    }
+}
+
+private val mockProductItem = ProductItem(
+    name = "Concombre",
+    quantity = 1.0,
+    unit = ProductUnit.PIECE,
+    pricePerUnit = 1.80,
+    totalPrice = 1.80,
+)

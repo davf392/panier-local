@@ -17,6 +17,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,14 +32,16 @@ import com.davf392.panierlocal.data.WeeklyBasketItem
 import com.davf392.panierlocal.ui.ArrowRightIcon
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 
 @Composable
 fun WeeklyBasketSection(
     basket: WeeklyBasketItem? = null,
+    modifier: Modifier = Modifier,
     isSelected: Boolean = false,
     onSelectBasket: (WeeklyBasketItem) -> Unit = {},
-    onExchangeClicked: (ProductItem) -> Unit = {},
-    modifier: Modifier = Modifier
+    onExchangeClicked: (ProductItem) -> Unit = {}
 ) {
     Card(
         modifier = modifier
@@ -60,21 +63,18 @@ fun WeeklyBasketSection(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                ) {
+                Column(modifier = Modifier.weight(1f)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
                             text = basket?.formula ?: "",
-                            fontSize = 18.sp,
+                            style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = "Attendus: ${basket?.expectedCount ?: 0}",
+                        text = "Attendus : ${basket?.expectedCount ?: 0}",
                         fontSize = 14.sp,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -106,18 +106,37 @@ fun WeeklyBasketSection(
     }
 }
 
+// --- Previews ---
+
+@Composable
+private fun WeeklyBasketSectionPreviewContent(isSelected: Boolean) {
+    WeeklyBasketSection(
+        basket = WeeklyBasketItem(
+            id = "1",
+            formula = "Tandem",
+            expectedCount = 20,
+            actualCount = 15,
+            productsList = emptyList()
+        ),
+        isSelected = isSelected
+    )
+}
+
 @Preview
 @Composable
-fun WeeklyBasketSectionPreview() {
-    PanierLocalTheme {
-        WeeklyBasketSection(
-            basket = WeeklyBasketItem(
-                id = "1",
-                formula = "Tandem",
-                expectedCount = 20,
-                actualCount = 15,
-                productsList = emptyList()
-            )
-        )
+private fun WeeklyBasketSectionLightPreview(
+    @PreviewParameter(WeeklyBasketSectionPreviewParameterProvider::class) isSelected: Boolean
+) {
+    PanierLocalTheme(useDarkTheme = false) {
+        Surface(modifier = Modifier.padding(16.dp)) {
+            WeeklyBasketSectionPreviewContent(isSelected = isSelected)
+        }
     }
+}
+
+class WeeklyBasketSectionPreviewParameterProvider : PreviewParameterProvider<Boolean> {
+    override val values: Sequence<Boolean> = sequenceOf(
+        false, // Replié
+        true   // Déplié
+    )
 }

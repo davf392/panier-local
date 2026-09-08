@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,6 +18,8 @@ import com.davf392.panierlocal.data.toLabel
 import com.davf392.panierlocal.formatDecimal
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 
 @Composable
 fun WeightDisplaySection(
@@ -54,17 +57,46 @@ fun WeightDisplaySection(
     }
 }
 
+// --- Previews ---
+
+@Composable
+private fun WeightDisplaySectionPreviewContent(weightGrams: Int) {
+    WeightDisplaySection(
+        item = mockItem,
+        weightGrams = weightGrams
+    )
+}
+
 @Preview
 @Composable
-fun WeightDisplaySectionPreview() {
-    PanierLocalTheme {
-        WeightDisplaySection(
-            item = ProductItem(
-                name = "Carottes",
-                pricePerUnit = 2.50,
-                unit = ProductUnit.GRAM
-            ),
-            weightGrams = 500
-        )
+private fun WeightDisplaySectionLightPreview(
+    @PreviewParameter(WeightDisplayPreviewParameterProvider::class) weightGrams: Int
+) {
+    PanierLocalTheme(useDarkTheme = false) {
+        Surface(modifier = Modifier.padding(16.dp)) {
+            WeightDisplaySectionPreviewContent(weightGrams = weightGrams)
+        }
     }
+}
+
+@Preview
+@Composable
+private fun WeightDisplaySectionDarkPreview(
+    @PreviewParameter(WeightDisplayPreviewParameterProvider::class) weightGrams: Int
+) {
+    PanierLocalTheme(useDarkTheme = true) {
+        Surface(modifier = Modifier.padding(16.dp)) {
+            WeightDisplaySectionPreviewContent(weightGrams = weightGrams)
+        }
+    }
+}
+
+private val mockItem = ProductItem(
+    name = "Carottes",
+    pricePerUnit = 2.50,
+    unit = ProductUnit.GRAM
+)
+
+class WeightDisplayPreviewParameterProvider : PreviewParameterProvider<Int> {
+    override val values: Sequence<Int> = sequenceOf(500, 1200)
 }

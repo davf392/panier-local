@@ -1,6 +1,5 @@
 package com.davf392.panierlocal.ui.features.exchange
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +10,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,7 +26,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun ProductSelectionSection(
     availableProducts: List<ExchangeItem>,
-    onProductSelected: (ExchangeItem) -> Unit,
+    onProductSelected: (ExchangeItem) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     var selectedExchangedItem by remember { mutableStateOf<String?>(null) }
@@ -61,21 +61,31 @@ fun ProductSelectionSection(
         }
     }
 }
-// ... rest of file (keep previews)
+
+// --- Previews ---
 
 @Preview
 @Composable
-fun ProductSelectionSection() {
-    PanierLocalTheme {
-        ProductSelectionSection(
-            availableProducts = listOf(
-                ExchangeItem(name = "Patate", pricePerUnit = 0.7),
-                ExchangeItem(name = "Gingembre", pricePerUnit = 3.4),
-            ),
-            onProductSelected = {},
-            modifier = Modifier.background(
-                color = MaterialTheme.colorScheme.background
-            )
-        )
+fun ProductSelectionSectionLightPreview() {
+    PanierLocalTheme(useDarkTheme = false) {
+        Surface {
+            ProductSelectionSection(availableProducts = mockProducts)
+        }
     }
 }
+
+@Preview
+@Composable
+fun ProductSelectionSectionDarkPreview() {
+    PanierLocalTheme(useDarkTheme = true) {
+        Surface {
+            ProductSelectionSection(availableProducts = mockProducts)
+        }
+    }
+}
+
+
+private val mockProducts = listOf(
+    ExchangeItem(name = "Patate", pricePerUnit = 0.7),
+    ExchangeItem(name = "Gingembre", pricePerUnit = 3.4),
+)

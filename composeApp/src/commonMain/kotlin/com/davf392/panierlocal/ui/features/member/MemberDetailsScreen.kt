@@ -10,9 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -54,9 +52,9 @@ fun MemberDetailsScreen(
     member: Member,
     formulas: List<WeeklyBasketItem>,
     status: AttendanceStatus,
-    onCollected: () -> Unit,
-    onAbsent: () -> Unit,
-    onReset: () -> Unit,
+    onCollected: () -> Unit = {},
+    onAbsent: () -> Unit = {},
+    onReset: () -> Unit = {},
     onSaveNotes: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
@@ -306,28 +304,48 @@ private fun AttendanceActionButtons(
     }
 }
 
+// --- Previews ---
+
 @Preview
 @Composable
-private fun MemberDetailsScreenPreview(
+private fun MemberDetailsScreenLightPreview(
     @PreviewParameter(MemberPreviewParameterProvider::class) member: Member
 ) {
-    PanierLocalTheme {
+    PanierLocalTheme(useDarkTheme = false) {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
             MemberDetailsScreen(
                 member = member,
-                formulas = listOf(
-                    WeeklyBasketItem(formula = "Mini", category = "Légumes"),
-                    WeeklyBasketItem(formula = "Solo", category = "Fruits")
-                ),
+                formulas = PreviewFormulas,
                 status = AttendanceStatus.EXPECTED,
-                onCollected = {},
-                onAbsent = {},
-                onReset = {},
-                onSaveNotes = {}
             )
         }
     }
 }
+
+@Preview
+@Composable
+private fun MemberDetailsScreenDarkPreview(
+    @PreviewParameter(MemberPreviewParameterProvider::class) member: Member
+) {
+    PanierLocalTheme(useDarkTheme = true) {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            MemberDetailsScreen(
+                member = member,
+                formulas = PreviewFormulas,
+                status = AttendanceStatus.EXPECTED,
+            )
+        }
+    }
+}
+
+
+private val PreviewFormulas = listOf(
+    WeeklyBasketItem(formula = "Mini", category = "Légumes"),
+    WeeklyBasketItem(formula = "Solo", category = "Fruits")
+)

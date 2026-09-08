@@ -28,13 +28,23 @@ fun BasketHistoryButton(
     }
 }
 
+// --- Previews ---
+
 @Preview
 @Composable
-fun BasketHistoryButtonPreview() {
-    PanierLocalTheme {
-        Surface(
-            color = MaterialTheme.colorScheme.background
-        ) {
+fun BasketHistoryButtonLightPreview() {
+    PanierLocalTheme(useDarkTheme = false) {
+        Surface {
+            BasketHistoryButton()
+        }
+    }
+}
+
+@Preview
+@Composable
+fun BasketHistoryButtonDarkPreview() {
+    PanierLocalTheme(useDarkTheme = true) {
+        Surface {
             BasketHistoryButton()
         }
     }

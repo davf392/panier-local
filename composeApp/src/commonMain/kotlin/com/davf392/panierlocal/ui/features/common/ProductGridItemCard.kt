@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,6 +24,8 @@ import androidx.compose.ui.unit.sp
 import com.davf392.panierlocal.data.ExchangeItem
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 
 @Composable
 fun ProductGridItemCard(
@@ -68,36 +71,50 @@ fun ProductGridItemCard(
     }
 }
 
+// --- Previews ---
+
+@Composable
+private fun ProductGridItemCardPreviewContent(isSelected: Boolean) {
+    val previewExchangeItem = ExchangeItem(
+        name = "Concombre",
+        pricePerUnit = 3.4
+    )
+    ProductGridItemCard(
+        item = previewExchangeItem,
+        isSelected = isSelected
+    ) { contentColor ->
+        Text(
+            text = "${previewExchangeItem.pricePerUnit} €/kg",
+            style = MaterialTheme.typography.bodyMedium,
+            color = contentColor
+        )
+    }
+}
+
 @Preview
 @Composable
-private fun ProductGridItemCardPreview() {
-    PanierLocalTheme {
-        val item = ExchangeItem(
-            name = "Concombre",
-            pricePerUnit = 3.4
-        )
-        Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-            ProductGridItemCard(
-                item = item,
-                content = { contentColor ->
-                    Text(
-                        text = "${item.pricePerUnit} €/kg",
-                        fontSize = 14.sp,
-                        color = contentColor
-                    )
-                }
-            )
-            ProductGridItemCard(
-                item = item,
-                isSelected = true,
-                content = { contentColor ->
-                    Text(
-                        text = "${item.pricePerUnit} €/kg",
-                        fontSize = 14.sp,
-                        color = contentColor
-                    )
-                }
-            )
+private fun ProductGridItemCardLightPreview(
+    @PreviewParameter(ProductGridItemPreviewParameterProvider::class) isSelected: Boolean
+) {
+    PanierLocalTheme(useDarkTheme = false) {
+        Surface(modifier = Modifier.padding(16.dp)) {
+            ProductGridItemCardPreviewContent(isSelected = isSelected)
         }
     }
+}
+
+@Preview
+@Composable
+private fun ProductGridItemCardDarkPreview(
+    @PreviewParameter(ProductGridItemPreviewParameterProvider::class) isSelected: Boolean
+) {
+    PanierLocalTheme(useDarkTheme = true) {
+        Surface(modifier = Modifier.padding(16.dp)) {
+            ProductGridItemCardPreviewContent(isSelected = isSelected)
+        }
+    }
+}
+
+class ProductGridItemPreviewParameterProvider : PreviewParameterProvider<Boolean> {
+    override val values: Sequence<Boolean> = sequenceOf(false, true)
 }

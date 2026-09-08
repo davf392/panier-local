@@ -92,7 +92,7 @@ fun MemberAttendanceItem(
                     }
                     // Container with fixed width for badge to ensure constant alignment of the Reset button
                     Box(
-                        modifier = Modifier.width(80.dp), 
+                        modifier = Modifier.width(80.dp),
                         contentAlignment = Alignment.CenterEnd
                     ) {
                         Surface(
@@ -117,20 +117,36 @@ fun MemberAttendanceItem(
     }
 }
 
+// --- Previews ---
+
 @Preview
 @Composable
-private fun MemberAttendanceItemPreview(
+private fun MemberAttendanceItemLightPreview(
     @PreviewParameter(MemberAttendancePreviewParameterProvider::class) attendance: MemberAttendance
 ) {
-    PanierLocalTheme {
-        Surface {
-            MemberAttendanceItem(
-                attendance = attendance,
-                onCollected = {},
-                onAbsent = {},
-                onReset = {},
-                onMemberClick = {}
-            )
-        }
+    PanierLocalTheme(useDarkTheme = false) {
+        MemberAttendanceItem(
+            attendance = attendance,
+            onCollected = {},
+            onAbsent = {},
+            onReset = {},
+            onMemberClick = {}
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun MemberAttendanceItemDarkPreview(
+    @PreviewParameter(MemberAttendancePreviewParameterProvider::class) attendance: MemberAttendance
+) {
+    PanierLocalTheme(useDarkTheme = true) {
+        MemberAttendanceItem(
+            attendance = attendance,
+            onCollected = {},
+            onAbsent = {},
+            onReset = {},
+            onMemberClick = {}
+        )
     }
 }

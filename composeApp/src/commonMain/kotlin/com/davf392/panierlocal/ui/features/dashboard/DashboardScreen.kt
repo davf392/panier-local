@@ -2,15 +2,12 @@ package com.davf392.panierlocal.ui.features.dashboard
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -96,7 +93,7 @@ fun DashboardScreenContent(
             item { PermanenceCard(selectedDistribution.permanenceSlots) }
             item { BasketCard(selectedDistribution.basketSummaries) }
         }
-        
+
         SnackbarHost(
             hostState = snackbarHostState,
             modifier = Modifier.align(androidx.compose.ui.Alignment.BottomCenter)
@@ -114,40 +111,60 @@ fun DashboardScreenContent(
     }
 }
 
+// --- Previews ---
+
 @Preview
 @Composable
-private fun PreviewDashboardScreen() {
-    PanierLocalTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
+private fun DashboardScreenLightPreview() {
+    PanierLocalTheme(useDarkTheme = false) {
+        Surface(modifier = Modifier.fillMaxSize()) {
             DashboardScreenContent(
-                selectedDistribution = DistributionUiState(
-                    id = "dist-001",
-                    location = "Le Croiseur (Lyon 7)",
-                    startTime = LocalDateTime(2026, 9, 8, 14, 0),
-                    endTime = LocalDateTime(2026, 9, 8, 18, 0),
-                    permanenceSlots = listOf(
-                        PermanenceSlot("p1", "Jean", "Responsable", true)
-                    ),
-                    basketSummaries = listOf(
-                        BasketFormulaSummary("b1", "Mini", 20, 15),
-                        BasketFormulaSummary("b2", "Solo", 30, 25)
-                    ),
-                    alerts = listOf(
-                        DashboardAlert("a1", "Alerte Lyon 7", AlertPriority.INFO)
-                    )
-                ),
-                distributionContext = DistributionContext(
-                    currentLocation = Location("dist-001", "Le Croiseur (Lyon 7)"),
-                    locations = listOf(
-                        Location("dist-001", "Le Croiseur (Lyon 7)"),
-                        Location("dist-002", "Cabanes (Lyon 8)")
-                    ),
-                    onLocationSelected = {},
-                    startTime = kotlinx.datetime.LocalDateTime(2026, 9, 8, 14, 0),
-                    endTime = kotlinx.datetime.LocalDateTime(2026, 9, 8, 18, 0)
-                ),
+                selectedDistribution = previewDistributionUiState,
+                distributionContext = previewDistributionContext,
                 onEvent = {}
             )
         }
     }
 }
+
+@Preview
+@Composable
+private fun DashboardScreenDarkPreview() {
+    PanierLocalTheme(useDarkTheme = true) {
+        Surface(modifier = Modifier.fillMaxSize()) {
+            DashboardScreenContent(
+                selectedDistribution = previewDistributionUiState,
+                distributionContext = previewDistributionContext,
+                onEvent = {}
+            )
+        }
+    }
+}
+
+private val previewDistributionUiState = DistributionUiState(
+    id = "dist-001",
+    location = "Le Croiseur (Lyon 7)",
+    startTime = LocalDateTime(2026, 9, 8, 14, 0),
+    endTime = LocalDateTime(2026, 9, 8, 18, 0),
+    permanenceSlots = listOf(
+        PermanenceSlot("p1", "Jean", "Responsable", true)
+    ),
+    basketSummaries = listOf(
+        BasketFormulaSummary("b1", "Mini", 20, 15),
+        BasketFormulaSummary("b2", "Solo", 30, 25)
+    ),
+    alerts = listOf(
+        DashboardAlert("a1", "Alerte Lyon 7", AlertPriority.INFO)
+    )
+)
+
+private val previewDistributionContext = DistributionContext(
+    currentLocation = Location("dist-001", "Le Croiseur (Lyon 7)"),
+    locations = listOf(
+        Location("dist-001", "Le Croiseur (Lyon 7)"),
+        Location("dist-002", "Cabanes (Lyon 8)")
+    ),
+    onLocationSelected = {},
+    startTime = LocalDateTime(2026, 9, 8, 14, 0),
+    endTime = LocalDateTime(2026, 9, 8, 18, 0)
+)

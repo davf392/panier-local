@@ -13,7 +13,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,6 +30,8 @@ import com.davf392.panierlocal.data.ProductUnit
 import com.davf392.panierlocal.ui.RefreshIcon
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 
 @Composable
 fun ProductItemCard(
@@ -75,44 +79,74 @@ fun ProductItemCard(
     }
 }
 
+// --- Previews ---
+
+@Composable
+private fun ProductItemCardPreviewContent(isSelected: Boolean) {
+    val previewProductItem = ProductItem(
+        name = "Concombre",
+        quantity = 300.0,
+        unit = ProductUnit.GRAM,
+        pricePerUnit = 3.4,
+        totalPrice = 4.6
+    )
+    ProductItemCard(
+        item = previewProductItem,
+        isSelected = isSelected
+    ) { contentColor ->
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Column(horizontalAlignment = Alignment.End) {
+                Text(
+                    text = previewProductItem.displayQuantity,
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = contentColor
+                )
+                Text(
+                    text = previewProductItem.displayPrice,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = contentColor.copy(alpha = 0.7f)
+                )
+            }
+
+            IconButton(onClick = {}) {
+                Icon(
+                    imageVector = RefreshIcon,
+                    contentDescription = "Échanger",
+                    tint = contentColor.copy(alpha = 0.7f)
+                )
+            }
+        }
+    }
+}
+
 @Preview
 @Composable
-fun ProductItemCardPreview() {
-    PanierLocalTheme {
-        val item = ProductItem(
-            name = "Concombre",
-            quantity = 300.0,
-            unit = ProductUnit.GRAM,
-            pricePerUnit = 3.4,
-            totalPrice = 4.6
-        )
-        ProductItemCard(
-            item = item,
-            content =
-                {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Column {
-                            Text(
-                                text = item.displayQuantity,
-                                fontSize = 14.sp,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                            Text(
-                                text = item.displayPrice,
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Icon(
-                            imageVector = RefreshIcon,
-                            contentDescription = "Échanger",
-                            tint = Color.Gray,
-                            modifier = Modifier.size(24.dp)
-                        )
-                    }
-                }
-        )
+private fun ProductItemCardLightPreview(
+    @PreviewParameter(ProductItemPreviewParameterProvider::class) isSelected: Boolean
+) {
+    PanierLocalTheme(useDarkTheme = false) {
+        Surface(modifier = Modifier.padding(16.dp)) {
+            ProductItemCardPreviewContent(isSelected = isSelected)
+        }
     }
+}
+
+@Preview
+@Composable
+private fun ProductItemCardDarkPreview(
+    @PreviewParameter(ProductItemPreviewParameterProvider::class) isSelected: Boolean
+) {
+    PanierLocalTheme(useDarkTheme = true) {
+        Surface(modifier = Modifier.padding(16.dp)) {
+            ProductItemCardPreviewContent(isSelected = isSelected)
+        }
+    }
+}
+
+class ProductItemPreviewParameterProvider : PreviewParameterProvider<Boolean> {
+    override val values: Sequence<Boolean> = sequenceOf(false, true)
 }

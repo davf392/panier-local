@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,17 +22,18 @@ import com.davf392.panierlocal.data.member.Member
 import com.davf392.panierlocal.data.member.MemberAttendance
 import com.davf392.panierlocal.ui.composition.LocalDistributionContext
 import com.davf392.panierlocal.ui.features.dashboard.components.DistributionHeaderCard
+import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import com.davf392.panierlocal.viewmodel.member.MemberTrackingUiState
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun MemberTrackingScreen(
     uiState: MemberTrackingUiState,
-    onCollected: (String) -> Unit,
-    onAbsent: (String) -> Unit,
-    onReset: (String) -> Unit,
-    onSearchQueryChanged: (String) -> Unit,
-    onMemberClick: (Member) -> Unit,
+    onCollected: (String) -> Unit = {},
+    onAbsent: (String) -> Unit = {},
+    onReset: (String) -> Unit = {},
+    onSearchQueryChanged: (String) -> Unit = {},
+    onMemberClick: (Member) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val distributionContext = LocalDistributionContext.current
@@ -61,11 +63,11 @@ fun MemberTrackingScreen(
 @Composable
 fun MemberTrackingScreenContent(
     uiState: MemberTrackingUiState,
-    onCollected: (String) -> Unit,
-    onAbsent: (String) -> Unit,
-    onReset: (String) -> Unit,
-    onSearchQueryChanged: (String) -> Unit,
-    onMemberClick: (Member) -> Unit
+    onCollected: (String) -> Unit = {},
+    onAbsent: (String) -> Unit = {},
+    onReset: (String) -> Unit = {},
+    onSearchQueryChanged: (String) -> Unit = {},
+    onMemberClick: (Member) -> Unit = {}
 ) {
     if (uiState.isLoading) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -99,32 +101,42 @@ fun MemberTrackingScreenContent(
     }
 }
 
+// --- Previews ---
+
 @Preview
 @Composable
-private fun MemberTrackingScreenPreview() {
-    val mockUiState = MemberTrackingUiState(
-        attendances = listOf(
-            MemberAttendance(
-                "d1",
-                Member("m1", "Alice", "Dupont", "alice@example.com", "067733445522", false, false),
-                listOf("b1"),
-                AttendanceStatus.EXPECTED
-            ),
-            MemberAttendance(
-                "d1",
-                Member("m2", "Bob", "Martin", "bob@example.com", "067788993322", true, false),
-                listOf("b2"),
-                AttendanceStatus.EXPECTED
-            )
-        ),
-        isLoading = false
-    )
-    MemberTrackingScreenContent(
-        uiState = mockUiState,
-        onCollected = {},
-        onAbsent = {},
-        onReset = {},
-        onSearchQueryChanged = {},
-        onMemberClick = {}
-    )
+private fun MemberTrackingScreenLightPreview() {
+    PanierLocalTheme(useDarkTheme = false) {
+        Surface {
+            MemberTrackingScreenContent(uiState = MockUiState)
+        }
+    }
 }
+
+@Preview
+@Composable
+private fun MemberTrackingScreenDarkPreview() {
+    PanierLocalTheme(useDarkTheme = true) {
+        Surface {
+            MemberTrackingScreenContent(uiState = MockUiState)
+        }
+    }
+}
+
+private val MockUiState = MemberTrackingUiState(
+    attendances = listOf(
+        MemberAttendance(
+            "d1",
+            Member("m1", "Alice", "Dupont", "alice@example.com", "067733445522", false, false),
+            listOf("b1"),
+            AttendanceStatus.EXPECTED
+        ),
+        MemberAttendance(
+            "d1",
+            Member("m2", "Bob", "Martin", "bob@example.com", "067788993322", true, false),
+            listOf("b2"),
+            AttendanceStatus.EXPECTED
+        )
+    ),
+    isLoading = false
+)

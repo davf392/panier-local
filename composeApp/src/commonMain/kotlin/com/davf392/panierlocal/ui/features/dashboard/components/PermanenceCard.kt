@@ -8,11 +8,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.davf392.panierlocal.data.staff_dashboard.PermanenceSlot
+import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -34,12 +36,29 @@ fun PermanenceCard(slots: List<PermanenceSlot>) {
     }
 }
 
+// --- Previews ---
+
 @Preview
 @Composable
-fun PreviewPermanenceCard() {
-    val slots = listOf(
-        PermanenceSlot("p1", "Jean", "Responsable", true),
-        PermanenceSlot("p2", "Marie", "Bénévole", false)
-    )
-    PermanenceCard(slots)
+fun PermanenceCardLightPreview() {
+    PanierLocalTheme(useDarkTheme = false) {
+        Surface {
+            PermanenceCard(slots = mockSlots)
+        }
+    }
 }
+
+@Preview
+@Composable
+fun PermanenceCardDarkPreview() {
+    PanierLocalTheme(useDarkTheme = true) {
+        Surface {
+            PermanenceCard(slots = mockSlots)
+        }
+    }
+}
+
+private val mockSlots = listOf(
+    PermanenceSlot("p1", "Jean", "Responsable", true),
+    PermanenceSlot("p2", "Marie", "Bénévole", false)
+)

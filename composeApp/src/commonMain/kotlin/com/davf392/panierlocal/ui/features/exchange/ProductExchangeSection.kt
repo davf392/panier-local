@@ -1,5 +1,6 @@
 package com.davf392.panierlocal.ui.features.exchange
 
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontWeight
@@ -31,16 +32,29 @@ fun ProductExchangeSection(
     }
 }
 
+// --- Previews ---
+
 @Preview
 @Composable
-fun ProductExchangeSectionPreview() {
-    PanierLocalTheme {
-        ProductExchangeSection(
-            item = ExchangeItem(
-                name = "Patate",
-                pricePerUnit = 0.7
-            ),
-            onProductSelected = {}
-        )
+fun ProductExchangeSectionLightPreview() {
+    PanierLocalTheme(useDarkTheme = false) {
+        Surface {
+            ProductExchangeSection(item = mockItem)
+        }
     }
 }
+
+@Preview
+@Composable
+fun ProductExchangeSectionDarkPreview() {
+    PanierLocalTheme(useDarkTheme = true) {
+        Surface {
+            ProductExchangeSection(item = mockItem)
+        }
+    }
+}
+
+private val mockItem = ExchangeItem(
+    name = "Patate",
+    pricePerUnit = 0.7
+)

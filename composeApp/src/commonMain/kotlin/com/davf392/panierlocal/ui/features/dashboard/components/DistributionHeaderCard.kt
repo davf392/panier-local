@@ -131,21 +131,45 @@ fun DistributionHeaderCard(
     }
 }
 
+// --- Previews ---
+
 @Preview
 @Composable
-private fun DistributionHeaderCardPreview() {
-    PanierLocalTheme {
+private fun DistributionHeaderCardLightPreview() {
+    PanierLocalTheme(useDarkTheme = false) {
         Surface {
             DistributionHeaderCard(
-                startTime = LocalDateTime(2026, 9, 8, 14, 0),
-                endTime = LocalDateTime(2026, 9, 8, 18, 0),
-                currentLocation = Location("dist-001", "Le Croiseur (Lyon 7)"),
-                locations = listOf(
-                    Location("dist-001", "Le Croiseur (Lyon 7)"),
-                    Location("dist-002", "Cabanes (Lyon 8)")
-                ),
+                startTime = mockStartTime,
+                endTime = mockEndTime,
+                currentLocation = mockCurrentLocation,
+                locations = mockLocations,
                 onLocationSelected = {}
             )
         }
     }
 }
+
+@Preview
+@Composable
+private fun DistributionHeaderCardDarkPreview() {
+    PanierLocalTheme(useDarkTheme = true) {
+        Surface {
+            DistributionHeaderCard(
+                startTime = mockStartTime,
+                endTime = mockEndTime,
+                currentLocation = mockCurrentLocation,
+                locations = mockLocations,
+                onLocationSelected = {}
+            )
+        }
+    }
+}
+
+
+private val mockStartTime = LocalDateTime(2026, 9, 8, 14, 0)
+private val mockEndTime = LocalDateTime(2026, 9, 8, 18, 0)
+private val mockCurrentLocation = Location("dist-001", "Le Croiseur (Lyon 7)")
+private val mockLocations = listOf(
+    Location("dist-001", "Le Croiseur (Lyon 7)"),
+    Location("dist-002", "Cabanes (Lyon 8)")
+)

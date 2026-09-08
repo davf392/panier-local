@@ -10,6 +10,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,12 +26,14 @@ import com.davf392.panierlocal.data.toLabel
 import com.davf392.panierlocal.formatDecimal
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 
 @Composable
 fun ResultDisplaySection(
     exchangedProduct: ExchangeItem,
     maxWeightGrams: Int,
-    onModifySelection: () -> Unit,
+    onModifySelection: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -101,36 +104,46 @@ fun ResultDisplaySection(
     }
 }
 
+// --- Previews ---
+
+@Composable
+private fun ResultDisplaySectionPreviewContent(maxWeightGrams: Int) {
+    ResultDisplaySection(
+        exchangedProduct = ExchangeItem(
+            id = "2",
+            name = "Pommes de terre",
+            unit = ProductUnit.GRAM,
+            pricePerUnit = 2.0
+        ),
+        maxWeightGrams = maxWeightGrams,
+        onModifySelection = {}
+    )
+}
+
 @Preview
 @Composable
-private fun ResultDisplaySectionSuccessPreview() {
-    PanierLocalTheme {
-        ResultDisplaySection(
-            exchangedProduct = ExchangeItem(
-                id = "2",
-                name = "Pommes de terre",
-                unit = ProductUnit.GRAM,
-                pricePerUnit = 2.0
-            ),
-            maxWeightGrams = 1500,
-            {}
-        )
+private fun ResultDisplaySectionLightPreview(
+    @PreviewParameter(ResultDisplayPreviewParameterProvider::class) maxWeightGrams: Int
+) {
+    PanierLocalTheme(useDarkTheme = false) {
+        Surface(modifier = Modifier.padding(16.dp)) {
+            ResultDisplaySectionPreviewContent(maxWeightGrams = maxWeightGrams)
+        }
     }
 }
 
 @Preview
 @Composable
-private fun ResultDisplaySectionInsufficientPreview() {
-    PanierLocalTheme {
-        ResultDisplaySection(
-            exchangedProduct = ExchangeItem(
-                id = "2",
-                name = "Pommes de terre",
-                unit = ProductUnit.GRAM,
-                pricePerUnit = 2.0
-            ),
-            maxWeightGrams = 0,
-            {}
-        )
+private fun ResultDisplaySectionDarkPreview(
+    @PreviewParameter(ResultDisplayPreviewParameterProvider::class) maxWeightGrams: Int
+) {
+    PanierLocalTheme(useDarkTheme = true) {
+        Surface(modifier = Modifier.padding(16.dp)) {
+            ResultDisplaySectionPreviewContent(maxWeightGrams = maxWeightGrams)
+        }
     }
+}
+
+class ResultDisplayPreviewParameterProvider : PreviewParameterProvider<Int> {
+    override val values: Sequence<Int> = sequenceOf(1500, 0)
 }

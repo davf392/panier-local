@@ -92,21 +92,42 @@ fun DistributionLocationHeader(
     }
 }
 
+// --- Previews ---
+
 @Preview
 @Composable
-private fun DistributionLocationHeaderPreview() {
-    PanierLocalTheme {
+private fun DistributionLocationHeaderLightPreview() {
+    PanierLocalTheme(useDarkTheme = false) {
         Surface {
             Column(modifier = Modifier.padding(16.dp)) {
                 DistributionLocationHeader(
-                    currentLocation = Location("dist-001", "Le Croiseur (Lyon 7)"),
-                    locations = listOf(
-                        Location("dist-001", "Le Croiseur (Lyon 7)"),
-                        Location("dist-002", "Cabanes (Lyon 8)")
-                    ),
+                    currentLocation = previewLocation,
+                    locations = previewLocations,
                     onLocationSelected = {}
                 )
             }
         }
     }
 }
+
+@Preview
+@Composable
+private fun DistributionLocationHeaderDarkPreview() {
+    PanierLocalTheme(useDarkTheme = true) {
+        Surface {
+            Column(modifier = Modifier.padding(16.dp)) {
+                DistributionLocationHeader(
+                    currentLocation = previewLocation,
+                    locations = previewLocations,
+                    onLocationSelected = {}
+                )
+            }
+        }
+    }
+}
+
+private val previewLocation = Location("dist-001", "Le Croiseur (Lyon 7)")
+private val previewLocations = listOf(
+    Location("dist-001", "Le Croiseur (Lyon 7)"),
+    Location("dist-002", "Cabanes (Lyon 8)")
+)

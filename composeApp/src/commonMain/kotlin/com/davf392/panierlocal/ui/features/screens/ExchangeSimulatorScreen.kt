@@ -86,34 +86,54 @@ fun ExchangeSimulatorScreen(
     }
 }
 
+// --- Previews ---
+
 @Preview
 @Composable
-fun ExchangeSimulatorScreenPreview() {
-    PanierLocalTheme {
+fun ExchangeSimulatorScreenLightPreview() {
+    PanierLocalTheme(useDarkTheme = false) {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
             ExchangeSimulatorScreen(
-                uiState = ExchangeUiState(
-                    itemToExchange = ProductItem(
-                        id = "6",
-                        name = "Banane",
-                        quantity = 500.0,
-                        unit = ProductUnit.PIECE,
-                        pricePerUnit = 3.0,
-                        totalPrice = 1.50
-                    ),
-                    availableProducts = listOf(
-                        ExchangeItem(id = "7", name = "Pomme", pricePerUnit = 3.50),
-                        ExchangeItem(id = "8", name = "Poire", pricePerUnit = 3.50)
-                    ),
-                    returnedWeightGrams = 150,
-                    selectedProduct = ExchangeItem(id = "7", name = "Pomme", pricePerUnit = 3.50),
-                    exchangeResult = 200
-                ),
+                uiState = PreviewUiState,
                 onProductSelected = {},
             )
         }
     }
 }
+
+@Preview
+@Composable
+fun ExchangeSimulatorScreenDarkPreview() {
+    PanierLocalTheme(useDarkTheme = true) {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            ExchangeSimulatorScreen(
+                uiState = PreviewUiState,
+                onProductSelected = {},
+            )
+        }
+    }
+}
+
+private val PreviewUiState = ExchangeUiState(
+    itemToExchange = ProductItem(
+        id = "6",
+        name = "Banane",
+        quantity = 500.0,
+        unit = ProductUnit.PIECE,
+        pricePerUnit = 3.0,
+        totalPrice = 1.50
+    ),
+    availableProducts = listOf(
+        ExchangeItem(id = "7", name = "Pomme", pricePerUnit = 3.50),
+        ExchangeItem(id = "8", name = "Poire", pricePerUnit = 3.50)
+    ),
+    returnedWeightGrams = 150,
+    selectedProduct = ExchangeItem(id = "7", name = "Pomme", pricePerUnit = 3.50),
+    exchangeResult = 200
+)
