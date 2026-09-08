@@ -11,4 +11,18 @@ data class DistributionUiState(
     val permanenceSlots: List<PermanenceSlot>,
     val basketSummaries: List<BasketFormulaSummary>,
     val alerts: List<DashboardAlert>
-)
+) {
+    companion object {
+        fun empty(): DistributionUiState {
+            return DistributionUiState(
+                id = "",
+                location = "",
+                startTime = LocalDateTime(2026, 1, 1, 0, 0),
+                endTime = LocalDateTime(2026, 1, 1, 0, 0),
+                permanenceSlots = emptyList(),
+                basketSummaries = emptyList(),
+                alerts = emptyList()
+            )
+        }
+    }
+}

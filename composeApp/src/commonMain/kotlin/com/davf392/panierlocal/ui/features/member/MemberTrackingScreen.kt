@@ -2,34 +2,47 @@ package com.davf392.panierlocal.ui.features.member
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.davf392.panierlocal.data.member.AttendanceStatus
 import com.davf392.panierlocal.data.member.Member
 import com.davf392.panierlocal.data.member.MemberAttendance
+import com.davf392.panierlocal.ui.composition.LocalDistributionContext
+import com.davf392.panierlocal.ui.features.common.DistributionLocationHeader
 import com.davf392.panierlocal.viewmodel.member.MemberTrackingUiState
-import com.davf392.panierlocal.viewmodel.member.MemberTrackingViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun MemberTrackingScreen(
-    viewModel: MemberTrackingViewModel
+    uiState: MemberTrackingUiState,
+    onCollected: (String) -> Unit,
+    onAbsent: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    val uiState by viewModel.uiState.collectAsState()
-    MemberTrackingScreenContent(
-        uiState = uiState,
-        onCollected = viewModel::markAsCollected,
-        onAbsent = viewModel::markAsAbsent
-    )
+    val distributionContext = LocalDistributionContext.current
+    
+    Column(modifier = modifier.fillMaxSize()) {
+        if (distributionContext != null) {
+            DistributionLocationHeader(
+                currentLocation = distributionContext.currentLocation,
+                locations = distributionContext.locations,
+                onLocationSelected = distributionContext.onLocationSelected
+            )
+        }
+        MemberTrackingScreenContent(
+            uiState = uiState,
+            onCollected = onCollected,
+            onAbsent = onAbsent
+        )
+    }
 }
 
 @Composable

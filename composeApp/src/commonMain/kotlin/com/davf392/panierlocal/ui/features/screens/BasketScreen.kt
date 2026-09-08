@@ -13,6 +13,7 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,6 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.davf392.panierlocal.data.ProductItem
 import com.davf392.panierlocal.state.BasketUiState
+import com.davf392.panierlocal.ui.composition.DistributionContext
+import com.davf392.panierlocal.ui.composition.LocalDistributionContext
 import com.davf392.panierlocal.ui.features.basket.BasketContentSection
 import com.davf392.panierlocal.ui.features.basket.BasketHistoryButton
 import com.davf392.panierlocal.ui.features.basket.WeeklyBasketSection
@@ -34,21 +37,39 @@ import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
 @Composable
 fun BasketScreen(
     uiState: BasketUiState,
-    currentLocation: Location,
-    locations: List<Location>,
-    onLocationSelected: (Location) -> Unit,
     onExchangeClicked: (ProductItem) -> Unit = {},
     onViewHistoryClicked: () -> Unit = {},
+    modifier: Modifier = Modifier
+) {
+    val distributionContext = LocalDistributionContext.current
+
+    BasketScreenContent(
+        uiState = uiState,
+        distributionContext = distributionContext,
+        onExchangeClicked = onExchangeClicked,
+        onViewHistoryClicked = onViewHistoryClicked,
+        modifier = modifier
+    )
+}
+
+@Composable
+private fun BasketScreenContent(
+    uiState: BasketUiState,
+    distributionContext: DistributionContext?,
+    onExchangeClicked: (ProductItem) -> Unit,
+    onViewHistoryClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var expandedBasketId by remember { mutableStateOf<String?>(null) }
 
     Column(modifier = modifier.fillMaxSize()) {
-        DistributionLocationHeader(
-            currentLocation = currentLocation,
-            locations = locations,
-            onLocationSelected = onLocationSelected
-        )
+        if (distributionContext != null) {
+            DistributionLocationHeader(
+                currentLocation = distributionContext.currentLocation,
+                locations = distributionContext.locations,
+                onLocationSelected = distributionContext.onLocationSelected
+            )
+        }
 
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -56,7 +77,7 @@ fun BasketScreen(
         var selectedCategory by remember { mutableStateOf(categories.firstOrNull() ?: "") }
 
         if (categories.isNotEmpty()) {
-            TabRow(selectedTabIndex = categories.indexOf(selectedCategory)) {
+            TabRow(selectedTabIndex = categories.indexOf(selectedCategory).coerceAtLeast(0)) {
                 categories.forEach { category ->
                     Tab(
                         selected = selectedCategory == category,
@@ -104,12 +125,17 @@ fun BasketScreenPreview(
 ) {
     PanierLocalTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-            BasketScreen(
-                uiState = uiState,
-                currentLocation = Location("dist-001", "Le Croiseur (Lyon 7)"),
-                locations = emptyList(),
-                onLocationSelected = {},
-            )
+            CompositionLocalProvider(
+                LocalDistributionContext provides DistributionContext(
+                    currentLocation = Location("dist-001", "Le Croiseur (Lyon 7)"),
+                    locations = emptyList(),
+                    onLocationSelected = {}
+                )
+            ) {
+                BasketScreen(
+                    uiState = uiState
+                )
+            }
         }
     }
 }
