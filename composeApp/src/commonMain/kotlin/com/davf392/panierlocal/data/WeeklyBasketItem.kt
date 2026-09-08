@@ -4,17 +4,11 @@ import com.davf392.panierlocal.formatDecimal
 
 data class WeeklyBasketItem(
     val id: String = "",
-    val name: String = "",
-    val weekNumber: Int = 0,
-    val year: Int = 0,
-    val formula: String = "",
-    val totalPrice: Double = 0.0,
+    val distributionId: String = "",
+    val formula: String = "", // Mini, Solo, Tandem, Famille
+    val category: String = "Autres", // Légumes, Fruits, Produits Laitiers
+    val expectedCount: Int = 0,
+    val actualCount: Int = 0,
     val productsList: List<ProductItem> = emptyList()
-) {
-    val displayWeek: String
-        get() = "Semaine $weekNumber ($year)"
-    
-    val displayTotalPrice: String
-        get() = "${formatDecimal(totalPrice, 2)} €"
-}
+)
 

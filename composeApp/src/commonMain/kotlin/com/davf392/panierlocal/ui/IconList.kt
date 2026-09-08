@@ -12,5 +12,8 @@ expect val DashboardIcon: ImageVector
 expect val BasketIcon: ImageVector
 expect val SwapIcon: ImageVector
 expect val AddIcon: ImageVector
+expect val RemoveIcon: ImageVector
 expect val UncheckedIcon: ImageVector
 expect val CheckedIcon: ImageVector
+expect val EditIcon: ImageVector
+expect val LocationOnIcon: ImageVector

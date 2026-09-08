@@ -58,12 +58,9 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreenContent(
-    distributions: List<Distribution>,
     selectedDistribution: DistributionUiState,
-    onDistributionSelected: (String) -> Unit,
     onEvent: (DashboardEvent) -> Unit
 ) {
-    var expanded by remember { mutableStateOf(false) }
     var showReportDialog by remember { mutableStateOf(false) }
     
     val snackbarHostState = remember { SnackbarHostState() }
@@ -74,37 +71,6 @@ fun DashboardScreenContent(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        ExposedDropdownMenuBox(
-            expanded = expanded,
-            onExpandedChange = { expanded = !expanded }
-        ) {
-            OutlinedTextField(
-                value = selectedDistribution.location,
-                onValueChange = {},
-                readOnly = true,
-                label = { Text("Lieu de distribution") },
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                modifier = Modifier.fillMaxWidth().menuAnchor()
-            )
-
-            ExposedDropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false }
-            ) {
-                distributions.forEach { dist ->
-                    DropdownMenuItem(
-                        text = { Text(dist.location) },
-                        onClick = {
-                            onDistributionSelected(dist.id)
-                            expanded = false
-                        }
-                    )
-                }
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -159,7 +125,6 @@ fun DashboardScreenContent(
 
 @Composable
 fun DashboardScreen(viewModel: DashboardViewModel = viewModel()) {
-    val distributions by viewModel.distributions.collectAsState()
     val selectedDistribution by viewModel.uiState.collectAsState()
 
     if (selectedDistribution == null) {
@@ -171,9 +136,7 @@ fun DashboardScreen(viewModel: DashboardViewModel = viewModel()) {
         }
     } else {
         DashboardScreenContent(
-            distributions = distributions,
             selectedDistribution = selectedDistribution!!,
-            onDistributionSelected = viewModel::selectDistribution,
             onEvent = viewModel::onEvent
         )
     }
@@ -225,9 +188,7 @@ fun PreviewDashboardScreen() {
             color = MaterialTheme.colorScheme.background
         ) {
             DashboardScreenContent(
-                distributions = mockData,
                 selectedDistribution = mockData.first().toUiState(),
-                onDistributionSelected = {},
                 onEvent = {}
             )
         }

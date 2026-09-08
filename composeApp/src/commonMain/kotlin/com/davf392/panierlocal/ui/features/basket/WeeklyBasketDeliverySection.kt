@@ -26,6 +26,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun WeeklyBasketDeliverySection(
     items: List<WeeklyBasketItem> = emptyList(),
     onExchangeClicked: (ProductItem) -> Unit = {},
+    onUpdateCount: (String, Int) -> Unit = { _, _ -> },
     modifier: Modifier = Modifier
 ) {
     var expandedBasketId by remember { mutableStateOf<String?>(null) }
@@ -42,7 +43,8 @@ fun WeeklyBasketDeliverySection(
                 isSelected = expandedBasketId == item.id,
                 onSelectBasket = { clickedItem ->
                     expandedBasketId = if (expandedBasketId == clickedItem.id) null else clickedItem.id
-                }
+                },
+                onUpdateCount = onUpdateCount
             )
             if (expandedBasketId == item.id) {
                 Spacer(modifier = Modifier.height(8.dp))
@@ -65,8 +67,8 @@ fun WeeklyBasketDeliverySectionPreview() {
         ) {
             WeeklyBasketDeliverySection(
                 items = listOf(
-                    WeeklyBasketItem(id = "1", name = "Tandem Légumes", weekNumber = 15, year = 2024, totalPrice = 10.90, formula = "Tandem", productsList = emptyList()),
-                    WeeklyBasketItem(id = "2", name = "Solo Fruits", weekNumber = 15, year = 2024, totalPrice = 7.80, formula = "Solo", productsList = emptyList())
+                    WeeklyBasketItem(id = "1", formula = "Tandem", expectedCount = 20, actualCount = 15, productsList = emptyList()),
+                    WeeklyBasketItem(id = "2", formula = "Solo", expectedCount = 30, actualCount = 25, productsList = emptyList())
                 )
             )
         }

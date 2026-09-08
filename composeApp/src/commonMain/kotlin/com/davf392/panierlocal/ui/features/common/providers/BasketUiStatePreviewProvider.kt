@@ -12,11 +12,10 @@ class BasketUiStatePreviewProvider : PreviewParameterProvider<BasketUiState> {
             baskets = listOf(
                 WeeklyBasketItem(
                     id = "TANDEM_LEGUMES_001",
-                    name = "Tandem Légumes",
-                    weekNumber = 15,
-                    year = 2024,
-                    totalPrice = 10.90,
+                    distributionId = "dist-001",
                     formula = "Tandem",
+                    expectedCount = 20,
+                    actualCount = 15,
                     productsList = listOf(
                         ProductItem(
                             id = "1",
@@ -62,11 +61,10 @@ class BasketUiStatePreviewProvider : PreviewParameterProvider<BasketUiState> {
                 ),
                 WeeklyBasketItem(
                     id = "SOLO_FRUITS_001",
-                    name = "Solo Fruits",
-                    weekNumber = 15,
-                    year = 2024,
-                    totalPrice = 8.50,
+                    distributionId = "dist-002",
                     formula = "Solo",
+                    expectedCount = 30,
+                    actualCount = 25,
                     productsList = listOf(
                         ProductItem(
                             id = "6",

@@ -26,3 +26,7 @@ actual val UncheckedIcon: ImageVector
     get() = TODO("Not yet implemented")
 actual val CheckedIcon: ImageVector
     get() = TODO("Not yet implemented")
+actual val EditIcon: ImageVector
+    get() = TODO("Not yet implemented")
+actual val LocationOnIcon: ImageVector
+    get() = TODO("Not yet implemented")

@@ -13,7 +13,7 @@ actual val ShoppingCartIcon: ImageVector
 actual val RefreshIcon: ImageVector
     get() = Icons.Default.Refresh
 actual val ArrowRightIcon: ImageVector
-    get() = Icons.AutoMirrored.Default.KeyboardArrowRight
+    get() = Icons.Default.ArrowCircleRight
 actual val CloseButton: ImageVector
     get() = Icons.Default.Close
 actual val ResolveIcon: ImageVector
@@ -25,8 +25,14 @@ actual val BasketIcon: ImageVector
 actual val SwapIcon: ImageVector
     get() = Icons.Default.SwapHoriz
 actual val AddIcon: ImageVector
-    get() = Icons.Default.Add
+    get() = Icons.Default.AddCircleOutline
+actual val RemoveIcon: ImageVector
+    get() = Icons.Default.RemoveCircleOutline
 actual val UncheckedIcon: ImageVector
     get() = Icons.Default.RadioButtonUnchecked
 actual val CheckedIcon: ImageVector
     get() = Icons.Default.CheckCircle
+actual val EditIcon: ImageVector
+    get() = Icons.Default.Edit
+actual val LocationOnIcon: ImageVector
+    get() = Icons.Default.LocationOn

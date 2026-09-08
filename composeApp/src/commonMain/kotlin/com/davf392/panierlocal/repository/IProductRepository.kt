@@ -6,5 +6,6 @@ import com.davf392.panierlocal.data.WeeklyBasketItem
 
 interface IProductRepository {
     suspend fun getWeeklyBasketList(): List<WeeklyBasketItem>
+    suspend fun getProductById(id: String): ProductItem?
     suspend fun getAvailableProductsForExchange(selectedItem: ProductItem): List<ExchangeItem>
-}
+    }

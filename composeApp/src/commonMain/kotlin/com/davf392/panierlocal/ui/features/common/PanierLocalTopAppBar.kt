@@ -1,5 +1,6 @@
 package com.davf392.panierlocal.ui.features
 
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -14,6 +15,7 @@ import com.davf392.panierlocal.ui.BackIcon
 fun PanierLocalTopAppBar(
     title: String,
     onBackClicked: (() -> Unit)? = null,
+    actions: @Composable RowScope.() -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     TopAppBar(
@@ -28,6 +30,7 @@ fun PanierLocalTopAppBar(
                 }
             }
         },
+        actions = actions,
         modifier = modifier
     )
 }
