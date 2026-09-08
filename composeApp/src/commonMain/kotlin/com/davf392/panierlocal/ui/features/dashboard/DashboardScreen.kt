@@ -25,13 +25,12 @@ import com.davf392.panierlocal.data.staff_dashboard.DashboardAlert
 import com.davf392.panierlocal.data.staff_dashboard.PermanenceSlot
 import com.davf392.panierlocal.ui.composition.DistributionContext
 import com.davf392.panierlocal.ui.composition.LocalDistributionContext
-import com.davf392.panierlocal.ui.features.common.DistributionLocationHeader
 import com.davf392.panierlocal.ui.features.dashboard.components.AlertCard
 import com.davf392.panierlocal.ui.features.dashboard.components.BasketCard
+import com.davf392.panierlocal.ui.features.dashboard.components.DistributionHeaderCard
 import com.davf392.panierlocal.ui.features.dashboard.components.PermanenceCard
 import com.davf392.panierlocal.ui.features.dashboard.components.ReportAlertDialog
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
-import com.davf392.panierlocal.ui.utils.formatDateTime
 import com.davf392.panierlocal.viewmodel.location.Location
 import com.davf392.panierlocal.viewmodel.staff_dashboard.DashboardEvent
 import com.davf392.panierlocal.viewmodel.staff_dashboard.DistributionUiState
@@ -69,46 +68,33 @@ fun DashboardScreenContent(
     val coroutineScope = rememberCoroutineScope()
 
     Box(modifier = modifier.fillMaxSize()) {
-        Column(modifier = modifier.fillMaxSize()) {
-            DistributionLocationHeader(
-                currentLocation = distributionContext.currentLocation,
-                locations = distributionContext.locations,
-                onLocationSelected = distributionContext.onLocationSelected
-            )
-
-            LazyColumn(
-                modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                item {
-                    val (date, time) = formatDateTime(
-                        selectedDistribution.startTime,
-                        selectedDistribution.endTime
-                    )
-                    Column {
-                        Text(text = date, style = MaterialTheme.typography.titleMedium)
-                        Text(
-                            text = time,
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                }
-                item {
-                    AlertCard(
-                        alerts = selectedDistribution.alerts,
-                        onResolve = { alert ->
-                            onEvent(DashboardEvent.ResolveAlert(alert))
-                            coroutineScope.launch {
-                                snackbarHostState.showSnackbar("Alerte résolue")
-                            }
-                        },
-                        onReport = { showReportDialog = true }
-                    )
-                }
-                item { PermanenceCard(selectedDistribution.permanenceSlots) }
-                item { BasketCard(selectedDistribution.basketSummaries) }
+        LazyColumn(
+            modifier = Modifier.fillMaxSize().padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            item {
+                DistributionHeaderCard(
+                    startTime = selectedDistribution.startTime,
+                    endTime = selectedDistribution.endTime,
+                    currentLocation = distributionContext.currentLocation,
+                    locations = distributionContext.locations,
+                    onLocationSelected = distributionContext.onLocationSelected
+                )
             }
+            item {
+                AlertCard(
+                    alerts = selectedDistribution.alerts,
+                    onResolve = { alert ->
+                        onEvent(DashboardEvent.ResolveAlert(alert))
+                        coroutineScope.launch {
+                            snackbarHostState.showSnackbar("Alerte résolue")
+                        }
+                    },
+                    onReport = { showReportDialog = true }
+                )
+            }
+            item { PermanenceCard(selectedDistribution.permanenceSlots) }
+            item { BasketCard(selectedDistribution.basketSummaries) }
         }
         
         SnackbarHost(
@@ -156,7 +142,9 @@ private fun PreviewDashboardScreen() {
                         Location("dist-001", "Le Croiseur (Lyon 7)"),
                         Location("dist-002", "Cabanes (Lyon 8)")
                     ),
-                    onLocationSelected = {}
+                    onLocationSelected = {},
+                    startTime = kotlinx.datetime.LocalDateTime(2026, 9, 8, 14, 0),
+                    endTime = kotlinx.datetime.LocalDateTime(2026, 9, 8, 18, 0)
                 ),
                 onEvent = {}
             )

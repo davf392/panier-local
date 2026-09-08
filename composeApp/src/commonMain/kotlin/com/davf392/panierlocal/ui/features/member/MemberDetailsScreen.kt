@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,6 +23,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -32,7 +35,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.davf392.panierlocal.data.WeeklyBasketItem
 import com.davf392.panierlocal.data.member.AttendanceStatus
@@ -247,7 +249,8 @@ private fun NotesSection(
             value = notes,
             onValueChange = onNotesChanged,
             modifier = Modifier.fillMaxWidth(),
-            minLines = 3
+            minLines = 3,
+            maxLines = 5
         )
     }
 }
@@ -270,10 +273,6 @@ private fun AttendanceActionButtons(
             if (currentStatus == AttendanceStatus.EXPECTED) {
                 Button(
                     onClick = onCollected,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer,
-                        contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                    ),
                     modifier = Modifier.weight(1f)
                 ) {
                     Icon(CheckIcon, contentDescription = null)
@@ -281,12 +280,8 @@ private fun AttendanceActionButtons(
                     Text("Récupéré")
                 }
 
-                Button(
+                OutlinedButton(
                     onClick = onAbsent,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.errorContainer,
-                        contentColor = MaterialTheme.colorScheme.onErrorContainer
-                    ),
                     modifier = Modifier.weight(1f)
                 ) {
                     Icon(CloseIcon, contentDescription = null)

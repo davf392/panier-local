@@ -14,6 +14,8 @@ import com.davf392.panierlocal.data.ProductUnit
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
+import androidx.compose.material3.HorizontalDivider
+
 @Composable
 fun BasketContentSection(
     items: List<ProductItem> = emptyList(),
@@ -21,16 +23,16 @@ fun BasketContentSection(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        modifier = modifier.fillMaxWidth().padding(horizontal = 16.dp),
     ) {
-        items.forEach { item ->
+        items.forEachIndexed { index, item ->
             ProductBasketSection(
                 item = item,
                 onExchangeClicked = onExchangeClicked
             )
+            if (index < items.size - 1) {
+                HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+            }
         }
     }
 }

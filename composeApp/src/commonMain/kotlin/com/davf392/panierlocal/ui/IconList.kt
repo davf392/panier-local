@@ -23,3 +23,4 @@ expect val CloseIcon: ImageVector
 expect val PersonIcon: ImageVector
 expect val PhoneIcon: ImageVector
 expect val MailIcon: ImageVector
+expect val WarningIcon: ImageVector

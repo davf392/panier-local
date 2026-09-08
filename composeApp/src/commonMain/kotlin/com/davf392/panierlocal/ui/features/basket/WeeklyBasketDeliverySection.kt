@@ -42,15 +42,9 @@ fun WeeklyBasketDeliverySection(
                 isSelected = expandedBasketId == item.id,
                 onSelectBasket = { clickedItem ->
                     expandedBasketId = if (expandedBasketId == clickedItem.id) null else clickedItem.id
-                }
+                },
+                onExchangeClicked = onExchangeClicked
             )
-            if (expandedBasketId == item.id) {
-                Spacer(modifier = Modifier.height(8.dp))
-                BasketContentSection(
-                    items = item.productsList,
-                    onExchangeClicked = onExchangeClicked
-                )
-            }
         }
     }
 }

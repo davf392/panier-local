@@ -48,3 +48,5 @@ actual val PhoneIcon: ImageVector
     get() = Icons.Default.Phone
 actual val MailIcon: ImageVector
     get() = Icons.Default.Mail
+actual val WarningIcon: ImageVector
+    get() = Icons.Default.WarningAmber

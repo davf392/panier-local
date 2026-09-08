@@ -1,5 +1,8 @@
 package com.davf392.panierlocal.ui.features.dashboard.components
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -7,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -24,6 +28,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.davf392.panierlocal.data.staff_dashboard.AlertPriority
 import com.davf392.panierlocal.data.staff_dashboard.DashboardAlert
@@ -41,7 +47,7 @@ fun AlertCard(alerts: List<DashboardAlert>, onResolve: (String) -> Unit, onRepor
     
     Card(
         modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(
@@ -49,10 +55,10 @@ fun AlertCard(alerts: List<DashboardAlert>, onResolve: (String) -> Unit, onRepor
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text("Alertes", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onErrorContainer)
+                Text("Alertes", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Button(
                     onClick = onReport,
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.onErrorContainer, contentColor = MaterialTheme.colorScheme.errorContainer)
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary)
                 ) {
                     Icon(AddIcon, contentDescription = null)
                     Spacer(modifier = Modifier.width(4.dp))
@@ -61,17 +67,31 @@ fun AlertCard(alerts: List<DashboardAlert>, onResolve: (String) -> Unit, onRepor
             }
 
             if (alerts.isNotEmpty()) {
-                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.5f))
+                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f))
                 alerts.forEach { alert ->
                     var isResolving by remember { mutableStateOf(false) }
 
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
+                        val priorityColor = when (alert.priority) {
+                            AlertPriority.INFO -> MaterialTheme.colorScheme.primary
+                            AlertPriority.WARNING -> MaterialTheme.colorScheme.tertiary
+                            AlertPriority.CRITICAL -> MaterialTheme.colorScheme.error
+                        }
+                        
+                        Box(
+                            modifier = Modifier
+                                .width(4.dp)
+                                .height(24.dp)
+                                .clip(RoundedCornerShape(2.dp))
+                                .background(priorityColor)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = alert.message,
-                            color = MaterialTheme.colorScheme.onErrorContainer,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.weight(1f)
                         )
                         IconButton(onClick = { 
@@ -84,7 +104,7 @@ fun AlertCard(alerts: List<DashboardAlert>, onResolve: (String) -> Unit, onRepor
                             Icon(
                                 imageVector = if (isResolving) CheckedIcon else UncheckedIcon,
                                 contentDescription = "Résoudre",
-                                tint = MaterialTheme.colorScheme.onErrorContainer
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
                     }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -24,13 +25,13 @@ import com.davf392.panierlocal.data.ProductItem
 import com.davf392.panierlocal.state.BasketUiState
 import com.davf392.panierlocal.ui.composition.DistributionContext
 import com.davf392.panierlocal.ui.composition.LocalDistributionContext
-import com.davf392.panierlocal.ui.features.basket.BasketContentSection
 import com.davf392.panierlocal.ui.features.basket.BasketHistoryButton
 import com.davf392.panierlocal.ui.features.basket.WeeklyBasketSection
-import com.davf392.panierlocal.ui.features.common.DistributionLocationHeader
+import com.davf392.panierlocal.ui.features.dashboard.components.DistributionHeaderCard
 import com.davf392.panierlocal.ui.features.common.providers.BasketUiStatePreviewProvider
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import com.davf392.panierlocal.viewmodel.location.Location
+import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
 
@@ -64,14 +65,15 @@ private fun BasketScreenContent(
 
     Column(modifier = modifier.fillMaxSize()) {
         if (distributionContext != null) {
-            DistributionLocationHeader(
+            DistributionHeaderCard(
+                startTime = distributionContext.startTime,
+                endTime = distributionContext.endTime,
                 currentLocation = distributionContext.currentLocation,
                 locations = distributionContext.locations,
-                onLocationSelected = distributionContext.onLocationSelected
+                onLocationSelected = distributionContext.onLocationSelected,
+                modifier = Modifier.padding(16.dp)
             )
         }
-
-        Spacer(modifier = Modifier.height(8.dp))
 
         val categories = uiState.baskets.map { it.category }.distinct()
         var selectedCategory by remember { mutableStateOf(categories.firstOrNull() ?: "") }
@@ -102,15 +104,9 @@ private fun BasketScreenContent(
                     isSelected = expandedBasketId == basket.id,
                     onSelectBasket = { clickedItem ->
                         expandedBasketId = if (expandedBasketId == clickedItem.id) null else clickedItem.id
-                    }
+                    },
+                    onExchangeClicked = onExchangeClicked
                 )
-                if (expandedBasketId == basket.id) {
-                    Spacer(modifier = Modifier.height(8.dp))
-                    BasketContentSection(
-                        items = basket.productsList,
-                        onExchangeClicked = onExchangeClicked
-                    )
-                }
             }
         }
 
@@ -129,7 +125,9 @@ fun BasketScreenPreview(
                 LocalDistributionContext provides DistributionContext(
                     currentLocation = Location("dist-001", "Le Croiseur (Lyon 7)"),
                     locations = emptyList(),
-                    onLocationSelected = {}
+                    onLocationSelected = {},
+                    startTime = LocalDateTime(2026, 9, 8, 14, 0),
+                    endTime = LocalDateTime(2026, 9, 8, 18, 0)
                 )
             ) {
                 BasketScreen(

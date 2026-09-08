@@ -82,7 +82,9 @@ fun App() {
             DistributionContext(
                 currentLocation = currentLocation,
                 locations = locationViewModel.locations,
-                onLocationSelected = locationViewModel::setLocation
+                onLocationSelected = locationViewModel::setLocation,
+                startTime = kotlinx.datetime.LocalDateTime(2026, 9, 8, 14, 0),
+                endTime = kotlinx.datetime.LocalDateTime(2026, 9, 8, 18, 0)
             )
         }
 

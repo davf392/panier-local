@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -26,6 +28,7 @@ import com.davf392.panierlocal.data.member.toFrench
 import com.davf392.panierlocal.ui.CheckIcon
 import com.davf392.panierlocal.ui.CloseIcon
 import com.davf392.panierlocal.ui.RefreshIcon
+import com.davf392.panierlocal.ui.WarningIcon
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
@@ -51,11 +54,23 @@ fun MemberAttendanceItem(
                     style = MaterialTheme.typography.titleMedium
                 )
                 if (!attendance.member.notes.isNullOrBlank()) {
-                    Text(
-                        text = attendance.member.notes,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.error
-                    )
+                    Row(
+                        modifier = Modifier.padding(top = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = WarningIcon,
+                            contentDescription = "Attention",
+                            modifier = Modifier.size(16.dp),
+                            tint = MaterialTheme.colorScheme.error
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(
+                            text = attendance.member.notes,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
                 }
             }
 
@@ -65,14 +80,14 @@ fun MemberAttendanceItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 if (attendance.status == AttendanceStatus.EXPECTED) {
-                    IconButton(onClick = onCollected) {
+                    IconButton(onClick = onCollected, modifier = Modifier.size(48.dp)) {
                         Icon(CheckIcon, contentDescription = "Récupéré", tint = MaterialTheme.colorScheme.primary)
                     }
-                    IconButton(onClick = onAbsent) {
+                    IconButton(onClick = onAbsent, modifier = Modifier.size(48.dp)) {
                         Icon(CloseIcon, contentDescription = "Absent", tint = MaterialTheme.colorScheme.error)
                     }
                 } else {
-                    IconButton(onClick = onReset) {
+                    IconButton(onClick = onReset, modifier = Modifier.size(48.dp)) {
                         Icon(RefreshIcon, contentDescription = "Annuler", tint = MaterialTheme.colorScheme.primary)
                     }
                     // Container with fixed width for badge to ensure constant alignment of the Reset button

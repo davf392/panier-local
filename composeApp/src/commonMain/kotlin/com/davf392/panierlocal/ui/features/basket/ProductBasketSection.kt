@@ -3,9 +3,9 @@ package com.davf392.panierlocal.ui.features.basket
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -15,11 +15,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.davf392.panierlocal.data.ProductItem
 import com.davf392.panierlocal.data.ProductUnit
 import com.davf392.panierlocal.ui.RefreshIcon
-import com.davf392.panierlocal.ui.features.common.ProductItemCard
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -29,34 +27,43 @@ fun ProductBasketSection(
     onExchangeClicked: (ProductItem) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    ProductItemCard(
-        item = item,
-        modifier = modifier,
-        onClick = {}
-    ) { contentColor ->
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Column {
-                Text(
-                    text = item.displayQuantity,
-                    fontSize = 14.sp,
-                    color = contentColor
-                )
-                Text(
-                    text = item.displayPrice,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = contentColor
-                )
-            }
-            Spacer(modifier = Modifier.width(8.dp))
-            IconButton(onClick = { onExchangeClicked(item) }) {
-                Icon(
-                    imageVector = RefreshIcon,
-                    contentDescription = "Échanger",
-                    tint = contentColor,
-                    modifier = Modifier.size(24.dp)
-                )
-            }
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = item.name,
+            style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier.weight(1f)
+        )
+        
+        Column(
+            horizontalAlignment = Alignment.End,
+            modifier = Modifier.padding(horizontal = 8.dp)
+        ) {
+            Text(
+                text = item.displayQuantity,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "${item.totalPrice} €",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
+        IconButton(
+            onClick = { onExchangeClicked(item) },
+            modifier = Modifier.size(36.dp)
+        ) {
+            Icon(
+                imageVector = RefreshIcon,
+                contentDescription = "Échanger",
+                tint = MaterialTheme.colorScheme.primary
+            )
         }
     }
 }

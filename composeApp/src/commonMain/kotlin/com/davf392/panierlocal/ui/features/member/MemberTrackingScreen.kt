@@ -20,7 +20,7 @@ import com.davf392.panierlocal.data.member.AttendanceStatus
 import com.davf392.panierlocal.data.member.Member
 import com.davf392.panierlocal.data.member.MemberAttendance
 import com.davf392.panierlocal.ui.composition.LocalDistributionContext
-import com.davf392.panierlocal.ui.features.common.DistributionLocationHeader
+import com.davf392.panierlocal.ui.features.dashboard.components.DistributionHeaderCard
 import com.davf392.panierlocal.viewmodel.member.MemberTrackingUiState
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -38,10 +38,13 @@ fun MemberTrackingScreen(
     
     Column(modifier = modifier.fillMaxSize()) {
         if (distributionContext != null) {
-            DistributionLocationHeader(
+            DistributionHeaderCard(
+                startTime = distributionContext.startTime,
+                endTime = distributionContext.endTime,
                 currentLocation = distributionContext.currentLocation,
                 locations = distributionContext.locations,
-                onLocationSelected = distributionContext.onLocationSelected
+                onLocationSelected = distributionContext.onLocationSelected,
+                modifier = Modifier.padding(16.dp)
             )
         }
         MemberTrackingScreenContent(
