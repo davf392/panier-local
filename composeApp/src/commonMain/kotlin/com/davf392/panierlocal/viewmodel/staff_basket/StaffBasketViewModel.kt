@@ -36,17 +36,6 @@ class StaffBasketViewModel(
         }
     }
 
-    fun updateActualCount(id: String, newCount: Int) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                baskets = currentState.baskets.map { item ->
-                    if (item.id == id) item.copy(actualCount = newCount)
-                    else item
-                }
-            )
-        }
-    }
-
     private fun mapDistributionToLocationName(distributionId: String): String = when (distributionId) {
         "dist-001" -> "Le Croiseur (Lyon 7)"
         "dist-002" -> "Cabanes (Lyon 8)"

@@ -39,7 +39,6 @@ fun BasketScreen(
     onLocationSelected: (Location) -> Unit,
     onExchangeClicked: (ProductItem) -> Unit = {},
     onViewHistoryClicked: () -> Unit = {},
-    onUpdateCount: (String, Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var expandedBasketId by remember { mutableStateOf<String?>(null) }
@@ -50,12 +49,12 @@ fun BasketScreen(
             locations = locations,
             onLocationSelected = onLocationSelected
         )
-        
+
         Spacer(modifier = Modifier.height(8.dp))
-        
+
         val categories = uiState.baskets.map { it.category }.distinct()
         var selectedCategory by remember { mutableStateOf(categories.firstOrNull() ?: "") }
-        
+
         if (categories.isNotEmpty()) {
             TabRow(selectedTabIndex = categories.indexOf(selectedCategory)) {
                 categories.forEach { category ->
@@ -67,9 +66,9 @@ fun BasketScreen(
                 }
             }
         }
-        
+
         val filteredBaskets = uiState.baskets.filter { it.category == selectedCategory }
-        
+
         LazyColumn(
             modifier = Modifier.weight(1f),
             contentPadding = PaddingValues(16.dp),
@@ -82,8 +81,7 @@ fun BasketScreen(
                     isSelected = expandedBasketId == basket.id,
                     onSelectBasket = { clickedItem ->
                         expandedBasketId = if (expandedBasketId == clickedItem.id) null else clickedItem.id
-                    },
-                    onUpdateCount = onUpdateCount
+                    }
                 )
                 if (expandedBasketId == basket.id) {
                     Spacer(modifier = Modifier.height(8.dp))
@@ -94,7 +92,7 @@ fun BasketScreen(
                 }
             }
         }
-        
+
         BasketHistoryButton(onViewHistoryClicked = onViewHistoryClicked)
     }
 }
@@ -111,7 +109,6 @@ fun BasketScreenPreview(
                 currentLocation = Location("dist-001", "Le Croiseur (Lyon 7)"),
                 locations = emptyList(),
                 onLocationSelected = {},
-                onUpdateCount = { _, _ -> }
             )
         }
     }

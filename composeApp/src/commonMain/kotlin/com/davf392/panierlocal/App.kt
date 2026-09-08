@@ -112,7 +112,6 @@ fun App() {
                         currentLocation = currentLocation,
                         locations = locationViewModel.locations,
                         onLocationSelected = locationViewModel::setLocation,
-                        onUpdateCount = viewModel::updateActualCount,
                         onExchangeClicked = { productItem ->
                             navController.navigate("${Routes.EXCHANGE_SIMULATOR}/${productItem.id}")
                         }
