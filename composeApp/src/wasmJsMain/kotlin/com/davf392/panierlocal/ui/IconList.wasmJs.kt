@@ -30,3 +30,5 @@ actual val EditIcon: ImageVector
     get() = TODO("Not yet implemented")
 actual val LocationOnIcon: ImageVector
     get() = TODO("Not yet implemented")
+actual val ArrowDropDownIcon: ImageVector
+    get() = TODO("Not yet implemented")

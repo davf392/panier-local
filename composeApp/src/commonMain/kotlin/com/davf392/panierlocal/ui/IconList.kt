@@ -17,3 +17,4 @@ expect val UncheckedIcon: ImageVector
 expect val CheckedIcon: ImageVector
 expect val EditIcon: ImageVector
 expect val LocationOnIcon: ImageVector
+expect val ArrowDropDownIcon: ImageVector

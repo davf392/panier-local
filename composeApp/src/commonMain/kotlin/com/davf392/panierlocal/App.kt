@@ -21,7 +21,6 @@ import androidx.navigation.navArgument
 import com.davf392.panierlocal.repository.ProductRepository
 import com.davf392.panierlocal.ui.*
 import com.davf392.panierlocal.ui.features.PanierLocalTopAppBar
-import com.davf392.panierlocal.ui.features.common.DistributionLocationHeader
 import com.davf392.panierlocal.ui.features.dashboard.DashboardScreen
 import com.davf392.panierlocal.ui.features.screens.BasketScreen
 import com.davf392.panierlocal.ui.features.screens.ExchangeSimulatorScreen
@@ -52,43 +51,26 @@ fun App() {
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-    
+
     val currentTitle = when {
         currentRoute == Routes.DASHBOARD -> "Dashboard"
         currentRoute == Routes.WEEKLY_BASKET -> "Paniers"
         currentRoute?.startsWith(Routes.EXCHANGE_SIMULATOR) == true -> "Simulateur"
         else -> "AMAP"
     }
-    
+
     val canNavigateBack = currentRoute?.startsWith(Routes.EXCHANGE_SIMULATOR) == true
     var menuExpanded by remember { mutableStateOf(false) }
 
     PanierLocalTheme {
         Scaffold(
-            topBar = { 
+            topBar = {
                 PanierLocalTopAppBar(
                     title = currentTitle,
-                    onBackClicked = if (canNavigateBack) { { navController.popBackStack() } } else null,
-                    actions = {
-                        Box {
-                            DistributionLocationHeader(
-                                locationName = currentLocation.name,
-                                onClick = { menuExpanded = true }
-                            )
-                            DropdownMenu(expanded = menuExpanded, onDismissRequest = { menuExpanded = false }) {
-                                locationViewModel.locations.forEach { loc ->
-                                    DropdownMenuItem(
-                                        text = { Text(loc.name) },
-                                        onClick = {
-                                            locationViewModel.setLocation(loc)
-                                            menuExpanded = false
-                                        }
-                                    )
-                                }
-                            }
-                        }
-                    }
-                ) 
+                    onBackClicked = if (canNavigateBack) {
+                        { navController.popBackStack() }
+                    } else null
+                )
             },
             bottomBar = {
                 NavigationBar {
@@ -117,7 +99,13 @@ fun App() {
                 startDestination = Routes.DASHBOARD,
                 modifier = Modifier.padding(innerPadding)
             ) {
-                composable(Routes.DASHBOARD) { DashboardScreen() }
+                composable(Routes.DASHBOARD) {
+                    DashboardScreen(
+                        currentLocation = currentLocation,
+                        locations = locationViewModel.locations,
+                        onLocationSelected = locationViewModel::setLocation
+                    )
+                }
                 composable(Routes.WEEKLY_BASKET) {
                     val viewModel: StaffBasketViewModel = viewModel(
                         factory = BasketViewModelFactory(ProductRepository())
@@ -125,12 +113,16 @@ fun App() {
                     val uiState by viewModel.uiState.collectAsState()
                     BasketScreen(
                         uiState = uiState,
+                        currentLocation = currentLocation,
+                        locations = locationViewModel.locations,
+                        onLocationSelected = locationViewModel::setLocation,
                         onUpdateCount = viewModel::updateActualCount,
                         onExchangeClicked = { productItem ->
                             navController.navigate("${Routes.EXCHANGE_SIMULATOR}/${productItem.id}")
                         }
                     )
                 }
+
                 composable(
                     route = "${Routes.EXCHANGE_SIMULATOR}/{itemId}",
                     arguments = listOf(navArgument("itemId") { type = NavType.StringType })
@@ -138,11 +130,14 @@ fun App() {
                     val viewModel: ExchangeSimulatorViewModel = viewModel(
                         factory = object : ViewModelProvider.Factory {
                             override fun <T : ViewModel> create(modelClass: KClass<T>, extras: CreationExtras): T {
-                                return ExchangeSimulatorViewModel(ProductRepository(), CalculateExchangeUseCase()) as T
+                                return ExchangeSimulatorViewModel(
+                                    ProductRepository(),
+                                    CalculateExchangeUseCase()
+                                ) as T
                             }
                         }
                     )
-                    
+
                     val itemId = backStackEntry.savedStateHandle.get<String>("itemId")
                     LaunchedEffect(itemId) {
                         viewModel.navigateToExchangeSimulatorScreen(itemId)

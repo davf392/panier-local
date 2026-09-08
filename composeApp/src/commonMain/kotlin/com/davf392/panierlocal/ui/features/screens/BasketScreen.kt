@@ -12,6 +12,8 @@ import com.davf392.panierlocal.ui.features.BasketContentSection
 import com.davf392.panierlocal.ui.features.BasketHistoryButton
 import com.davf392.panierlocal.ui.features.WeeklyBasketSection
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
+import com.davf392.panierlocal.ui.features.common.DistributionLocationHeader
+import com.davf392.panierlocal.viewmodel.location.Location
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import com.davf392.panierlocal.ui.features.common.providers.BasketUiStatePreviewProvider
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
@@ -19,19 +21,29 @@ import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
 @Composable
 fun BasketScreen(
     uiState: BasketUiState,
+    currentLocation: Location,
+    locations: List<Location>,
+    onLocationSelected: (Location) -> Unit,
     onExchangeClicked: (ProductItem) -> Unit = {},
     onViewHistoryClicked: () -> Unit = {},
     onUpdateCount: (String, Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val categories = uiState.baskets.map { it.category }.distinct()
-    var selectedCategory by remember { mutableStateOf(categories.firstOrNull() ?: "") }
+    var expanded by remember { mutableStateOf(false) }
     var expandedBasketId by remember { mutableStateOf<String?>(null) }
-    val filteredBaskets = remember(uiState.baskets, selectedCategory) {
-        uiState.baskets.filter { it.category == selectedCategory }
-    }
 
     Column(modifier = modifier.fillMaxSize()) {
+        DistributionLocationHeader(
+            currentLocation = currentLocation,
+            locations = locations,
+            onLocationSelected = onLocationSelected
+        )
+        
+        Spacer(modifier = Modifier.height(8.dp))
+        
+        val categories = uiState.baskets.map { it.category }.distinct()
+        var selectedCategory by remember { mutableStateOf(categories.firstOrNull() ?: "") }
+        
         if (categories.isNotEmpty()) {
             TabRow(selectedTabIndex = categories.indexOf(selectedCategory)) {
                 categories.forEach { category ->
@@ -44,6 +56,8 @@ fun BasketScreen(
             }
         }
         
+        val filteredBaskets = uiState.baskets.filter { it.category == selectedCategory }
+        
         LazyColumn(
             modifier = Modifier.weight(1f),
             contentPadding = PaddingValues(16.dp),
@@ -51,7 +65,6 @@ fun BasketScreen(
         ) {
             items(filteredBaskets.size) { index ->
                 val basket = filteredBaskets[index]
-                val isExpanded = expandedBasketId == basket.id
                 WeeklyBasketSection(
                     basket = basket,
                     isSelected = expandedBasketId == basket.id,
@@ -60,7 +73,7 @@ fun BasketScreen(
                     },
                     onUpdateCount = onUpdateCount
                 )
-                if (isExpanded) {
+                if (expandedBasketId == basket.id) {
                     Spacer(modifier = Modifier.height(8.dp))
                     BasketContentSection(
                         items = basket.productsList,
@@ -83,6 +96,9 @@ fun BasketScreenPreview(
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
             BasketScreen(
                 uiState = uiState,
+                currentLocation = Location("dist-001", "Le Croiseur (Lyon 7)"),
+                locations = emptyList(),
+                onLocationSelected = {},
                 onUpdateCount = { _, _ -> }
             )
         }

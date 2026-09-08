@@ -36,3 +36,5 @@ actual val EditIcon: ImageVector
     get() = Icons.Default.Edit
 actual val LocationOnIcon: ImageVector
     get() = Icons.Default.LocationOn
+actual val ArrowDropDownIcon: ImageVector
+    get() = Icons.Default.ArrowDropDown
