@@ -1,4 +1,4 @@
-package com.davf392.panierlocal.ui.features
+package com.davf392.panierlocal.ui.features.basket
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import com.davf392.panierlocal.data.ProductItem
 import com.davf392.panierlocal.data.ProductUnit
 import com.davf392.panierlocal.ui.RefreshIcon
+import com.davf392.panierlocal.ui.features.common.ProductItemCard
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 

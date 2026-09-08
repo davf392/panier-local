@@ -1,4 +1,4 @@
-package com.davf392.panierlocal.ui.features
+package com.davf392.panierlocal.ui.features.basket
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween

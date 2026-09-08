@@ -1,6 +1,5 @@
 package com.davf392.panierlocal
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -20,7 +19,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.davf392.panierlocal.repository.ProductRepository
 import com.davf392.panierlocal.ui.*
-import com.davf392.panierlocal.ui.features.PanierLocalTopAppBar
+import com.davf392.panierlocal.ui.features.common.PanierLocalTopAppBar
 import com.davf392.panierlocal.ui.features.dashboard.DashboardScreen
 import com.davf392.panierlocal.ui.features.screens.BasketScreen
 import com.davf392.panierlocal.ui.features.screens.ExchangeSimulatorScreen
@@ -60,16 +59,13 @@ fun App() {
     }
 
     val canNavigateBack = currentRoute?.startsWith(Routes.EXCHANGE_SIMULATOR) == true
-    var menuExpanded by remember { mutableStateOf(false) }
 
     PanierLocalTheme {
         Scaffold(
             topBar = {
                 PanierLocalTopAppBar(
                     title = currentTitle,
-                    onBackClicked = if (canNavigateBack) {
-                        { navController.popBackStack() }
-                    } else null
+                    onBackClicked = if (canNavigateBack) { { navController.popBackStack() } } else null
                 )
             },
             bottomBar = {

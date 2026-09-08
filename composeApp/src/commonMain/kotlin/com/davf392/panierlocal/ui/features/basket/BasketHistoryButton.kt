@@ -1,4 +1,4 @@
-package com.davf392.panierlocal.ui.features
+package com.davf392.panierlocal.ui.features.basket
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

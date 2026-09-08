@@ -1,4 +1,4 @@
-package com.davf392.panierlocal.ui.features
+package com.davf392.panierlocal.ui.features.common
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.ExperimentalMaterial3Api

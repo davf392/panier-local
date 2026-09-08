@@ -1,23 +1,32 @@
 package com.davf392.panierlocal.ui.features.screens
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.davf392.panierlocal.data.ExchangeItem
 import com.davf392.panierlocal.data.ProductItem
 import com.davf392.panierlocal.data.ProductUnit
 import com.davf392.panierlocal.state.ExchangeUiState
+import com.davf392.panierlocal.ui.features.exchange.ProductSelectionSection
 import com.davf392.panierlocal.ui.features.exchange.ResultDisplaySection
-import com.davf392.panierlocal.ui.features.exchange_simulator.ProductSelectionSection
-import com.davf392.panierlocal.ui.features.exchange_simulator.WeightDisplaySection
+import com.davf392.panierlocal.ui.features.exchange.WeightDisplaySection
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -34,6 +43,10 @@ fun ExchangeSimulatorScreen(
 ) {
     var step by remember { mutableStateOf(ExchangeStep.SELECT_PRODUCT) }
 
+    val transitionSpec: AnimatedContentTransitionScope<ExchangeStep>.() -> ContentTransform = {
+        fadeIn(animationSpec = tween(300)) togetherWith fadeOut(animationSpec = tween(300))
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -43,15 +56,11 @@ fun ExchangeSimulatorScreen(
             item = uiState.itemToExchange,
             weightGrams = uiState.returnedWeightGrams
         )
-
         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
         AnimatedContent(
             targetState = step,
-            transitionSpec = {
-                fadeIn(animationSpec = tween(300)) togetherWith fadeOut(animationSpec = tween(300))
-            },
-            label = "ExchangeStepAnimation"
+            transitionSpec = transitionSpec
         ) { targetStep ->
             when (targetStep) {
                 ExchangeStep.SELECT_PRODUCT -> {
@@ -64,25 +73,12 @@ fun ExchangeSimulatorScreen(
                     )
                 }
                 ExchangeStep.CONFIRMATION -> {
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        uiState.selectedProduct?.let { selectedProduct ->
-                            ResultDisplaySection(
-                                exchangedProduct = selectedProduct,
-                                maxWeightGrams = uiState.exchangeResult
-                            )
-                        }
-                        
-                        Spacer(modifier = Modifier.height(24.dp))
-                        
-                        OutlinedButton(
-                            onClick = { step = ExchangeStep.SELECT_PRODUCT },
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text("Modifier ma sélection")
-                        }
+                    uiState.selectedProduct?.let { selectedProduct ->
+                        ResultDisplaySection(
+                            exchangedProduct = selectedProduct,
+                            maxWeightGrams = uiState.exchangeResult,
+                            onModifySelection = { step = ExchangeStep.SELECT_PRODUCT }
+                        )
                     }
                 }
             }

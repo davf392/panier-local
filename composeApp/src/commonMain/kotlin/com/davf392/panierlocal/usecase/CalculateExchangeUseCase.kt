@@ -3,31 +3,72 @@ package com.davf392.panierlocal.usecase
 import com.davf392.panierlocal.data.ExchangeItem
 import com.davf392.panierlocal.data.ProductItem
 import com.davf392.panierlocal.data.ProductUnit
+import kotlin.math.floor
 
+/**
+ * Use case responsible for calculating the maximum quantity of an [ExchangeItem]
+ * a user can receive in exchange for a returned [ProductItem].
+ *
+ * The final result is rounded down using [floor] to ensure the calculated exchange
+ * value never exceeds the financial value of the returned item.
+ */
 class CalculateExchangeUseCase {
+
+    /**
+     * Calculates the maximum allowance for the target product ([exchangedAgainst])
+     * based on the monetary value of the returned item ([itemToExchange]).
+     *
+     * @param itemToExchange The original product being returned.
+     * @param exchangedAgainst The new product selected for exchange.
+     * @param returnedQuantity The quantity of the returned item (in pieces, grams, or kilograms).
+     * @return The maximum allowable quantity of the new product (floored to the nearest integer),
+     *         expressed in pieces for [ProductUnit.PIECE] or in grams for [ProductUnit.GRAM] and [ProductUnit.KILOGRAM].
+     */
     fun execute(
         itemToExchange: ProductItem,
         exchangedAgainst: ExchangeItem,
         returnedQuantity: Double
     ): Int {
-        // Price of returning item (e.g., 200g of Oignon @ 1.60/kg = 0.32€)
-        val valueOfReturnedItem: Double = when (itemToExchange.unit) {
-            ProductUnit.PIECE -> returnedQuantity * itemToExchange.pricePerUnit
-            ProductUnit.GRAM -> (returnedQuantity / 1000.0) * itemToExchange.pricePerUnit
-            ProductUnit.KILOGRAM -> returnedQuantity * itemToExchange.pricePerUnit
+        if (exchangedAgainst.pricePerUnit <= 0.0) return 0
+
+        val returnedValue = calculateReturnedValue(item = itemToExchange, quantity = returnedQuantity)
+        val maxQuantity = calculateMaxQuantityToTake(availableValue = returnedValue, targetItem = exchangedAgainst)
+
+        return floor(maxQuantity).toInt()
+    }
+
+    /**
+     * Computes the total monetary value (€) of the returned product based on its measurement unit.
+     */
+    private fun calculateReturnedValue(
+        item: ProductItem,
+        quantity: Double
+    ): Double = when (item.unit) {
+        ProductUnit.PIECE -> quantity * item.pricePerUnit
+        ProductUnit.GRAM -> (quantity / GRAMS_PER_KG) * item.pricePerUnit
+        ProductUnit.KILOGRAM -> quantity * item.pricePerUnit
+        null -> 0.0
+    }
+
+    /**
+     * Calculates the raw quantity of the target product obtainable for the given monetary value.
+     * Weight-based units ([ProductUnit.GRAM] and [ProductUnit.KILOGRAM]) are converted to grams.
+     */
+    private fun calculateMaxQuantityToTake(
+        availableValue: Double,
+        targetItem: ExchangeItem
+    ): Double {
+        val baseQuantity = availableValue / targetItem.pricePerUnit
+
+        return when (targetItem.unit) {
+            ProductUnit.PIECE -> baseQuantity
+            ProductUnit.GRAM,
+            ProductUnit.KILOGRAM -> baseQuantity * GRAMS_PER_KG
             null -> 0.0
         }
+    }
 
-        // Quantity of new item
-        val maxQuantityToTake: Double = when (exchangedAgainst.unit) {
-            ProductUnit.PIECE -> valueOfReturnedItem / exchangedAgainst.pricePerUnit
-            // For KILOGRAM, we want (value / pricePerKg) * 1000 to get grams
-            ProductUnit.GRAM -> (valueOfReturnedItem / exchangedAgainst.pricePerUnit) * 1000.0
-            ProductUnit.KILOGRAM -> (valueOfReturnedItem / exchangedAgainst.pricePerUnit) * 1000.0 // Corrected: return grams for KILOGRAM as well if needed, or stick to kg?
-            null -> 0.0
-        }
-
-        // Rounding logic: Use floor to only count whole units affordable with the returned value
-        return kotlin.math.floor(maxQuantityToTake).toInt()
+    private companion object {
+        private const val GRAMS_PER_KG = 1000.0
     }
 }

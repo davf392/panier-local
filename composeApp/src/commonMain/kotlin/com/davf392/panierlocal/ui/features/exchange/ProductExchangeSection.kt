@@ -1,4 +1,4 @@
-package com.davf392.panierlocal.ui.features.exchange_simulator
+package com.davf392.panierlocal.ui.features.exchange
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

@@ -1,4 +1,4 @@
-package com.davf392.panierlocal.ui.features.exchange_simulator
+package com.davf392.panierlocal.ui.features.exchange
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,15 +10,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.ui.tooling.preview.Preview
-import com.davf392.panierlocal.ui.theme.PanierLocalTheme
+import com.davf392.panierlocal.data.ProductItem
+import com.davf392.panierlocal.data.ProductUnit
 import com.davf392.panierlocal.data.formatWeightDisplay
 import com.davf392.panierlocal.data.toLabel
 import com.davf392.panierlocal.formatDecimal
+import com.davf392.panierlocal.ui.theme.PanierLocalTheme
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun WeightDisplaySection(
-    item: com.davf392.panierlocal.data.ProductItem,
+    item: ProductItem,
     weightGrams: Int,
     modifier: Modifier = Modifier
 ) {
@@ -57,10 +59,10 @@ fun WeightDisplaySection(
 fun WeightDisplaySectionPreview() {
     PanierLocalTheme {
         WeightDisplaySection(
-            item = com.davf392.panierlocal.data.ProductItem(
+            item = ProductItem(
                 name = "Carottes",
                 pricePerUnit = 2.50,
-                unit = com.davf392.panierlocal.data.ProductUnit.GRAM
+                unit = ProductUnit.GRAM
             ),
             weightGrams = 500
         )
