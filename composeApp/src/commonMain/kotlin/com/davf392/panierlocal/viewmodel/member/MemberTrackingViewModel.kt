@@ -43,6 +43,10 @@ class MemberTrackingViewModel(
         updateStatus(memberId, AttendanceStatus.ABSENT)
     }
 
+    fun resetStatus(memberId: String) {
+        updateStatus(memberId, AttendanceStatus.EXPECTED)
+    }
+
     private fun updateStatus(memberId: String, status: AttendanceStatus) {
         viewModelScope.launch {
             repository.updateAttendanceStatus(memberId, distributionId, status)

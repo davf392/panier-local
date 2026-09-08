@@ -25,6 +25,7 @@ fun MemberTrackingScreen(
     uiState: MemberTrackingUiState,
     onCollected: (String) -> Unit,
     onAbsent: (String) -> Unit,
+    onReset: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val distributionContext = LocalDistributionContext.current
@@ -40,7 +41,8 @@ fun MemberTrackingScreen(
         MemberTrackingScreenContent(
             uiState = uiState,
             onCollected = onCollected,
-            onAbsent = onAbsent
+            onAbsent = onAbsent,
+            onReset = onReset
         )
     }
 }
@@ -49,7 +51,8 @@ fun MemberTrackingScreen(
 fun MemberTrackingScreenContent(
     uiState: MemberTrackingUiState,
     onCollected: (String) -> Unit,
-    onAbsent: (String) -> Unit
+    onAbsent: (String) -> Unit,
+    onReset: (String) -> Unit
 ) {
     if (uiState.isLoading) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -65,7 +68,8 @@ fun MemberTrackingScreenContent(
                 MemberAttendanceItem(
                     attendance = attendance,
                     onCollected = { onCollected(attendance.member.id) },
-                    onAbsent = { onAbsent(attendance.member.id) }
+                    onAbsent = { onAbsent(attendance.member.id) },
+                    onReset = { onReset(attendance.member.id) }
                 )
             }
         }
@@ -95,6 +99,7 @@ private fun MemberTrackingScreenPreview() {
     MemberTrackingScreenContent(
         uiState = mockUiState,
         onCollected = {},
-        onAbsent = {}
+        onAbsent = {},
+        onReset = {}
     )
 }

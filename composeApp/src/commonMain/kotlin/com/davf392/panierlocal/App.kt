@@ -149,7 +149,8 @@ fun App() {
                         MemberTrackingScreen(
                             uiState = uiState,
                             onCollected = viewModel::markAsCollected,
-                            onAbsent = viewModel::markAsAbsent
+                            onAbsent = viewModel::markAsAbsent,
+                            onReset = viewModel::resetStatus
                         )
                     }
 

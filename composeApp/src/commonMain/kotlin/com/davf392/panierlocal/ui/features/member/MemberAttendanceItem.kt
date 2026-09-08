@@ -8,6 +8,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,13 +20,18 @@ import com.davf392.panierlocal.data.member.Member
 import com.davf392.panierlocal.data.member.MemberAttendance
 import com.davf392.panierlocal.ui.CheckIcon
 import com.davf392.panierlocal.ui.CloseIcon
+import com.davf392.panierlocal.ui.RefreshIcon
+import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 
 @Composable
 fun MemberAttendanceItem(
     attendance: MemberAttendance,
     onCollected: () -> Unit,
-    onAbsent: () -> Unit
+    onAbsent: () -> Unit,
+    onReset: () -> Unit
 ) {
     Card(
         modifier = Modifier.fillMaxWidth()
@@ -39,13 +45,11 @@ fun MemberAttendanceItem(
                     text = "${attendance.member.firstName} ${attendance.member.lastName}",
                     style = MaterialTheme.typography.titleMedium
                 )
-                if (attendance.member.needsRenewal || attendance.member.hasArrears) {
-                    Text(
-                        text = "Cotisation à régulariser",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.error
-                    )
-                }
+                Text(
+                    text = attendance.member.notes ?: "",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.error
+                )
             }
 
             if (attendance.status == AttendanceStatus.EXPECTED) {
@@ -56,7 +60,11 @@ fun MemberAttendanceItem(
                     Icon(CloseIcon, contentDescription = "Absent", tint = Color.Red)
                 }
             } else {
+                IconButton(onClick = onReset) {
+                    Icon(RefreshIcon, contentDescription = "Annuler", tint = MaterialTheme.colorScheme.primary)
+                }
                 Text(
+                    modifier = Modifier.padding(start = 8.dp),
                     text = attendance.status.name,
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -68,15 +76,63 @@ fun MemberAttendanceItem(
 
 @Preview
 @Composable
-private fun MemberAttendanceItemPreview() {
-    MemberAttendanceItem(
-        attendance = MemberAttendance(
-            "d1",
-            Member("m1", "Alice", "Dupont", "alice@example.com", true, false),
-            listOf("b1"),
-            AttendanceStatus.EXPECTED
+private fun MemberAttendanceItemPreview(
+    @PreviewParameter(MemberAttendancePreviewParameterProvider::class) attendance: MemberAttendance
+) {
+    PanierLocalTheme {
+        Surface {
+            MemberAttendanceItem(
+                attendance = attendance,
+                onCollected = {},
+                onAbsent = {},
+                onReset = {}
+            )
+        }
+    }
+}
+
+class MemberAttendancePreviewParameterProvider : PreviewParameterProvider<MemberAttendance> {
+    override val values: Sequence<MemberAttendance> = sequenceOf(
+        MemberAttendance(
+            distributionId = "d1",
+            member = Member(
+                id = "m1",
+                firstName = "Camille",
+                lastName = "Benali",
+                email = "camillebenali@example.com",
+                needsRenewal = true,
+                hasArrears = false,
+                notes = "Cotisation à régulariser"
+            ),
+            basketFormulaIds = listOf("b1"),
+            status = AttendanceStatus.EXPECTED
         ),
-        onCollected = {},
-        onAbsent = {}
+        MemberAttendance(
+            distributionId = "d1",
+            member = Member(
+                id = "m1",
+                firstName = "Yassin",
+                lastName = "Traoré",
+                email = "yassintraore@example.com",
+                needsRenewal = true,
+                hasArrears = false,
+                notes = "Abonnement à renouveler"
+            ),
+            basketFormulaIds = listOf("b1"),
+            status = AttendanceStatus.ABSENT
+        ),
+        MemberAttendance(
+            distributionId = "d1",
+            member = Member(
+                id = "m1",
+                firstName = "Léa",
+                lastName = "Chen",
+                email = "leachen@example.com",
+                needsRenewal = true,
+                hasArrears = false
+            ),
+            basketFormulaIds = listOf("b1"),
+            status = AttendanceStatus.COLLECTED
+        )
     )
 }

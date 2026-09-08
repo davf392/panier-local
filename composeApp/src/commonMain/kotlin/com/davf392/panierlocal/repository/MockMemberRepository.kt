@@ -11,21 +11,43 @@ class MockMemberRepository : IMemberRepository {
         listOf(
             MemberAttendance(
                 "dist-001",
-                Member("m1", "Alice", "Dupont", "alice@example.com", false, false),
-                listOf("b1"),
-                AttendanceStatus.EXPECTED
+                Member(
+                    id = "m1",
+                    firstName = "Alice",
+                    lastName = "Dupont",
+                    email = "alice@example.com",
+                    needsRenewal = false,
+                    hasArrears = false,
+                    notes = "Cotisation à régulariser"
+                ),
+                basketFormulaIds = listOf(element = "b1"),
+                status = AttendanceStatus.EXPECTED
             ),
             MemberAttendance(
-                "dist-001",
-                Member("m2", "Bob", "Martin", "bob@example.com", true, false),
-                listOf("b2"),
-                AttendanceStatus.EXPECTED
+                distributionId = "dist-001",
+                member = Member(
+                    id = "m2",
+                    firstName = "Bob",
+                    lastName = "Martin",
+                    email = "bob@example.com",
+                    needsRenewal = true,
+                    hasArrears = false
+                ),
+                basketFormulaIds = listOf("b2"),
+                status = AttendanceStatus.EXPECTED
             ),
             MemberAttendance(
-                "dist-001",
-                Member("m3", "Charlie", "Durand", "charlie@example.com", false, true),
-                listOf("b1", "b3"),
-                AttendanceStatus.EXPECTED
+                distributionId = "dist-001",
+                member = Member(
+                    id = "m3",
+                    firstName = "Charlie",
+                    lastName = "Durand",
+                    email = "charlie@example.com",
+                    needsRenewal = false,
+                    hasArrears = true
+                ),
+                basketFormulaIds = listOf("b1", "b3"),
+                status = AttendanceStatus.EXPECTED
             )
         )
     )
