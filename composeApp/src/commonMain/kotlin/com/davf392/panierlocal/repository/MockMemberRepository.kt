@@ -20,7 +20,7 @@ class MockMemberRepository : IMemberRepository {
                     needsRenewal = false,
                     hasArrears = false,
                 ),
-                basketFormulaIds = listOf(element = "b1"),
+                basketFormulaIds = listOf(element = "o5"),
                 status = AttendanceStatus.EXPECTED
             ),
             MemberAttendance(
@@ -35,7 +35,7 @@ class MockMemberRepository : IMemberRepository {
                     needsRenewal = false,
                     hasArrears = false
                 ),
-                basketFormulaIds = listOf("b2"),
+                basketFormulaIds = listOf("f4"),
                 status = AttendanceStatus.EXPECTED
             ),
             MemberAttendance(
@@ -49,7 +49,7 @@ class MockMemberRepository : IMemberRepository {
                     needsRenewal = false,
                     hasArrears = true
                 ),
-                basketFormulaIds = listOf("b1", "b3"),
+                basketFormulaIds = listOf("v2", "f2"),
                 status = AttendanceStatus.EXPECTED
             )
         )
@@ -86,5 +86,9 @@ class MockMemberRepository : IMemberRepository {
                 attendance
             }
         }
+    }
+
+    override suspend fun getAttendanceForMember(memberId: String, distributionId: String): MemberAttendance? {
+        return _attendances.value.find { it.member.id == memberId && it.distributionId == distributionId }
     }
 }

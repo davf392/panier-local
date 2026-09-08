@@ -8,4 +8,5 @@ interface IMemberRepository {
     suspend fun updateAttendanceStatus(memberId: String, distributionId: String, status: com.davf392.panierlocal.data.member.AttendanceStatus)
     suspend fun getMemberById(memberId: String): com.davf392.panierlocal.data.member.Member?
     suspend fun updateMemberNotes(memberId: String, notes: String)
+    suspend fun getAttendanceForMember(memberId: String, distributionId: String): com.davf392.panierlocal.data.member.MemberAttendance?
 }

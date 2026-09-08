@@ -17,6 +17,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.davf392.panierlocal.data.member.AttendanceStatus
 import com.davf392.panierlocal.repository.MockMemberRepository
 import com.davf392.panierlocal.repository.ProductRepository
 import com.davf392.panierlocal.ui.*
@@ -49,6 +50,10 @@ data class BottomNavItem(
 
 @Composable
 fun App() {
+    // Shared repositories to maintain state consistency
+    val memberRepository = remember { MockMemberRepository() }
+    val productRepository = remember { ProductRepository() }
+    
     val navController = rememberNavController()
     val locationViewModel: LocationViewModel = viewModel()
     val currentLocation by locationViewModel.currentLocation.collectAsState()
@@ -142,7 +147,7 @@ fun App() {
                             factory = object : ViewModelProvider.Factory {
                                 override fun <T : ViewModel> create(modelClass: KClass<T>, extras: CreationExtras): T {
                                     return MemberTrackingViewModel(
-                                        MockMemberRepository(),
+                                        memberRepository,
                                         currentLocation.id
                                     ) as T
                                 }
@@ -170,9 +175,10 @@ fun App() {
                             factory = object : ViewModelProvider.Factory {
                                 override fun <T : ViewModel> create(modelClass: KClass<T>, extras: CreationExtras): T {
                                     return MemberDetailsViewModel(
-                                        MockMemberRepository(),
-                                        ProductRepository(),
-                                        memberId
+                                        memberRepository,
+                                        productRepository,
+                                        memberId,
+                                        currentLocation.id
                                     ) as T
                                 }
                             }
@@ -185,6 +191,10 @@ fun App() {
                                 MemberDetailsScreen(
                                     member = member,
                                     formulas = uiState.formulas,
+                                    status = uiState.attendanceStatus ?: AttendanceStatus.EXPECTED,
+                                    onCollected = viewModel::markAsCollected,
+                                    onAbsent = viewModel::markAsAbsent,
+                                    onReset = viewModel::resetStatus,
                                     onSaveNotes = viewModel::updateNotes
                                 )
                             }
