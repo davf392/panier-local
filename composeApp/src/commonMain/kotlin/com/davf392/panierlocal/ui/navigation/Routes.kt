@@ -6,6 +6,7 @@ object Routes {
     const val DASHBOARD = "dashboard"
     const val WEEKLY_BASKET = "weekly_basket"
     const val MEMBERS = "members"
+    const val MEMBER_DETAILS = "member_details"
     const val EXCHANGE_SIMULATOR = "exchange_simulator"
     const val BASKET_HISTORY = "basket_history"
 }

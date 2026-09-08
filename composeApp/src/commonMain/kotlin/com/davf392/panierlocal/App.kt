@@ -24,6 +24,7 @@ import com.davf392.panierlocal.ui.composition.DistributionContext
 import com.davf392.panierlocal.ui.composition.LocalDistributionContext
 import com.davf392.panierlocal.ui.features.common.PanierLocalTopAppBar
 import com.davf392.panierlocal.ui.features.dashboard.DashboardScreen
+import com.davf392.panierlocal.ui.features.member.MemberDetailsScreen
 import com.davf392.panierlocal.ui.features.member.MemberTrackingScreen
 import com.davf392.panierlocal.ui.features.screens.BasketScreen
 import com.davf392.panierlocal.ui.features.screens.ExchangeSimulatorScreen
@@ -33,6 +34,7 @@ import com.davf392.panierlocal.usecase.CalculateExchangeUseCase
 import com.davf392.panierlocal.viewmodel.BasketViewModelFactory
 import com.davf392.panierlocal.viewmodel.exchange.ExchangeSimulatorViewModel
 import com.davf392.panierlocal.viewmodel.location.LocationViewModel
+import com.davf392.panierlocal.viewmodel.member.MemberDetailsViewModel
 import com.davf392.panierlocal.viewmodel.member.MemberTrackingViewModel
 import com.davf392.panierlocal.viewmodel.staff_basket.StaffBasketViewModel
 import com.davf392.panierlocal.viewmodel.staff_dashboard.DashboardViewModel
@@ -67,7 +69,8 @@ fun App() {
         else -> "AMAP"
     }
 
-    val canNavigateBack = currentRoute?.startsWith(Routes.EXCHANGE_SIMULATOR) == true
+    val canNavigateBack = currentRoute?.startsWith(Routes.EXCHANGE_SIMULATOR) == true || 
+                          currentRoute?.startsWith(Routes.MEMBER_DETAILS) == true
 
     PanierLocalTheme {
         val distributionContext = remember(currentLocation, locationViewModel.locations) {
@@ -150,8 +153,41 @@ fun App() {
                             uiState = uiState,
                             onCollected = viewModel::markAsCollected,
                             onAbsent = viewModel::markAsAbsent,
-                            onReset = viewModel::resetStatus
+                            onReset = viewModel::resetStatus,
+                            onSearchQueryChanged = viewModel::onSearchQueryChanged,
+                            onMemberClick = { member -> 
+                                navController.navigate("${Routes.MEMBER_DETAILS}/${member.id}")
+                            }
                         )
+                    }
+
+                    composable(
+                        route = "${Routes.MEMBER_DETAILS}/{memberId}",
+                        arguments = listOf(navArgument("memberId") { type = NavType.StringType })
+                    ) { backStackEntry ->
+                        val memberId = backStackEntry.savedStateHandle.get<String>("memberId") ?: ""
+                        val viewModel: MemberDetailsViewModel = viewModel(
+                            factory = object : ViewModelProvider.Factory {
+                                override fun <T : ViewModel> create(modelClass: KClass<T>, extras: CreationExtras): T {
+                                    return MemberDetailsViewModel(
+                                        MockMemberRepository(),
+                                        memberId
+                                    ) as T
+                                }
+                            }
+                        )
+                        val uiState by viewModel.uiState.collectAsState()
+                        if (uiState.isLoading) {
+                            Text("Chargement...")
+                        } else {
+                            uiState.member?.let { member ->
+                                MemberDetailsScreen(
+                                    member = member,
+                                    onNavigateBack = { navController.popBackStack() },
+                                    onSaveNotes = viewModel::updateNotes
+                                )
+                            }
+                        }
                     }
 
                     composable(

@@ -12,8 +12,19 @@ import kotlinx.coroutines.launch
 
 data class MemberTrackingUiState(
     val attendances: List<MemberAttendance> = emptyList(),
+    val searchQuery: String = "",
     val isLoading: Boolean = false
-)
+) {
+    val filteredAttendances: List<MemberAttendance>
+        get() = if (searchQuery.isBlank()) {
+            attendances
+        } else {
+            attendances.filter {
+                it.member.firstName.contains(searchQuery, ignoreCase = true) ||
+                        it.member.lastName.contains(searchQuery, ignoreCase = true)
+            }
+        }
+}
 
 class MemberTrackingViewModel(
     private val repository: IMemberRepository,
@@ -30,9 +41,13 @@ class MemberTrackingViewModel(
     private fun loadAttendances() {
         viewModelScope.launch {
             repository.getAttendancesForDistribution(distributionId).collect { list ->
-                _uiState.value = MemberTrackingUiState(attendances = list, isLoading = false)
+                _uiState.value = _uiState.value.copy(attendances = list, isLoading = false)
             }
         }
+    }
+
+    fun onSearchQueryChanged(query: String) {
+        _uiState.value = _uiState.value.copy(searchQuery = query)
     }
 
     fun markAsCollected(memberId: String) {

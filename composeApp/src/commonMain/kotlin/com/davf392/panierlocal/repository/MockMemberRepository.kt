@@ -70,4 +70,18 @@ class MockMemberRepository : IMemberRepository {
             }
         }
     }
+
+    override suspend fun getMemberById(memberId: String): Member? {
+        return _attendances.value.find { it.member.id == memberId }?.member
+    }
+
+    override suspend fun updateMemberNotes(memberId: String, notes: String) {
+        _attendances.value = _attendances.value.map { attendance ->
+            if (attendance.member.id == memberId) {
+                attendance.copy(member = attendance.member.copy(notes = notes))
+            } else {
+                attendance
+            }
+        }
+    }
 }

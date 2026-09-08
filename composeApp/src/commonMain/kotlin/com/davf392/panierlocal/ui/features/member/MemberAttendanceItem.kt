@@ -1,5 +1,6 @@
 package com.davf392.panierlocal.ui.features.member
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,10 +32,11 @@ fun MemberAttendanceItem(
     attendance: MemberAttendance,
     onCollected: () -> Unit,
     onAbsent: () -> Unit,
-    onReset: () -> Unit
+    onReset: () -> Unit,
+    onMemberClick: () -> Unit
 ) {
     Card(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth().clickable(onClick = onMemberClick)
     ) {
         Row(
             modifier = Modifier.padding(16.dp),
@@ -45,11 +47,13 @@ fun MemberAttendanceItem(
                     text = "${attendance.member.firstName} ${attendance.member.lastName}",
                     style = MaterialTheme.typography.titleMedium
                 )
-                Text(
-                    text = attendance.member.notes ?: "",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.error
-                )
+                if (attendance.member.needsRenewal || attendance.member.hasArrears || !attendance.member.notes.isNullOrBlank()) {
+                    Text(
+                        text = attendance.member.notes ?: "Cotisation à régulariser",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
             }
 
             if (attendance.status == AttendanceStatus.EXPECTED) {
@@ -85,54 +89,9 @@ private fun MemberAttendanceItemPreview(
                 attendance = attendance,
                 onCollected = {},
                 onAbsent = {},
-                onReset = {}
+                onReset = {},
+                onMemberClick = {}
             )
         }
     }
-}
-
-class MemberAttendancePreviewParameterProvider : PreviewParameterProvider<MemberAttendance> {
-    override val values: Sequence<MemberAttendance> = sequenceOf(
-        MemberAttendance(
-            distributionId = "d1",
-            member = Member(
-                id = "m1",
-                firstName = "Camille",
-                lastName = "Benali",
-                email = "camillebenali@example.com",
-                needsRenewal = true,
-                hasArrears = false,
-                notes = "Cotisation à régulariser"
-            ),
-            basketFormulaIds = listOf("b1"),
-            status = AttendanceStatus.EXPECTED
-        ),
-        MemberAttendance(
-            distributionId = "d1",
-            member = Member(
-                id = "m1",
-                firstName = "Yassin",
-                lastName = "Traoré",
-                email = "yassintraore@example.com",
-                needsRenewal = true,
-                hasArrears = false,
-                notes = "Abonnement à renouveler"
-            ),
-            basketFormulaIds = listOf("b1"),
-            status = AttendanceStatus.ABSENT
-        ),
-        MemberAttendance(
-            distributionId = "d1",
-            member = Member(
-                id = "m1",
-                firstName = "Léa",
-                lastName = "Chen",
-                email = "leachen@example.com",
-                needsRenewal = true,
-                hasArrears = false
-            ),
-            basketFormulaIds = listOf("b1"),
-            status = AttendanceStatus.COLLECTED
-        )
-    )
 }
