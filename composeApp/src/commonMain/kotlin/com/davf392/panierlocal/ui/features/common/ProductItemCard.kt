@@ -62,15 +62,7 @@ fun ProductItemCard(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            // Partie gauche (emoji et nom du produit)
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    text = item.emoji,
-                    fontSize = 24.sp,
-                    modifier = Modifier.padding(end = 12.dp),
-                    color = contentColor
-                )
-                Spacer(modifier = Modifier.width(16.dp))
                 Text(
                     text = item.name,
                     fontSize = 16.sp,
@@ -78,8 +70,6 @@ fun ProductItemCard(
                     color = contentColor
                 )
             }
-
-            // Le slot de contenu (le contenu à droite)
             content(contentColor)
         }
     }
@@ -91,7 +81,6 @@ fun ProductItemCardPreview() {
     PanierLocalTheme {
         val item = ProductItem(
             name = "Concombre",
-            emoji = "🥒",
             quantity = 300.0,
             unit = ProductUnit.GRAM,
             pricePerUnit = 3.4,

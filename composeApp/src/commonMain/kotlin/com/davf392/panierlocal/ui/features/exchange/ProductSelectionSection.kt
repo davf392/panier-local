@@ -69,8 +69,8 @@ fun ProductSelectionSection() {
     PanierLocalTheme {
         ProductSelectionSection(
             availableProducts = listOf(
-                ExchangeItem(name = "Patate", emoji = "🥔", pricePerUnit = 0.7),
-                ExchangeItem(name = "Gingembre", emoji = "🫚", pricePerUnit = 3.4),
+                ExchangeItem(name = "Patate", pricePerUnit = 0.7),
+                ExchangeItem(name = "Gingembre", pricePerUnit = 3.4),
             ),
             onProductSelected = {},
             modifier = Modifier.background(

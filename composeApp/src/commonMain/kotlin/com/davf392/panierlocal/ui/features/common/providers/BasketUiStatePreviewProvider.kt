@@ -25,7 +25,6 @@ class BasketUiStatePreviewProvider : PreviewParameterProvider<BasketUiState> {
                             unit = ProductUnit.PIECE,
                             pricePerUnit = 2.50,
                             totalPrice = 2.50,
-                            emoji = "🥬"
                         ),
                         ProductItem(
                             id = "2",
@@ -34,7 +33,6 @@ class BasketUiStatePreviewProvider : PreviewParameterProvider<BasketUiState> {
                             unit = ProductUnit.PIECE,
                             pricePerUnit = 1.80,
                             totalPrice = 1.80,
-                            emoji = "🥒"
                         ),
                         ProductItem(
                             id = "3",
@@ -43,7 +41,6 @@ class BasketUiStatePreviewProvider : PreviewParameterProvider<BasketUiState> {
                             unit = ProductUnit.GRAM,
                             pricePerUnit = 1.60,
                             totalPrice = 1.60,
-                            emoji = "🧅"
                         ),
                         ProductItem(
                             id = "4",
@@ -52,7 +49,6 @@ class BasketUiStatePreviewProvider : PreviewParameterProvider<BasketUiState> {
                             unit = ProductUnit.GRAM,
                             pricePerUnit = 1.80,
                             totalPrice = 1.80,
-                            emoji = "🍅"
                         ),
                         ProductItem(
                             id = "5",
@@ -61,7 +57,6 @@ class BasketUiStatePreviewProvider : PreviewParameterProvider<BasketUiState> {
                             unit = ProductUnit.GRAM,
                             pricePerUnit = 3.20,
                             totalPrice = 3.20,
-                            emoji = "🍆"
                         )
                     )
                 ),
@@ -80,7 +75,6 @@ class BasketUiStatePreviewProvider : PreviewParameterProvider<BasketUiState> {
                             unit = ProductUnit.GRAM,
                             pricePerUnit = 3.0,
                             totalPrice = 1.50,
-                            emoji = "🍌"
                         ),
                         ProductItem(
                             id = "7",
@@ -89,7 +83,6 @@ class BasketUiStatePreviewProvider : PreviewParameterProvider<BasketUiState> {
                             unit = ProductUnit.KILOGRAM,
                             pricePerUnit = 3.50,
                             totalPrice = 3.50,
-                            emoji = "🍎"
                         ),
                         ProductItem(
                             id = "8",
@@ -98,7 +91,6 @@ class BasketUiStatePreviewProvider : PreviewParameterProvider<BasketUiState> {
                             unit = ProductUnit.GRAM,
                             pricePerUnit = 7.0,
                             totalPrice = 3.50,
-                            emoji = "🍐"
                         )
                     )
                 )

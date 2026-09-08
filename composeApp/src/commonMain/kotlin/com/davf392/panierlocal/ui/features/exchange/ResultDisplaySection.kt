@@ -1,4 +1,4 @@
-package com.davf392.panierlocal.ui.features.exchange_simulator
+package com.davf392.panierlocal.ui.features.exchange
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -89,7 +89,6 @@ private fun ResultDisplaySectionSuccessPreview() {
             exchangedProduct = ExchangeItem(
                 id = "2",
                 name = "Pommes de terre",
-                emoji = "🥔",
                 unit = ProductUnit.GRAM,
                 pricePerUnit = 2.0
             ),
@@ -106,7 +105,6 @@ private fun ResultDisplaySectionInsufficientPreview() {
             exchangedProduct = ExchangeItem(
                 id = "2",
                 name = "Pommes de terre",
-                emoji = "🥔",
                 unit = ProductUnit.GRAM,
                 pricePerUnit = 2.0
             ),

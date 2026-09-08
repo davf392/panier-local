@@ -6,7 +6,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.davf392.panierlocal.data.ExchangeItem
 import com.davf392.panierlocal.data.toLabel
-import com.davf392.panierlocal.ui.features.ProductGridItemCard
+import com.davf392.panierlocal.formatDecimal
+import com.davf392.panierlocal.ui.features.common.ProductGridItemCard
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -22,7 +23,7 @@ fun ProductExchangeSection(
         isSelected = isSelected
     ) { contentColor ->
         Text(
-            text = "${com.davf392.panierlocal.formatDecimal(item.pricePerUnit, 2)} €/${item.unit.toLabel(1.0)}",
+            text = "${formatDecimal(item.pricePerUnit, 2)} €/${item.unit.toLabel(1.0)}",
             fontSize = 14.sp,
             fontWeight = FontWeight.Normal,
             color = contentColor
@@ -37,7 +38,6 @@ fun ProductExchangeSectionPreview() {
         ProductExchangeSection(
             item = ExchangeItem(
                 name = "Patate",
-                emoji = "🥔",
                 pricePerUnit = 0.7
             ),
             onProductSelected = {}

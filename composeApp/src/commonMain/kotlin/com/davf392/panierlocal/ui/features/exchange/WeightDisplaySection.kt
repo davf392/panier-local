@@ -24,8 +24,9 @@ fun WeightDisplaySection(
 ) {
     Column(modifier = modifier.padding(12.dp)) {
         Text(
+            modifier = Modifier.padding(start = 10.dp),
             text = "Produit rendu :",
-            style = MaterialTheme.typography.labelLarge,
+            style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 

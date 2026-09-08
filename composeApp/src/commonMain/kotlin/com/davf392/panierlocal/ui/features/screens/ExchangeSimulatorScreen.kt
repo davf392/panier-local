@@ -15,8 +15,8 @@ import com.davf392.panierlocal.data.ExchangeItem
 import com.davf392.panierlocal.data.ProductItem
 import com.davf392.panierlocal.data.ProductUnit
 import com.davf392.panierlocal.state.ExchangeUiState
+import com.davf392.panierlocal.ui.features.exchange.ResultDisplaySection
 import com.davf392.panierlocal.ui.features.exchange_simulator.ProductSelectionSection
-import com.davf392.panierlocal.ui.features.exchange_simulator.ResultDisplaySection
 import com.davf392.panierlocal.ui.features.exchange_simulator.WeightDisplaySection
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -44,7 +44,7 @@ fun ExchangeSimulatorScreen(
             weightGrams = uiState.returnedWeightGrams
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
         AnimatedContent(
             targetState = step,
@@ -106,15 +106,14 @@ fun ExchangeSimulatorScreenPreview() {
                         quantity = 500.0,
                         unit = ProductUnit.PIECE,
                         pricePerUnit = 3.0,
-                        totalPrice = 1.50,
-                        emoji = "🍌"
+                        totalPrice = 1.50
                     ),
                     availableProducts = listOf(
-                        ExchangeItem(id = "7", name = "Pomme", emoji = "🍎", pricePerUnit = 3.50),
-                        ExchangeItem(id = "8", name = "Poire", emoji = "🍐", pricePerUnit = 3.50)
+                        ExchangeItem(id = "7", name = "Pomme", pricePerUnit = 3.50),
+                        ExchangeItem(id = "8", name = "Poire", pricePerUnit = 3.50)
                     ),
                     returnedWeightGrams = 150,
-                    selectedProduct = ExchangeItem(id = "7", name = "Pomme", emoji = "🍎", pricePerUnit = 3.50),
+                    selectedProduct = ExchangeItem(id = "7", name = "Pomme", pricePerUnit = 3.50),
                     exchangeResult = 200
                 ),
                 onProductSelected = {},

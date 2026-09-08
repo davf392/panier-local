@@ -1,4 +1,4 @@
-package com.davf392.panierlocal.ui.features
+package com.davf392.panierlocal.ui.features.common
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -74,7 +74,6 @@ private fun ProductGridItemCardPreview() {
     PanierLocalTheme {
         val item = ExchangeItem(
             name = "Concombre",
-            emoji = "🥒",
             pricePerUnit = 3.4
         )
         Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {

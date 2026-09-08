@@ -66,7 +66,6 @@ fun ProductBasketSectionPreview() {
     PanierLocalTheme {
         val sampleProductItem = ProductItem(
             name = "Concombre",
-            emoji = "🥒",
             quantity = 1.0,
             unit = ProductUnit.PIECE,
             pricePerUnit = 1.80,
