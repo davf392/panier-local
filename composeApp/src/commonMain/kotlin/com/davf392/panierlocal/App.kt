@@ -17,10 +17,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.davf392.panierlocal.repository.MockMemberRepository
 import com.davf392.panierlocal.repository.ProductRepository
 import com.davf392.panierlocal.ui.*
 import com.davf392.panierlocal.ui.features.common.PanierLocalTopAppBar
 import com.davf392.panierlocal.ui.features.dashboard.DashboardScreen
+import com.davf392.panierlocal.ui.features.member.MemberTrackingScreen
 import com.davf392.panierlocal.ui.features.screens.BasketScreen
 import com.davf392.panierlocal.ui.features.screens.ExchangeSimulatorScreen
 import com.davf392.panierlocal.ui.navigation.Routes
@@ -29,6 +31,7 @@ import com.davf392.panierlocal.usecase.CalculateExchangeUseCase
 import com.davf392.panierlocal.viewmodel.BasketViewModelFactory
 import com.davf392.panierlocal.viewmodel.exchange.ExchangeSimulatorViewModel
 import com.davf392.panierlocal.viewmodel.location.LocationViewModel
+import com.davf392.panierlocal.viewmodel.member.MemberTrackingViewModel
 import com.davf392.panierlocal.viewmodel.staff_basket.StaffBasketViewModel
 import kotlin.reflect.KClass
 
@@ -46,6 +49,7 @@ fun App() {
     val items = listOf(
         BottomNavItem(Routes.DASHBOARD, "Dashboard", DashboardIcon),
         BottomNavItem(Routes.WEEKLY_BASKET, "Paniers", BasketIcon),
+        BottomNavItem(Routes.MEMBERS, "Adhérents", PersonIcon),
     )
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -54,6 +58,7 @@ fun App() {
     val currentTitle = when {
         currentRoute == Routes.DASHBOARD -> "Dashboard"
         currentRoute == Routes.WEEKLY_BASKET -> "Paniers"
+        currentRoute == Routes.MEMBERS -> "Adhérents"
         currentRoute?.startsWith(Routes.EXCHANGE_SIMULATOR) == true -> "Simulateur"
         else -> "AMAP"
     }
@@ -116,6 +121,20 @@ fun App() {
                             navController.navigate("${Routes.EXCHANGE_SIMULATOR}/${productItem.id}")
                         }
                     )
+                }
+
+                composable(Routes.MEMBERS) {
+                    val viewModel: MemberTrackingViewModel = viewModel(
+                        factory = object : ViewModelProvider.Factory {
+                            override fun <T : ViewModel> create(modelClass: KClass<T>, extras: CreationExtras): T {
+                                return MemberTrackingViewModel(
+                                    MockMemberRepository(),
+                                    currentLocation.id
+                                ) as T
+                            }
+                        }
+                    )
+                    MemberTrackingScreen(viewModel = viewModel)
                 }
 
                 composable(

@@ -38,3 +38,9 @@ actual val LocationOnIcon: ImageVector
     get() = Icons.Default.LocationOn
 actual val ArrowDropDownIcon: ImageVector
     get() = Icons.Default.ArrowDropDown
+actual val CheckIcon: ImageVector
+    get() = Icons.Default.Check
+actual val CloseIcon: ImageVector
+    get() = Icons.Default.Close
+actual val PersonIcon: ImageVector
+    get() = Icons.Default.Person
