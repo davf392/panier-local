@@ -47,9 +47,9 @@ fun MemberAttendanceItem(
                     text = "${attendance.member.firstName} ${attendance.member.lastName}",
                     style = MaterialTheme.typography.titleMedium
                 )
-                if (attendance.member.needsRenewal || attendance.member.hasArrears || !attendance.member.notes.isNullOrBlank()) {
+                attendance.member.notes?.let {
                     Text(
-                        text = attendance.member.notes ?: "Cotisation à régulariser",
+                        text = attendance.member.notes,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.error
                     )

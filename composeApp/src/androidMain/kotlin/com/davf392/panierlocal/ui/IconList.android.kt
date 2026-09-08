@@ -44,3 +44,7 @@ actual val CloseIcon: ImageVector
     get() = Icons.Default.Close
 actual val PersonIcon: ImageVector
     get() = Icons.Default.Person
+actual val PhoneIcon: ImageVector
+    get() = Icons.Default.Phone
+actual val MailIcon: ImageVector
+    get() = Icons.Default.Mail

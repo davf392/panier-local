@@ -16,9 +16,9 @@ class MockMemberRepository : IMemberRepository {
                     firstName = "Alice",
                     lastName = "Dupont",
                     email = "alice@example.com",
+                    phoneNumber = "0677445533",
                     needsRenewal = false,
                     hasArrears = false,
-                    notes = "Cotisation à régulariser"
                 ),
                 basketFormulaIds = listOf(element = "b1"),
                 status = AttendanceStatus.EXPECTED
@@ -30,7 +30,9 @@ class MockMemberRepository : IMemberRepository {
                     firstName = "Bob",
                     lastName = "Martin",
                     email = "bob@example.com",
-                    needsRenewal = true,
+                    phoneNumber = "0687192837",
+                    notes = "Cotisation à régulariser",
+                    needsRenewal = false,
                     hasArrears = false
                 ),
                 basketFormulaIds = listOf("b2"),
@@ -43,6 +45,7 @@ class MockMemberRepository : IMemberRepository {
                     firstName = "Charlie",
                     lastName = "Durand",
                     email = "charlie@example.com",
+                    phoneNumber = "0688330923",
                     needsRenewal = false,
                     hasArrears = true
                 ),

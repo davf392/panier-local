@@ -21,3 +21,5 @@ expect val ArrowDropDownIcon: ImageVector
 expect val CheckIcon: ImageVector
 expect val CloseIcon: ImageVector
 expect val PersonIcon: ImageVector
+expect val PhoneIcon: ImageVector
+expect val MailIcon: ImageVector

@@ -103,13 +103,13 @@ private fun MemberTrackingScreenPreview() {
         attendances = listOf(
             MemberAttendance(
                 "d1",
-                Member("m1", "Alice", "Dupont", "alice@example.com", false, false),
+                Member("m1", "Alice", "Dupont", "alice@example.com", "067733445522", false, false),
                 listOf("b1"),
                 AttendanceStatus.EXPECTED
             ),
             MemberAttendance(
                 "d1",
-                Member("m2", "Bob", "Martin", "bob@example.com", true, false),
+                Member("m2", "Bob", "Martin", "bob@example.com", "067788993322", true, false),
                 listOf("b2"),
                 AttendanceStatus.EXPECTED
             )

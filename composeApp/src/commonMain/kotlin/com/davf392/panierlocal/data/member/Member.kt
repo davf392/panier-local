@@ -5,6 +5,7 @@ data class Member(
     val firstName: String,
     val lastName: String,
     val email: String,
+    val phoneNumber: String? = null,
     val needsRenewal: Boolean, // Abonnement web à relancer
     val hasArrears: Boolean,    // Dette monétaire
     val notes: String? = null

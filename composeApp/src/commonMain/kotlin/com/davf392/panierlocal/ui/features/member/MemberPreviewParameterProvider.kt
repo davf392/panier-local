@@ -10,6 +10,7 @@ class MemberPreviewParameterProvider : PreviewParameterProvider<Member> {
             firstName = "Camille",
             lastName = "Benali",
             email = "camille.benali@example.com",
+            phoneNumber = "0601020304",
             needsRenewal = false,
             hasArrears = false,
             notes = "Cotisation à jour, panier sans gluten."
@@ -19,6 +20,7 @@ class MemberPreviewParameterProvider : PreviewParameterProvider<Member> {
             firstName = "Yassin",
             lastName = "Traoré",
             email = "yassin.traore@example.com",
+            phoneNumber = "0612345678",
             needsRenewal = true,
             hasArrears = true,
             notes = "Chèque de régularisation en attente."

@@ -171,6 +171,7 @@ fun App() {
                                 override fun <T : ViewModel> create(modelClass: KClass<T>, extras: CreationExtras): T {
                                     return MemberDetailsViewModel(
                                         MockMemberRepository(),
+                                        ProductRepository(),
                                         memberId
                                     ) as T
                                 }
@@ -183,13 +184,12 @@ fun App() {
                             uiState.member?.let { member ->
                                 MemberDetailsScreen(
                                     member = member,
-                                    onNavigateBack = { navController.popBackStack() },
+                                    formulas = uiState.formulas,
                                     onSaveNotes = viewModel::updateNotes
                                 )
                             }
                         }
-                    }
-
+                        }
                     composable(
                         route = "${Routes.EXCHANGE_SIMULATOR}/{itemId}",
                         arguments = listOf(navArgument("itemId") { type = NavType.StringType })
