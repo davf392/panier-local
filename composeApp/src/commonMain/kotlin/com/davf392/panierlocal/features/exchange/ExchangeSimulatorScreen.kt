@@ -21,7 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.davf392.panierlocal.core.designsystem.theme.PanierLocalTheme
-import com.davf392.panierlocal.data.ExchangeItem
+import com.davf392.panierlocal.data.Product
 import com.davf392.panierlocal.data.ProductItem
 import com.davf392.panierlocal.data.ProductUnit
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -34,7 +34,7 @@ enum class ExchangeStep {
 @Composable
 fun ExchangeSimulatorScreen(
     uiState: ExchangeUiState,
-    onProductSelected: (ExchangeItem) -> Unit = {},
+    onProductSelected: (Product) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     var step by remember { mutableStateOf(ExchangeStep.SELECT_PRODUCT) }
@@ -118,18 +118,19 @@ fun ExchangeSimulatorScreenDarkPreview() {
 
 private val PreviewUiState = ExchangeUiState(
     itemToExchange = ProductItem(
-        id = "6",
-        name = "Banane",
+        product = Product(
+            id = "6",
+            name = "Banane",
+            unit = ProductUnit.PIECE,
+            pricePerUnit = 3.0,
+        ),
         quantity = 500.0,
-        unit = ProductUnit.PIECE,
-        pricePerUnit = 3.0,
-        totalPrice = 1.50
     ),
     availableProducts = listOf(
-        ExchangeItem(id = "7", name = "Pomme", pricePerUnit = 3.50),
-        ExchangeItem(id = "8", name = "Poire", pricePerUnit = 3.50)
+        Product(id = "7", name = "Pomme", pricePerUnit = 3.50),
+        Product(id = "8", name = "Poire", pricePerUnit = 3.50)
     ),
     returnedWeightGrams = 150,
-    selectedProduct = ExchangeItem(id = "7", name = "Pomme", pricePerUnit = 3.50),
+    selectedProduct = Product(id = "7", name = "Pomme", pricePerUnit = 3.50),
     exchangeResult = 200
 )

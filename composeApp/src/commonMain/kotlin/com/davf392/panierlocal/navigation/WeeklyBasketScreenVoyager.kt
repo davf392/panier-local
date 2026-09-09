@@ -23,7 +23,7 @@ object WeeklyBasketScreenVoyager : Screen {
         BasketScreen(
             uiState = uiState,
             onExchangeClicked = { productItem ->
-                navigator.push(ExchangeSimulatorScreenVoyager(productItem.id))
+                navigator.push(ExchangeSimulatorScreenVoyager(productItem.product.id))
             }
         )
     }

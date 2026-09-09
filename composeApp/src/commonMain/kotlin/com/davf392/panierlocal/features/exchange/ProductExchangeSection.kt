@@ -9,13 +9,13 @@ import com.davf392.panierlocal.core.designsystem.ProductGridItemCard
 import com.davf392.panierlocal.core.designsystem.theme.PanierLocalTheme
 import com.davf392.panierlocal.core.utils.formatDecimal
 import com.davf392.panierlocal.core.utils.toLabel
-import com.davf392.panierlocal.data.ExchangeItem
+import com.davf392.panierlocal.data.Product
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun ProductExchangeSection(
-    item: ExchangeItem = ExchangeItem(),
-    onProductSelected: (ExchangeItem) -> Unit = {},
+    item: Product = Product(),
+    onProductSelected: (Product) -> Unit = {},
     isSelected: Boolean = false,
 ) {
     ProductGridItemCard(
@@ -54,7 +54,7 @@ fun ProductExchangeSectionDarkPreview() {
     }
 }
 
-private val mockItem = ExchangeItem(
+private val mockItem = Product(
     name = "Patate",
     pricePerUnit = 0.7
 )

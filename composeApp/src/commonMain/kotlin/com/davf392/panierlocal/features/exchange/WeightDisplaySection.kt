@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.davf392.panierlocal.data.Product
 import com.davf392.panierlocal.data.ProductItem
 import com.davf392.panierlocal.data.ProductUnit
 import com.davf392.panierlocal.core.designsystem.theme.PanierLocalTheme
@@ -43,12 +44,12 @@ fun WeightDisplaySection(
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = "${formatWeightDisplay(weightGrams, item.unit)} de ${item.name.lowercase()}",
+                    text = "${formatWeightDisplay(weightGrams, item.product.unit)} de ${item.product.name.lowercase()}",
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Text(
-                    text = "${formatDecimal(item.pricePerUnit, 2)} € / ${item.unit.toLabel(1.0)}",
+                    text = "${formatDecimal(item.product.pricePerUnit, 2)} € / ${item.product.unit.toLabel(1.0)}",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
                 )
@@ -92,9 +93,13 @@ private fun WeightDisplaySectionDarkPreview(
 }
 
 private val mockItem = ProductItem(
-    name = "Carottes",
-    pricePerUnit = 2.50,
-    unit = ProductUnit.GRAM
+    product = Product(
+        id = "mock",
+        name = "Carottes",
+        pricePerUnit = 2.50,
+        unit = ProductUnit.GRAM
+    ),
+    quantity = 1.0
 )
 
 class WeightDisplayPreviewParameterProvider : PreviewParameterProvider<Int> {

@@ -2,7 +2,7 @@ package com.davf392.panierlocal.features.exchange
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.davf392.panierlocal.data.ExchangeItem
+import com.davf392.panierlocal.data.Product
 import com.davf392.panierlocal.data.ProductItem
 import com.davf392.panierlocal.repository.MockProductRepository
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +28,7 @@ class ExchangeSimulatorViewModel(
         }
     }
 
-    fun selectProduct(product: ExchangeItem) {
+    fun selectProduct(product: Product) {
         _exchangeUiState.update { it?.copy(selectedProduct = product) }
         calculateResult()
     }

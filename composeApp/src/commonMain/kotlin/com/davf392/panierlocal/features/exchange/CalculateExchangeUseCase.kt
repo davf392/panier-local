@@ -1,12 +1,12 @@
 package com.davf392.panierlocal.features.exchange
 
-import com.davf392.panierlocal.data.ExchangeItem
+import com.davf392.panierlocal.data.Product
 import com.davf392.panierlocal.data.ProductItem
 import com.davf392.panierlocal.data.ProductUnit
 import kotlin.math.floor
 
 /**
- * Use case responsible for calculating the maximum quantity of an [ExchangeItem]
+ * Use case responsible for calculating the maximum quantity of an [Product]
  * a user can receive in exchange for a returned [ProductItem].
  *
  * The final result is rounded down using [floor] to ensure the calculated exchange
@@ -26,7 +26,7 @@ class CalculateExchangeUseCase {
      */
     fun execute(
         itemToExchange: ProductItem,
-        exchangedAgainst: ExchangeItem,
+        exchangedAgainst: Product,
         returnedQuantity: Double
     ): Int {
         if (exchangedAgainst.pricePerUnit <= 0.0) return 0
@@ -43,10 +43,10 @@ class CalculateExchangeUseCase {
     private fun calculateReturnedValue(
         item: ProductItem,
         quantity: Double
-    ): Double = when (item.unit) {
-        ProductUnit.PIECE -> quantity * item.pricePerUnit
-        ProductUnit.GRAM -> (quantity / GRAMS_PER_KG) * item.pricePerUnit
-        ProductUnit.KILOGRAM -> quantity * item.pricePerUnit
+    ): Double = when (item.product.unit) {
+        ProductUnit.PIECE -> quantity * item.product.pricePerUnit
+        ProductUnit.GRAM -> (quantity / GRAMS_PER_KG) * item.product.pricePerUnit
+        ProductUnit.KILOGRAM -> quantity * item.product.pricePerUnit
         null -> 0.0
     }
 
@@ -56,7 +56,7 @@ class CalculateExchangeUseCase {
      */
     private fun calculateMaxQuantityToTake(
         availableValue: Double,
-        targetItem: ExchangeItem
+        targetItem: Product
     ): Double {
         val baseQuantity = availableValue / targetItem.pricePerUnit
 

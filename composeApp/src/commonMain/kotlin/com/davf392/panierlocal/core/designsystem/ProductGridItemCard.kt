@@ -21,7 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.davf392.panierlocal.data.ExchangeItem
+import com.davf392.panierlocal.data.Product
 import com.davf392.panierlocal.core.designsystem.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
@@ -29,7 +29,7 @@ import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 
 @Composable
 fun ProductGridItemCard(
-    item: ExchangeItem,
+    item: Product,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
     isSelected: Boolean = false,
@@ -75,16 +75,16 @@ fun ProductGridItemCard(
 
 @Composable
 private fun ProductGridItemCardPreviewContent(isSelected: Boolean) {
-    val previewExchangeItem = ExchangeItem(
+    val previewProduct = Product(
         name = "Concombre",
         pricePerUnit = 3.4
     )
     ProductGridItemCard(
-        item = previewExchangeItem,
+        item = previewProduct,
         isSelected = isSelected
     ) { contentColor ->
         Text(
-            text = "${previewExchangeItem.pricePerUnit} €/kg",
+            text = "${previewProduct.pricePerUnit} €/kg",
             style = MaterialTheme.typography.bodyMedium,
             color = contentColor
         )

@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.davf392.panierlocal.data.Product
 import com.davf392.panierlocal.data.ProductItem
 import com.davf392.panierlocal.data.ProductUnit
 import com.davf392.panierlocal.core.designsystem.RefreshIcon
@@ -34,7 +35,7 @@ fun ProductBasketSection(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = item.name,
+            text = item.product.name,
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.weight(1f)
         )
@@ -91,9 +92,10 @@ fun ProductBasketSectionDarkPreview() {
 }
 
 private val mockProductItem = ProductItem(
-    name = "Concombre",
+    product = Product(
+        name = "Concombre",
+        unit = ProductUnit.PIECE,
+        pricePerUnit = 1.80,
+    ),
     quantity = 1.0,
-    unit = ProductUnit.PIECE,
-    pricePerUnit = 1.80,
-    totalPrice = 1.80,
 )

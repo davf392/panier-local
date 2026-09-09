@@ -14,6 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.davf392.panierlocal.core.designsystem.theme.PanierLocalTheme
+import com.davf392.panierlocal.data.Product
 import com.davf392.panierlocal.data.ProductItem
 import com.davf392.panierlocal.data.ProductUnit
 import com.davf392.panierlocal.data.WeeklyBasketItem
@@ -84,8 +85,8 @@ private fun WeeklyBasketDeliverySectionDarkPreview(
 }
 
 private val mockProducts = listOf(
-    ProductItem(name = "Salade", quantity = 1.0, unit = ProductUnit.PIECE, pricePerUnit = 2.5, totalPrice = 2.5),
-    ProductItem(name = "Carottes", quantity = 1.0, unit = ProductUnit.KILOGRAM, pricePerUnit = 2.0, totalPrice = 2.0)
+    ProductItem(product = Product(name = "Salade", unit = ProductUnit.PIECE, pricePerUnit = 2.5), quantity = 1.0),
+    ProductItem(product = Product(name = "Carottes", unit = ProductUnit.KILOGRAM, pricePerUnit = 2.0), quantity = 1.0)
 )
 
 private val mockWeeklyBasketItems = listOf(

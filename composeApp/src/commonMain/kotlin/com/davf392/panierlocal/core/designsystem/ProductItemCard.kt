@@ -22,7 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.davf392.panierlocal.core.designsystem.theme.PanierLocalTheme
-import com.davf392.panierlocal.data.CommonProduct
+import com.davf392.panierlocal.data.Product
 import com.davf392.panierlocal.data.ProductItem
 import com.davf392.panierlocal.data.ProductUnit
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -31,7 +31,7 @@ import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 
 @Composable
 fun ProductItemCard(
-    item: CommonProduct,
+    item: ProductItem,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
     isSelected: Boolean = false,
@@ -64,7 +64,7 @@ fun ProductItemCard(
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = item.name,
+                    text = item.product.name,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium,
                     color = contentColor
@@ -80,11 +80,13 @@ fun ProductItemCard(
 @Composable
 private fun ProductItemCardPreviewContent(isSelected: Boolean) {
     val previewProductItem = ProductItem(
-        name = "Concombre",
-        quantity = 300.0,
-        unit = ProductUnit.GRAM,
-        pricePerUnit = 3.4,
-        totalPrice = 4.6
+        product = Product(
+            id = "1",
+            name = "Concombre",
+            unit = ProductUnit.GRAM,
+            pricePerUnit = 3.4
+        ),
+        quantity = 300.0
     )
     ProductItemCard(
         item = previewProductItem,

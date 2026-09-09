@@ -23,7 +23,7 @@ import com.davf392.panierlocal.core.designsystem.theme.PanierLocalTheme
 import com.davf392.panierlocal.core.utils.formatDecimal
 import com.davf392.panierlocal.core.utils.formatWeightDisplay
 import com.davf392.panierlocal.core.utils.toLabel
-import com.davf392.panierlocal.data.ExchangeItem
+import com.davf392.panierlocal.data.Product
 import com.davf392.panierlocal.data.ProductUnit
 import org.jetbrains.compose.resources.stringResource
 import panierlocal.composeapp.generated.resources.Res
@@ -34,7 +34,7 @@ import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 
 @Composable
 fun ResultDisplaySection(
-    exchangedProduct: ExchangeItem,
+    exchangedProduct: Product,
     maxWeightGrams: Int,
     onModifySelection: () -> Unit = {},
     modifier: Modifier = Modifier
@@ -112,7 +112,7 @@ fun ResultDisplaySection(
 @Composable
 private fun ResultDisplaySectionPreviewContent(maxWeightGrams: Int) {
     ResultDisplaySection(
-        exchangedProduct = ExchangeItem(
+        exchangedProduct = Product(
             id = "2",
             name = "Pommes de terre",
             unit = ProductUnit.GRAM,

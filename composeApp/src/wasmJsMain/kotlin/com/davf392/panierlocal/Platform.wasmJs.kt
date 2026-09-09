@@ -1,7 +1,3 @@
-package com.davf392.panierlocal
+package com.davf392.panierlocal.core.platform
 
-class WasmPlatform: Platform {
-    override val name: String = "Web with Kotlin/Wasm"
-}
-
-actual fun getPlatform(): Platform = WasmPlatform()
+actual fun getPlatform(): Platform = Platform.Web

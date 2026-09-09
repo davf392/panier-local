@@ -45,9 +45,9 @@ class BasketViewModel(
         if (itemId == null) return null
 
         allBaskets.forEach { basket ->
-            basket.productsList.forEach { product ->
-                if (product.id == itemId) {
-                    return product
+            basket.productsList.forEach { item ->
+                if (item.product.id == itemId) {
+                    return item
                 }
             }
         }

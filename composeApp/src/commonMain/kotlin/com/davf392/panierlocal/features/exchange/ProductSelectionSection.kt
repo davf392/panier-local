@@ -19,14 +19,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.davf392.panierlocal.data.ExchangeItem
+import com.davf392.panierlocal.data.Product
 import com.davf392.panierlocal.core.designsystem.theme.PanierLocalTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun ProductSelectionSection(
-    availableProducts: List<ExchangeItem>,
-    onProductSelected: (ExchangeItem) -> Unit = {},
+    availableProducts: List<Product>,
+    onProductSelected: (Product) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     var selectedExchangedItem by remember { mutableStateOf<String?>(null) }
@@ -86,6 +86,6 @@ fun ProductSelectionSectionDarkPreview() {
 
 
 private val mockProducts = listOf(
-    ExchangeItem(name = "Patate", pricePerUnit = 0.7),
-    ExchangeItem(name = "Gingembre", pricePerUnit = 3.4),
+    Product(name = "Patate", pricePerUnit = 0.7),
+    Product(name = "Gingembre", pricePerUnit = 3.4),
 )
