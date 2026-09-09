@@ -1,23 +1,22 @@
-# Panier Local
+# Panier Local [![Kotlin Version](https://img.shields.io/badge/kotlin-2.2.0-blue.svg)](https://kotlinlang.org) [![API](https://img.shields.io/badge/API-35%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=35) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-Panier Local est une application mobile et bureau dédiée à la gestion et à la logistique opérationnelle des AMAP (Associations pour le Maintien d’une Agriculture Paysanne).
+Cette application a été conçue pour faciliter la gestion, la communication et la logistique des AMAP (Associations pour le Maintien d’une Agriculture Paysanne) en mettant en relation adhérents, producteurs et bénévoles.
+Elle vise à réduire les frictions administratives et à favoriser l’autonomie via une interface simple et intuitive.
 
-L'objectif est d'optimiser le temps passé par les salariés et les bénévoles lors des permanences de distribution, tout en offrant une interface fluide pour le suivi des adhérents.
-
-## 🚀 Fonctionnalités du Prototype
+## Fonctionnalités du Prototype
 
 Le prototype actuel implémente les fonctionnalités suivantes :
 
-- 📊 **Tableau de bord : Visualisation en direct du point de collecte actif (alertes, ratio paniers récupérés/attendus, bénévoles/astreintes).
-- 🧺 **Consultation des Paniers** : Affichage détaillé du contenu des différentes formules de paniers selon le lieu de distribution.
-- 👥 **Suivi des Présences Adhérents** : Liste des passages adhérents, pointage en temps réel et outils de relance.
-- ⚖️ **Simulateur d'Échanges** : Calcul des équivalences poids/valeur entre produits lors des échanges sur place.
+- **Tableau de bord** : Visualisation en direct du point de collecte actif (alertes, ratio paniers récupérés/attendus, bénévoles/astreintes).
+- **Consultation des Paniers** : Affichage détaillé du contenu des différentes formules de paniers selon le lieu de distribution.
+- **Suivi des Présences Adhérents** : Liste des passages adhérents, pointage en temps réel et outils de relance.
+- **Simulateur d'Échanges** : Calcul des équivalences poids/valeur entre produits lors des échanges sur place.
 
 ## 🛠️ Architecture Technique
 
 - **Langage** : Kotlin Multiplatform (KMP)
 - **UI** : Compose Multiplatform
-- **Modèle** : Clean Architecture orientée Features, utilisant les Coroutines et Flows pour la réactivité.
+- **Modèle** : Clean Architecture utilisant les Coroutines et Flows pour la réactivité.
 
 ## 💻 Instructions de lancement
 
