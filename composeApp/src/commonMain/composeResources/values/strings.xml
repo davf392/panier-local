@@ -23,6 +23,7 @@
     <string name="notes_placeholder">Notes (dettes, remarques…)</string>
     <string name="description">Description</string>
     <string name="collected">Récupéré</string>
+    <string name="absent">Absent</string>
 
     <!-- Attendance Status -->
     <string name="status_expected">Attendu</string>
