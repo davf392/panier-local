@@ -1,4 +1,4 @@
-package com.davf392.panierlocal.ui.navigation
+package com.davf392.panierlocal.navigation
 
 import androidx.compose.runtime.Composable
 

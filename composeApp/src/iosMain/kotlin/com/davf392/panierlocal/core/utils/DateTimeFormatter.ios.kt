@@ -1,4 +1,4 @@
-package com.davf392.panierlocal.ui.utils
+package com.davf392.panierlocal.core.utils
 
 import kotlinx.datetime.LocalDateTime
 import platform.Foundation.*
