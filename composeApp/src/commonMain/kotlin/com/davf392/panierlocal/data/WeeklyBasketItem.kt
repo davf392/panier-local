@@ -1,7 +1,5 @@
 package com.davf392.panierlocal.data
 
-import com.davf392.panierlocal.formatDecimal
-
 data class WeeklyBasketItem(
     val id: String = "",
     val distributionId: String = "",

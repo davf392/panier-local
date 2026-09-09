@@ -1,6 +1,7 @@
 package com.davf392.panierlocal.data
 
-import com.davf392.panierlocal.formatDecimal
+import com.davf392.panierlocal.core.utils.formatDecimal
+import com.davf392.panierlocal.core.utils.toLabel
 
 data class ProductItem(
     override val id: String = "",
