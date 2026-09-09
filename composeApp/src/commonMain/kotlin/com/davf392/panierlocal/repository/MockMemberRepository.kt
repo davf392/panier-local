@@ -51,6 +51,20 @@ class MockMemberRepository : IMemberRepository {
                 ),
                 basketFormulaIds = listOf("v2", "f2"),
                 status = AttendanceStatus.EXPECTED
+            ),
+            MemberAttendance(
+                distributionId = "dist-002",
+                member = Member(
+                    id = "m4",
+                    firstName = "David",
+                    lastName = "Petit",
+                    email = "david@example.com",
+                    phoneNumber = "0612345678",
+                    needsRenewal = false,
+                    hasArrears = false
+                ),
+                basketFormulaIds = listOf("o5"),
+                status = AttendanceStatus.EXPECTED
             )
         )
     )

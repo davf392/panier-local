@@ -4,10 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.davf392.panierlocal.data.ProductItem
 import com.davf392.panierlocal.data.WeeklyBasketItem
-import com.davf392.panierlocal.repository.ProductRepository
+import com.davf392.panierlocal.repository.MockProductRepository
 import com.davf392.panierlocal.state.BasketUiState
 import com.davf392.panierlocal.state.ExchangeUiState
-import com.davf392.panierlocal.usecase.CalculateExchangeUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +14,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class BasketViewModel(
-    private val productRepository: ProductRepository,
+    private val productRepository: MockProductRepository,
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow(BasketUiState())

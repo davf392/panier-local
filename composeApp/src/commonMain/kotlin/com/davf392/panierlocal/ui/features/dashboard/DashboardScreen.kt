@@ -16,6 +16,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.davf392.panierlocal.data.DistributionLocation
 import com.davf392.panierlocal.data.staff_dashboard.AlertPriority
 import com.davf392.panierlocal.data.staff_dashboard.BasketFormulaSummary
 import com.davf392.panierlocal.data.staff_dashboard.DashboardAlert
@@ -28,7 +29,6 @@ import com.davf392.panierlocal.ui.features.dashboard.components.DistributionHead
 import com.davf392.panierlocal.ui.features.dashboard.components.PermanenceCard
 import com.davf392.panierlocal.ui.features.dashboard.components.ReportAlertDialog
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
-import com.davf392.panierlocal.viewmodel.location.Location
 import com.davf392.panierlocal.viewmodel.staff_dashboard.DashboardEvent
 import com.davf392.panierlocal.viewmodel.staff_dashboard.DistributionUiState
 import kotlinx.coroutines.launch
@@ -159,10 +159,10 @@ private val previewDistributionUiState = DistributionUiState(
 )
 
 private val previewDistributionContext = DistributionContext(
-    currentLocation = Location("dist-001", "Le Croiseur (Lyon 7)"),
+    currentLocation = DistributionLocation("dist-001", "Le Croiseur (Lyon 7)"),
     locations = listOf(
-        Location("dist-001", "Le Croiseur (Lyon 7)"),
-        Location("dist-002", "Cabanes (Lyon 8)")
+        DistributionLocation("dist-001", "Le Croiseur (Lyon 7)"),
+        DistributionLocation("dist-002", "Cabanes (Lyon 8)")
     ),
     onLocationSelected = {},
     startTime = LocalDateTime(2026, 9, 8, 14, 0),

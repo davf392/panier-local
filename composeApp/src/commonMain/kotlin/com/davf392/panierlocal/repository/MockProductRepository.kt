@@ -5,7 +5,7 @@ import com.davf392.panierlocal.data.ProductItem
 import com.davf392.panierlocal.data.ProductUnit
 import com.davf392.panierlocal.data.WeeklyBasketItem
 
-class ProductRepository: IProductRepository {
+class MockProductRepository: IProductRepository {
 
     override suspend fun getWeeklyBasketList(): List<WeeklyBasketItem> {
         return listOf(

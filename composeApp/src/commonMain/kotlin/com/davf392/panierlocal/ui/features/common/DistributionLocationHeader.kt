@@ -24,17 +24,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.davf392.panierlocal.data.DistributionLocation
 import com.davf392.panierlocal.ui.LocationOnIcon
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
-import com.davf392.panierlocal.viewmodel.location.Location
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DistributionLocationHeader(
-    currentLocation: Location,
-    locations: List<Location>,
-    onLocationSelected: (Location) -> Unit,
+    currentLocation: DistributionLocation,
+    locations: List<DistributionLocation>,
+    onLocationSelected: (DistributionLocation) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -126,8 +126,8 @@ private fun DistributionLocationHeaderDarkPreview() {
     }
 }
 
-private val previewLocation = Location("dist-001", "Le Croiseur (Lyon 7)")
+private val previewLocation = DistributionLocation("dist-001", "Le Croiseur (Lyon 7)")
 private val previewLocations = listOf(
-    Location("dist-001", "Le Croiseur (Lyon 7)"),
-    Location("dist-002", "Cabanes (Lyon 8)")
+    DistributionLocation("dist-001", "Le Croiseur (Lyon 7)"),
+    DistributionLocation("dist-002", "Cabanes (Lyon 8)")
 )

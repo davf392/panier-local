@@ -20,10 +20,10 @@ import androidx.compose.ui.unit.dp
 import com.davf392.panierlocal.data.member.AttendanceStatus
 import com.davf392.panierlocal.data.member.Member
 import com.davf392.panierlocal.data.member.MemberAttendance
+import com.davf392.panierlocal.state.MemberTrackingUiState
 import com.davf392.panierlocal.ui.composition.LocalDistributionContext
 import com.davf392.panierlocal.ui.features.dashboard.components.DistributionHeaderCard
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
-import com.davf392.panierlocal.viewmodel.member.MemberTrackingUiState
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable

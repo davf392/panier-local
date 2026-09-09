@@ -2,8 +2,7 @@ package com.davf392.panierlocal.viewmodel.staff_basket
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.davf392.panierlocal.data.WeeklyBasketItem
-import com.davf392.panierlocal.repository.ProductRepository
+import com.davf392.panierlocal.repository.MockProductRepository
 import com.davf392.panierlocal.state.BasketUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,7 +11,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class StaffBasketViewModel(
-    private val repository: ProductRepository = ProductRepository()
+    private val repository: MockProductRepository = MockProductRepository()
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(BasketUiState())

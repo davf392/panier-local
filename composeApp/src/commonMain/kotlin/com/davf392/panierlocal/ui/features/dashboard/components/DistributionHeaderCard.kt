@@ -25,10 +25,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.davf392.panierlocal.data.DistributionLocation
 import com.davf392.panierlocal.ui.LocationOnIcon
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
 import com.davf392.panierlocal.ui.utils.formatDateTime
-import com.davf392.panierlocal.viewmodel.location.Location
 import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -37,9 +37,9 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun DistributionHeaderCard(
     startTime: LocalDateTime,
     endTime: LocalDateTime,
-    currentLocation: Location,
-    locations: List<Location>,
-    onLocationSelected: (Location) -> Unit,
+    currentLocation: DistributionLocation,
+    locations: List<DistributionLocation>,
+    onLocationSelected: (DistributionLocation) -> Unit,
     modifier: Modifier = Modifier
 ) {
     // ... (rest of the code unchanged) ...
@@ -168,8 +168,8 @@ private fun DistributionHeaderCardDarkPreview() {
 
 private val mockStartTime = LocalDateTime(2026, 9, 8, 14, 0)
 private val mockEndTime = LocalDateTime(2026, 9, 8, 18, 0)
-private val mockCurrentLocation = Location("dist-001", "Le Croiseur (Lyon 7)")
+private val mockCurrentLocation = DistributionLocation("dist-001", "Le Croiseur (Lyon 7)")
 private val mockLocations = listOf(
-    Location("dist-001", "Le Croiseur (Lyon 7)"),
-    Location("dist-002", "Cabanes (Lyon 8)")
+    DistributionLocation("dist-001", "Le Croiseur (Lyon 7)"),
+    DistributionLocation("dist-002", "Cabanes (Lyon 8)")
 )

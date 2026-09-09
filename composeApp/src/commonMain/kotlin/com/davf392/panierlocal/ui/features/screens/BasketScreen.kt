@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.davf392.panierlocal.data.DistributionLocation
 import com.davf392.panierlocal.data.ProductItem
 import com.davf392.panierlocal.state.BasketUiState
 import com.davf392.panierlocal.ui.composition.DistributionContext
@@ -28,7 +29,6 @@ import com.davf392.panierlocal.ui.features.basket.WeeklyBasketSection
 import com.davf392.panierlocal.ui.features.common.providers.BasketUiStatePreviewProvider
 import com.davf392.panierlocal.ui.features.dashboard.components.DistributionHeaderCard
 import com.davf392.panierlocal.ui.theme.PanierLocalTheme
-import com.davf392.panierlocal.viewmodel.location.Location
 import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
@@ -144,7 +144,7 @@ fun BasketScreenDarkPreview(
 
 
 private val MockDistributionContext = DistributionContext(
-    currentLocation = Location("dist-001", "Le Croiseur (Lyon 7)"),
+    currentLocation = DistributionLocation("dist-001", "Le Croiseur (Lyon 7)"),
     locations = emptyList(),
     onLocationSelected = {},
     startTime = LocalDateTime(2026, 9, 8, 14, 0),

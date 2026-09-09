@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.davf392.panierlocal.data.ExchangeItem
 import com.davf392.panierlocal.data.ProductItem
-import com.davf392.panierlocal.repository.ProductRepository
+import com.davf392.panierlocal.repository.MockProductRepository
 import com.davf392.panierlocal.state.ExchangeUiState
 import com.davf392.panierlocal.usecase.CalculateExchangeUseCase
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ExchangeSimulatorViewModel(
-    private val repository: ProductRepository,
+    private val repository: MockProductRepository,
     private val calculateExchangeUseCase: CalculateExchangeUseCase
 ) : ViewModel() {
 

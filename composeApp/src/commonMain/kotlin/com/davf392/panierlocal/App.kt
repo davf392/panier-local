@@ -19,7 +19,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.davf392.panierlocal.data.member.AttendanceStatus
 import com.davf392.panierlocal.repository.MockMemberRepository
-import com.davf392.panierlocal.repository.ProductRepository
+import com.davf392.panierlocal.repository.MockProductRepository
 import com.davf392.panierlocal.ui.*
 import com.davf392.panierlocal.ui.composition.DistributionContext
 import com.davf392.panierlocal.ui.composition.LocalDistributionContext
@@ -52,7 +52,7 @@ data class BottomNavItem(
 fun App() {
     // Shared repositories to maintain state consistency
     val memberRepository = remember { MockMemberRepository() }
-    val productRepository = remember { ProductRepository() }
+    val productRepository = remember { MockProductRepository() }
     
     val navController = rememberNavController()
     val locationViewModel: LocationViewModel = viewModel()
@@ -133,7 +133,7 @@ fun App() {
                     }
                     composable(Routes.WEEKLY_BASKET) {
                         val viewModel: StaffBasketViewModel = viewModel(
-                            factory = BasketViewModelFactory(ProductRepository())
+                            factory = BasketViewModelFactory(MockProductRepository())
                         )
                         val uiState by viewModel.uiState.collectAsState()
                         BasketScreen(
@@ -146,6 +146,7 @@ fun App() {
 
                     composable(Routes.MEMBERS) {
                         val viewModel: MemberTrackingViewModel = viewModel(
+                            key = currentLocation.id,
                             factory = object : ViewModelProvider.Factory {
                                 override fun <T : ViewModel> create(modelClass: KClass<T>, extras: CreationExtras): T {
                                     return MemberTrackingViewModel(
@@ -210,7 +211,7 @@ fun App() {
                             factory = object : ViewModelProvider.Factory {
                                 override fun <T : ViewModel> create(modelClass: KClass<T>, extras: CreationExtras): T {
                                     return ExchangeSimulatorViewModel(
-                                        ProductRepository(),
+                                        MockProductRepository(),
                                         CalculateExchangeUseCase()
                                     ) as T
                                 }

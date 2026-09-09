@@ -3,28 +3,12 @@ package com.davf392.panierlocal.viewmodel.member
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.davf392.panierlocal.data.member.AttendanceStatus
-import com.davf392.panierlocal.data.member.MemberAttendance
 import com.davf392.panierlocal.repository.IMemberRepository
+import com.davf392.panierlocal.state.MemberTrackingUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-
-data class MemberTrackingUiState(
-    val attendances: List<MemberAttendance> = emptyList(),
-    val searchQuery: String = "",
-    val isLoading: Boolean = false
-) {
-    val filteredAttendances: List<MemberAttendance>
-        get() = if (searchQuery.isBlank()) {
-            attendances
-        } else {
-            attendances.filter {
-                it.member.firstName.contains(searchQuery, ignoreCase = true) ||
-                        it.member.lastName.contains(searchQuery, ignoreCase = true)
-            }
-        }
-}
 
 class MemberTrackingViewModel(
     private val repository: IMemberRepository,

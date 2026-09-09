@@ -1,22 +1,23 @@
 package com.davf392.panierlocal.viewmodel.location
 
 import androidx.lifecycle.ViewModel
+import com.davf392.panierlocal.data.DistributionLocation
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-data class Location(val id: String, val name: String)
+
 
 class LocationViewModel : ViewModel() {
     val locations = listOf(
-        Location("dist-001", "Le Croiseur (Lyon 7)"),
-        Location("dist-002", "Cabanes (Lyon 8)")
+        DistributionLocation("dist-001", "Le Croiseur (Lyon 7)"),
+        DistributionLocation("dist-002", "Cabanes (Lyon 8)")
     )
     
     private val _currentLocation = MutableStateFlow(locations.first())
-    val currentLocation: StateFlow<Location> = _currentLocation.asStateFlow()
+    val currentLocation: StateFlow<DistributionLocation> = _currentLocation.asStateFlow()
     
-    fun setLocation(location: Location) {
+    fun setLocation(location: DistributionLocation) {
         _currentLocation.value = location
     }
 }
