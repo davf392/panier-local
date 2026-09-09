@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 fun AppNavigation(
     modifier: Modifier = Modifier
 ) {
-    AppNavigationContent(modifier = modifier)
+    PlatformAppNavigationContent(modifier = modifier)
 }
 
 @Composable
