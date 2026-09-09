@@ -37,15 +37,24 @@ import androidx.compose.ui.unit.dp
 import com.davf392.panierlocal.data.WeeklyBasketItem
 import com.davf392.panierlocal.data.member.AttendanceStatus
 import com.davf392.panierlocal.data.member.Member
-import com.davf392.panierlocal.data.member.toFrench
+import com.davf392.panierlocal.data.member.toResource
 import com.davf392.panierlocal.core.designsystem.CheckIcon
 import com.davf392.panierlocal.core.designsystem.CloseIcon
 import com.davf392.panierlocal.core.designsystem.MailIcon
 import com.davf392.panierlocal.core.designsystem.PhoneIcon
 import com.davf392.panierlocal.core.designsystem.RefreshIcon
 import com.davf392.panierlocal.core.designsystem.theme.PanierLocalTheme
+import org.jetbrains.compose.resources.stringResource
+import panierlocal.composeapp.generated.resources.Res
+import panierlocal.composeapp.generated.resources.absent
+import panierlocal.composeapp.generated.resources.cancel
+import panierlocal.composeapp.generated.resources.clear
+import panierlocal.composeapp.generated.resources.collected
+import panierlocal.composeapp.generated.resources.notes_placeholder
+import panierlocal.composeapp.generated.resources.subscribed_formulas
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
+import panierlocal.composeapp.generated.resources.status_absent
 
 @Composable
 fun MemberDetailsScreen(
@@ -147,7 +156,7 @@ private fun MemberHeaderSection(
             color = containerColor
         ) {
             Text(
-                text = status.toFrench().uppercase(),
+                text = stringResource(status.toResource()).uppercase(),
                 color = contentColor,
                 modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
                 style = MaterialTheme.typography.labelLarge
@@ -201,7 +210,7 @@ private fun FormulasSection(
 ) {
     Column(modifier = modifier) {
         Text(
-            text = "Formules souscrites",
+            text = stringResource(Res.string.subscribed_formulas),
             style = MaterialTheme.typography.titleSmall
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -235,11 +244,11 @@ private fun NotesSection(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Notes (dettes, remarques...)",
+                text = stringResource(Res.string.notes_placeholder),
                 style = MaterialTheme.typography.titleSmall
             )
             TextButton(onClick = onClearNotes) {
-                Text("Effacer")
+                Text(stringResource(Res.string.clear))
             }
         }
 
@@ -275,7 +284,7 @@ private fun AttendanceActionButtons(
                 ) {
                     Icon(CheckIcon, contentDescription = null)
                     Spacer(Modifier.width(4.dp))
-                    Text("Récupéré")
+                    Text(stringResource(Res.string.collected))
                 }
 
                 OutlinedButton(
@@ -284,7 +293,7 @@ private fun AttendanceActionButtons(
                 ) {
                     Icon(CloseIcon, contentDescription = null)
                     Spacer(Modifier.width(4.dp))
-                    Text("Absent")
+                    Text(stringResource(Res.string.status_absent))
                 }
             } else {
                 Button(
@@ -297,7 +306,7 @@ private fun AttendanceActionButtons(
                 ) {
                     Icon(RefreshIcon, contentDescription = null)
                     Spacer(Modifier.width(4.dp))
-                    Text("Annuler")
+                    Text(stringResource(Res.string.cancel))
                 }
             }
         }

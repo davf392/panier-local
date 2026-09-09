@@ -13,6 +13,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import org.jetbrains.compose.resources.stringResource
+import panierlocal.composeapp.generated.resources.Res
+import panierlocal.composeapp.generated.resources.amap
+import panierlocal.composeapp.generated.resources.baskets
+import panierlocal.composeapp.generated.resources.dashboard
+import panierlocal.composeapp.generated.resources.loading
+import panierlocal.composeapp.generated.resources.simulator
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -69,8 +76,8 @@ fun App() {
     val locationViewModel: LocationViewModel = viewModel()
     val currentLocation by locationViewModel.currentLocation.collectAsState()
     val items = listOf(
-        BottomNavItem(Routes.DASHBOARD, "Dashboard", DashboardIcon),
-        BottomNavItem(Routes.WEEKLY_BASKET, "Paniers", BasketIcon),
+        BottomNavItem(Routes.DASHBOARD, stringResource(Res.string.dashboard), DashboardIcon),
+        BottomNavItem(Routes.WEEKLY_BASKET, stringResource(Res.string.baskets), BasketIcon),
         BottomNavItem(Routes.MEMBERS, "Adhérents", PersonIcon),
     )
 
@@ -78,11 +85,11 @@ fun App() {
     val currentRoute = navBackStackEntry?.destination?.route
 
     val currentTitle = when {
-        currentRoute == Routes.DASHBOARD -> "Dashboard"
-        currentRoute == Routes.WEEKLY_BASKET -> "Paniers"
+        currentRoute == Routes.DASHBOARD -> stringResource(Res.string.dashboard)
+        currentRoute == Routes.WEEKLY_BASKET -> stringResource(Res.string.baskets)
         currentRoute == Routes.MEMBERS -> "Adhérents"
-        currentRoute?.startsWith(Routes.EXCHANGE_SIMULATOR) == true -> "Simulateur"
-        else -> "AMAP"
+        currentRoute?.startsWith(Routes.EXCHANGE_SIMULATOR) == true -> stringResource(Res.string.simulator)
+        else -> stringResource(Res.string.amap)
     }
 
     val canNavigateBack = currentRoute?.startsWith(Routes.EXCHANGE_SIMULATOR) == true || 
@@ -199,7 +206,7 @@ fun App() {
                         )
                         val uiState by viewModel.uiState.collectAsState()
                         if (uiState.isLoading) {
-                            Text("Chargement...")
+                            Text(stringResource(Res.string.loading))
                         } else {
                             uiState.member?.let { member ->
                                 MemberDetailsScreen(

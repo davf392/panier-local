@@ -37,7 +37,10 @@ import com.davf392.panierlocal.core.designsystem.UncheckedIcon
 import com.davf392.panierlocal.core.designsystem.theme.PanierLocalTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import panierlocal.composeapp.generated.resources.Res
+import panierlocal.composeapp.generated.resources.report
 import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
@@ -61,7 +64,7 @@ fun AlertCard(alerts: List<DashboardAlert>, onResolve: (String) -> Unit, onRepor
                 ) {
                     Icon(AddIcon, contentDescription = null)
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text("Signaler")
+                    Text(stringResource(Res.string.report))
                 }
             }
 

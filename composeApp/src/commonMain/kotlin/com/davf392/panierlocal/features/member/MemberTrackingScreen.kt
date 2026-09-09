@@ -23,7 +23,10 @@ import com.davf392.panierlocal.data.member.Member
 import com.davf392.panierlocal.data.member.MemberAttendance
 import com.davf392.panierlocal.features.staff_dashboard.DistributionHeaderCard
 import com.davf392.panierlocal.navigation.LocalDistributionContext
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import panierlocal.composeapp.generated.resources.Res
+import panierlocal.composeapp.generated.resources.search_member
 
 @Composable
 fun MemberTrackingScreen(
@@ -78,7 +81,7 @@ fun MemberTrackingScreenContent(
                 value = uiState.searchQuery,
                 onValueChange = onSearchQueryChanged,
                 modifier = Modifier.fillMaxWidth().padding(16.dp),
-                label = { Text("Rechercher un adhérent") },
+                label = { Text(stringResource(Res.string.search_member)) },
                 singleLine = true
             )
             LazyColumn(

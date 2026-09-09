@@ -25,6 +25,9 @@ import com.davf392.panierlocal.core.utils.formatWeightDisplay
 import com.davf392.panierlocal.core.utils.toLabel
 import com.davf392.panierlocal.data.ExchangeItem
 import com.davf392.panierlocal.data.ProductUnit
+import org.jetbrains.compose.resources.stringResource
+import panierlocal.composeapp.generated.resources.Res
+import panierlocal.composeapp.generated.resources.modify_selection
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
@@ -99,7 +102,7 @@ fun ResultDisplaySection(
             onClick = onModifySelection,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Modifier ma sélection")
+            Text(stringResource(Res.string.modify_selection))
         }
     }
 }

@@ -24,12 +24,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.davf392.panierlocal.data.member.AttendanceStatus
 import com.davf392.panierlocal.data.member.MemberAttendance
-import com.davf392.panierlocal.data.member.toFrench
+import com.davf392.panierlocal.data.member.toResource
 import com.davf392.panierlocal.core.designsystem.CheckIcon
 import com.davf392.panierlocal.core.designsystem.CloseIcon
 import com.davf392.panierlocal.core.designsystem.RefreshIcon
 import com.davf392.panierlocal.core.designsystem.WarningIcon
 import com.davf392.panierlocal.core.designsystem.theme.PanierLocalTheme
+import org.jetbrains.compose.resources.stringResource
+import panierlocal.composeapp.generated.resources.Res
+import panierlocal.composeapp.generated.resources.absent
+import panierlocal.composeapp.generated.resources.attention
+import panierlocal.composeapp.generated.resources.cancel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
 
@@ -60,7 +65,7 @@ fun MemberAttendanceItem(
                     ) {
                         Icon(
                             imageVector = WarningIcon,
-                            contentDescription = "Attention",
+                            contentDescription = stringResource(Res.string.attention),
                             modifier = Modifier.size(16.dp),
                             tint = MaterialTheme.colorScheme.error
                         )
@@ -84,11 +89,11 @@ fun MemberAttendanceItem(
                         Icon(CheckIcon, contentDescription = "Récupéré", tint = MaterialTheme.colorScheme.primary)
                     }
                     IconButton(onClick = onAbsent, modifier = Modifier.size(48.dp)) {
-                        Icon(CloseIcon, contentDescription = "Absent", tint = MaterialTheme.colorScheme.error)
+                        Icon(CloseIcon, contentDescription = stringResource(Res.string.absent), tint = MaterialTheme.colorScheme.error)
                     }
                 } else {
                     IconButton(onClick = onReset, modifier = Modifier.size(48.dp)) {
-                        Icon(RefreshIcon, contentDescription = "Annuler", tint = MaterialTheme.colorScheme.primary)
+                        Icon(RefreshIcon, contentDescription = stringResource(Res.string.cancel), tint = MaterialTheme.colorScheme.primary)
                     }
                     // Container with fixed width for badge to ensure constant alignment of the Reset button
                     Box(
@@ -105,7 +110,7 @@ fun MemberAttendanceItem(
                         ) {
                             Text(
                                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                                text = attendance.status.toFrench(),
+                                text = stringResource(attendance.status.toResource()),
                                 style = MaterialTheme.typography.labelSmall,
                                 maxLines = 1
                             )

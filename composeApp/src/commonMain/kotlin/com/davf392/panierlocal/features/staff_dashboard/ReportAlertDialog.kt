@@ -24,6 +24,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.davf392.panierlocal.core.designsystem.theme.PanierLocalTheme
+import org.jetbrains.compose.resources.stringResource
+import panierlocal.composeapp.generated.resources.Res
+import panierlocal.composeapp.generated.resources.cancel
+import panierlocal.composeapp.generated.resources.description
+import panierlocal.composeapp.generated.resources.report
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -72,7 +77,7 @@ fun ReportAlertDialogContent(
             OutlinedTextField(
                 value = message,
                 onValueChange = { message = it },
-                label = { Text("Description") },
+                label = { Text(stringResource(Res.string.description)) },
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -82,14 +87,14 @@ fun ReportAlertDialogContent(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 TextButton(onClick = onDismiss) {
-                    Text("Annuler")
+                    Text(stringResource(Res.string.cancel))
                 }
                 Spacer(modifier = Modifier.width(8.dp))
                 TextButton(
                     onClick = { onConfirm(message) },
                     enabled = message.isNotBlank()
                 ) {
-                    Text("Signaler")
+                    Text(stringResource(Res.string.report))
                 }
             }
         }

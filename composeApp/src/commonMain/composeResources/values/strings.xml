@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Application -->
+    <string name="app_name">Panier Local</string>
+
+    <!-- Navigation -->
+    <string name="dashboard">Accueil</string>
+    <string name="baskets">Paniers</string>
+    <string name="amap">AMAP</string>
+    <string name="simulator">Simulateur</string>
+    <string name="search_member">Rechercher un adhérent</string>
+
+    <!-- Common UI Actions -->
+    <string name="cancel">Annuler</string>
+    <string name="clear">Effacer</string>
+    <string name="report">Signaler</string>
+    <string name="modify_selection">Modifier ma sélection</string>
+    <string name="loading">Chargement…</string>
+
+    <!-- Member Details / Attendance -->
+    <string name="attention">Attention</string>
+    <string name="subscribed_formulas">Formules souscrites</string>
+    <string name="notes_placeholder">Notes (dettes, remarques…)</string>
+    <string name="description">Description</string>
+    <string name="collected">Récupéré</string>
+
+    <!-- Attendance Status -->
+    <string name="status_expected">Attendu</string>
+    <string name="status_collected">Récupéré</string>
+    <string name="status_absent">Absent</string>
+    <string name="status_redirected">Redirigé</string>
+</resources>
