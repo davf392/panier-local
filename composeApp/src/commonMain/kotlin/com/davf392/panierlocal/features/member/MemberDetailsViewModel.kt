@@ -35,6 +35,7 @@ class MemberDetailsViewModel(
     private fun loadMemberDetails() {
         viewModelScope.launch {
             val member = memberRepository.getMemberById(memberId)
+            println("member name : ${member?.lastName} | first name : ${member?.firstName}")
             val allFormulas = productRepository.getWeeklyBasketList()
 
             memberRepository.getAttendancesForDistribution(distributionId).collect { attendances ->

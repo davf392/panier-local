@@ -6,6 +6,7 @@
     <!-- Navigation -->
     <string name="dashboard">Accueil</string>
     <string name="baskets">Paniers</string>
+    <string name="members">Adhérents</string>
     <string name="amap">AMAP</string>
     <string name="simulator">Simulateur</string>
     <string name="search_member">Rechercher un adhérent</string>
