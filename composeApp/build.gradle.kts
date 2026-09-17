@@ -74,6 +74,11 @@ kotlin {
             implementation(libs.voyager.screenmodel)
             implementation(libs.voyager.transitions)
             implementation(libs.androidx.navigation.compose)
+            implementation(libs.kotlin.crypto.macs)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.ktor.client.logging)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -82,6 +87,8 @@ kotlin {
             implementation(compose.desktop.currentOs)
             implementation(compose.materialIconsExtended)
             implementation(libs.kotlinx.coroutinesSwing)
+            implementation(libs.ktor.client.cio)
+
         }
     }
 }
