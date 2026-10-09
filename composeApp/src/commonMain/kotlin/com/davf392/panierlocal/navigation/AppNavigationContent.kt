@@ -11,8 +11,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.stack.StackEvent
+import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.ScreenTransition
 
@@ -24,13 +26,16 @@ internal fun AppNavigationContent(
         val currentScreen = navigator.lastItem
         val isRootTab = currentScreen is DashboardScreenVoyager ||
                 currentScreen is WeeklyBasketScreenVoyager ||
+                currentScreen is BoutiqueScreenVoyager ||
                 currentScreen is MembersScreenVoyager
 
         Scaffold(
             modifier = modifier.fillMaxSize(),
             bottomBar = {
                 if (isRootTab) {
-                    AppBottomBar()
+                    CompositionLocalProvider(LocalNavigator provides navigator) {
+                        AppBottomBar(navigator = navigator)
+                    }
                 }
             }
         ) { innerPadding ->

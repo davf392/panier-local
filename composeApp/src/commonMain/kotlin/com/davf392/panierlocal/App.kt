@@ -12,6 +12,8 @@ import com.davf392.panierlocal.navigation.AppNavigation
 import com.davf392.panierlocal.navigation.DistributionContext
 import com.davf392.panierlocal.navigation.LocalDistributionContext
 import com.davf392.panierlocal.repository.MockMemberRepository
+import com.davf392.panierlocal.core.security.SocleoConfig
+import com.davf392.panierlocal.navigation.LocalSocleoConfig
 import com.davf392.panierlocal.repository.MockProductRepository
 import kotlinx.datetime.LocalDateTime
 
@@ -25,6 +27,15 @@ fun App() {
     val currentLocation by locationViewModel.currentLocation.collectAsState()
 
     PanierLocalTheme {
+        val socleoConfig = remember {
+            SocleoConfig(
+                baseUrl = "https://www.adeuxpresdechezvous.fr/api2.stp?",
+                userApi = "adeuxpresdechezvous",
+                userEmail = "info@adeuxpresdechezvous.fr",
+                apiVersion = "2.3.5",
+                apiSecret = ""
+            )
+        }
         val distributionContext = remember(currentLocation, locationViewModel.locations) {
             DistributionContext(
                 currentLocation = currentLocation,
@@ -35,7 +46,10 @@ fun App() {
             )
         }
 
-        CompositionLocalProvider(LocalDistributionContext provides distributionContext) {
+        CompositionLocalProvider(
+            LocalDistributionContext provides distributionContext,
+            LocalSocleoConfig provides socleoConfig
+        ) {
             AppNavigation()
         }
     }

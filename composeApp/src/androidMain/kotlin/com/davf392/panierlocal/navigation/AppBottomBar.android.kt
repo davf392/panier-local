@@ -6,25 +6,27 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.currentOrThrow
+import cafe.adriel.voyager.navigator.Navigator
 import com.davf392.panierlocal.core.designsystem.BasketIcon
 import com.davf392.panierlocal.core.designsystem.DashboardIcon
 import com.davf392.panierlocal.core.designsystem.PersonIcon
+import com.davf392.panierlocal.core.designsystem.ShoppingCartIcon
 import org.jetbrains.compose.resources.stringResource
 import panierlocal.composeapp.generated.resources.Res
 import panierlocal.composeapp.generated.resources.baskets
+import panierlocal.composeapp.generated.resources.boutique
 import panierlocal.composeapp.generated.resources.dashboard
 import panierlocal.composeapp.generated.resources.members
 
 @Composable
 actual fun AppBottomBar(
+    navigator: Navigator,
     modifier: Modifier
 ) {
-    val navigator = LocalNavigator.currentOrThrow
     val items = listOf(
         BottomNavItem(DashboardScreenVoyager, stringResource(Res.string.dashboard), DashboardIcon),
         BottomNavItem(WeeklyBasketScreenVoyager, stringResource(Res.string.baskets), BasketIcon),
+        BottomNavItem(BoutiqueScreenVoyager, stringResource(Res.string.boutique), ShoppingCartIcon),
         BottomNavItem(MembersScreenVoyager, stringResource(Res.string.members), PersonIcon),
     )
 

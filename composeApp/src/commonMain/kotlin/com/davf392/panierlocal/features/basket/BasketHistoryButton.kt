@@ -11,7 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.davf392.panierlocal.core.designsystem.theme.PanierLocalTheme
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import panierlocal.composeapp.generated.resources.Res
+import panierlocal.composeapp.generated.resources.basket_history
 
 @Composable
 fun BasketHistoryButton(
@@ -24,7 +27,7 @@ fun BasketHistoryButton(
             containerColor = MaterialTheme.colorScheme.primary
         )
     ) {
-        Text(text = "Historique des anciens paniers")
+        Text(text = stringResource(Res.string.basket_history))
     }
 }
 

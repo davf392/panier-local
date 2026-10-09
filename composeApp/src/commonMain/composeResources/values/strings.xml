@@ -6,6 +6,7 @@
     <!-- Navigation -->
     <string name="dashboard">Accueil</string>
     <string name="baskets">Paniers</string>
+    <string name="boutique">Boutique</string>
     <string name="members">Adhérents</string>
     <string name="amap">AMAP</string>
     <string name="simulator">Simulateur</string>
@@ -17,6 +18,8 @@
     <string name="report">Signaler</string>
     <string name="modify_selection">Modifier ma sélection</string>
     <string name="loading">Chargement…</string>
+    <string name="refresh">Actualiser</string>
+    <string name="retry">Réessayer</string>
 
     <!-- Member Details / Attendance -->
     <string name="attention">Attention</string>
@@ -31,4 +34,20 @@
     <string name="status_collected">Récupéré</string>
     <string name="status_absent">Absent</string>
     <string name="status_redirected">Redirigé</string>
+
+    <!-- Basket -->
+    <string name="basket_history">Historique des anciens paniers</string>
+
+    <!-- Boutique -->
+    <string name="boutique_loading">Chargement des produits de la boutique…</string>
+    <string name="boutique_empty">Aucun produit disponible dans la boutique.</string>
+    <string name="boutique_error_title">Impossible de charger les produits</string>
+    <string name="boutique_search_placeholder">Rechercher un produit…</string>
+    <string name="boutique_category_all">Tous</string>
+    <string name="boutique_category_other">Autres</string>
+    <string name="boutique_products_count">%1$d produit(s)</string>
+    <string name="boutique_no_search_results">Aucun produit ne correspond à votre recherche.</string>
+    <string name="boutique_badge_bio">AB Bio</string>
+    <string name="boutique_badge_unavailable">Indisponible</string>
+    <string name="boutique_unit_price">le %1$s</string>
 </resources>
