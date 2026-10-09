@@ -57,7 +57,8 @@ fun MemberTrackingScreen(
             onAbsent = onAbsent,
             onReset = onReset,
             onSearchQueryChanged = onSearchQueryChanged,
-            onMemberClick = onMemberClick
+            onMemberClick = onMemberClick,
+            modifier = Modifier.weight(1f).fillMaxWidth()
         )
     }
 }
@@ -69,14 +70,15 @@ fun MemberTrackingScreenContent(
     onAbsent: (String) -> Unit = {},
     onReset: (String) -> Unit = {},
     onSearchQueryChanged: (String) -> Unit = {},
-    onMemberClick: (Member) -> Unit = {}
+    onMemberClick: (Member) -> Unit = {},
+    modifier: Modifier = Modifier.fillMaxSize()
 ) {
     if (uiState.isLoading) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Box(modifier = modifier, contentAlignment = Alignment.Center) {
             CircularProgressIndicator()
         }
     } else {
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = modifier) {
             OutlinedTextField(
                 value = uiState.searchQuery,
                 onValueChange = onSearchQueryChanged,
@@ -85,7 +87,7 @@ fun MemberTrackingScreenContent(
                 singleLine = true
             )
             LazyColumn(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.weight(1f).fillMaxWidth(),
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
