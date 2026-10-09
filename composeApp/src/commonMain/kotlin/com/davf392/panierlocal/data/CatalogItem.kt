@@ -3,6 +3,17 @@ package com.davf392.panierlocal.data
 enum class BasketSize { SOLO, MINI, TANDEM, FAMILLE, OTHER }
 enum class PriceType { PLEIN, REDUIT }
 enum class Sector { BREAD_AND_EGGS, FRUITS, DAIRY_AND_CHEESE, VEGETABLES, GROCERY, OTHER }
+enum class ProductLogo(val code: String) {
+    AB("AB"),
+    NP("NP"),
+    EU("EU"),
+    AP("AP");
+
+    companion object {
+        fun fromCode(code: String): ProductLogo? =
+            entries.firstOrNull { it.code.equals(code.trim(), ignoreCase = true) }
+    }
+}
 
 sealed interface CatalogItem {
     val reference: String
@@ -76,7 +87,7 @@ data class BoutiqueProduct(
     val communeFournisseur: String = "",
     val origine: String = "",
     val logos: String = "",
-    val isBio: Boolean = false,
-    val note: String = ""
+    val note: String = "",
+    val productLogos: List<ProductLogo> = CatalogItemMapper.parseProductLogos(logos)
 ) : CatalogItem
 

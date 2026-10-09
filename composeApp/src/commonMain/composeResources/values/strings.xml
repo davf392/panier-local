@@ -48,6 +48,10 @@
     <string name="boutique_products_count">%1$d produit(s)</string>
     <string name="boutique_no_search_results">Aucun produit ne correspond à votre recherche.</string>
     <string name="boutique_badge_bio">AB Bio</string>
+    <string name="boutique_badge_logo_ab">Agriculture Biologique</string>
+    <string name="boutique_badge_logo_np">Nature &amp; Progrès</string>
+    <string name="boutique_badge_logo_eu">Bio Européen</string>
+    <string name="boutique_badge_logo_ap">Agriculture Paysanne</string>
     <string name="boutique_badge_unavailable">Indisponible</string>
     <string name="boutique_unit_price">le %1$s</string>
 </resources>

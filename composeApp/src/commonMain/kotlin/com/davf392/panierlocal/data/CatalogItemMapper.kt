@@ -84,14 +84,13 @@ object CatalogItemMapper {
         val delaiCommande = dto.parseInt("delaiCommande")
         val typeAgriculture = dto.trimmed("typeAgriculture")
         val logos = dto.trimmed("logos")
-        val isBio = typeAgriculture.equals("B", ignoreCase = true) ||
-                logos.contains("AB", ignoreCase = true) ||
-                (fournisseur?.typeAgriculture?.equals("B", ignoreCase = true) == true)
         val disponible = dto.trimmed("disponible") != "0"
         val famille = dto.nonBlank("famille1")
             ?: dto.nonBlank("famille2")
             ?: dto.nonBlank("categorie")
             ?: "Autres"
+
+        val productLogos = parseProductLogos(logos)
 
         return BoutiqueProduct(
             reference = reference,
@@ -115,9 +114,32 @@ object CatalogItemMapper {
             communeFournisseur = dto.trimmed("communeFournisseur"),
             origine = dto.trimmed("origine"),
             logos = logos,
-            isBio = isBio,
-            note = dto.trimmed("note")
+            note = dto.trimmed("note"),
+            productLogos = productLogos
         )
+    }
+
+    private val LOGO_TOKEN_REGEX = Regex("\\[([A-Za-z0-9_]+)\\]")
+
+    fun parseProductLogos(logos: String): List<ProductLogo> {
+        val results = mutableListOf<ProductLogo>()
+
+        val bracketMatches = LOGO_TOKEN_REGEX.findAll(logos).map { it.groupValues[1] }.toList()
+        val tokens = if (bracketMatches.isNotEmpty()) {
+            bracketMatches
+        } else if (logos.isNotBlank()) {
+            logos.split(',', ';', ' ', '|').map { it.trim() }.filter { it.isNotEmpty() }
+        } else {
+            emptyList()
+        }
+
+        for (token in tokens) {
+            val logo = ProductLogo.fromCode(token)
+            if (logo != null && logo !in results) {
+                results.add(logo)
+            }
+        }
+        return results
     }
 
     private fun isBasket(designation: String): Boolean =

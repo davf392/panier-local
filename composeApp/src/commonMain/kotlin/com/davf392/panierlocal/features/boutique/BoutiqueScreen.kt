@@ -1,5 +1,6 @@
 package com.davf392.panierlocal.features.boutique
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -39,22 +40,28 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.davf392.panierlocal.core.designsystem.CloseIcon
-import com.davf392.panierlocal.core.designsystem.PersonIcon
 import com.davf392.panierlocal.core.designsystem.RefreshIcon
 import com.davf392.panierlocal.core.designsystem.ShoppingCartIcon
 import com.davf392.panierlocal.core.designsystem.WarningIcon
 import com.davf392.panierlocal.core.designsystem.theme.PanierLocalTheme
 import com.davf392.panierlocal.core.utils.formatDecimal
 import com.davf392.panierlocal.data.BoutiqueProduct
+import com.davf392.panierlocal.data.ProductLogo
 import com.davf392.panierlocal.ui.catalog.CatalogUiState
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import panierlocal.composeapp.generated.resources.Res
 import panierlocal.composeapp.generated.resources.boutique_badge_bio
+import panierlocal.composeapp.generated.resources.boutique_badge_logo_ab
+import panierlocal.composeapp.generated.resources.boutique_badge_logo_ap
+import panierlocal.composeapp.generated.resources.boutique_badge_logo_eu
+import panierlocal.composeapp.generated.resources.boutique_badge_logo_np
 import panierlocal.composeapp.generated.resources.boutique_badge_unavailable
 import panierlocal.composeapp.generated.resources.boutique_category_all
 import panierlocal.composeapp.generated.resources.boutique_category_other
@@ -66,6 +73,10 @@ import panierlocal.composeapp.generated.resources.boutique_products_count
 import panierlocal.composeapp.generated.resources.boutique_search_placeholder
 import panierlocal.composeapp.generated.resources.boutique_unit_price
 import panierlocal.composeapp.generated.resources.clear
+import panierlocal.composeapp.generated.resources.logo_ab
+import panierlocal.composeapp.generated.resources.logo_ap
+import panierlocal.composeapp.generated.resources.logo_eu
+import panierlocal.composeapp.generated.resources.logo_np
 import panierlocal.composeapp.generated.resources.refresh
 import panierlocal.composeapp.generated.resources.retry
 
@@ -340,7 +351,7 @@ fun BoutiqueProductCard(
             FlowRow(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+                itemVerticalAlignment = Alignment.CenterVertically
             ) {
                 if (product.famille.isNotBlank()) {
                     ProductBadge(
@@ -350,11 +361,18 @@ fun BoutiqueProductCard(
                     )
                 }
 
-                if (product.isBio) {
-                    ProductBadge(
-                        text = stringResource(Res.string.boutique_badge_bio),
-                        backgroundColor = Color(0xFFC8E6C9),
-                        textColor = Color(0xFF1B5E20)
+                product.productLogos.forEach { logo ->
+                    val (drawableRes, contentDescRes) = when (logo) {
+                        ProductLogo.AB -> Res.drawable.logo_ab to Res.string.boutique_badge_logo_ab
+                        ProductLogo.NP -> Res.drawable.logo_np to Res.string.boutique_badge_logo_np
+                        ProductLogo.EU -> Res.drawable.logo_eu to Res.string.boutique_badge_logo_eu
+                        ProductLogo.AP -> Res.drawable.logo_ap to Res.string.boutique_badge_logo_ap
+                    }
+                    Image(
+                        painter = painterResource(drawableRes),
+                        contentDescription = stringResource(contentDescRes),
+                        modifier = Modifier.height(26.dp),
+                        contentScale = ContentScale.Fit
                     )
                 }
 
@@ -382,8 +400,6 @@ fun BoutiqueProductCard(
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface
                     )
-
-
                 }
 
                 Column(horizontalAlignment = Alignment.End) {
@@ -405,34 +421,22 @@ fun BoutiqueProductCard(
 
             // Provider & Location
             if (product.fournisseurNom.isNotBlank() || product.communeFournisseur.isNotBlank() || product.origine.isNotBlank()) {
-                Spacer(modifier = Modifier.height(10.dp))
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(6.dp)
-                ) {
-                    Icon(
-                        imageVector = PersonIcon,
-                        contentDescription = null,
-                        modifier = Modifier.size(16.dp),
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                    val providerText = buildString {
-                        if (product.fournisseurNom.isNotBlank()) {
-                            append(product.fournisseurNom)
-                        }
-                        val loc = product.communeFournisseur.ifBlank { product.origine }
-                        if (loc.isNotBlank()) {
-                            if (isNotEmpty()) append(" • ")
-                            append(loc)
-                        }
+                val providerText = buildString {
+                    if (product.fournisseurNom.isNotBlank()) {
+                        append(product.fournisseurNom)
                     }
-                    Text(
-                        text = providerText,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        fontWeight = FontWeight.Medium
-                    )
+                    val loc = product.communeFournisseur.ifBlank { product.origine }
+                    if (loc.isNotBlank()) {
+                        if (isNotEmpty()) append(" • ")
+                        append(loc)
+                    }
                 }
+                Text(
+                    text = providerText,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    fontWeight = FontWeight.Medium
+                )
             }
         }
     }
@@ -482,8 +486,8 @@ fun BoutiqueScreenPreview() {
             fournisseurNom = "Distillerie du Coin",
             communeFournisseur = "Saint-Martin-en-Haut",
             origine = "Rhône",
-            isBio = true,
-            complement = "Plante aromatique distillée avec soin."
+            complement = "Plante aromatique distillée avec soin.",
+            logos = "[AB][NP]"
         ),
         BoutiqueProduct(
             reference = "ED252NR6",
@@ -494,8 +498,8 @@ fun BoutiqueScreenPreview() {
             famille = "Épicerie",
             fournisseurNom = "Les Ruches de la Vallée",
             communeFournisseur = "Annonnay",
-            isBio = true,
-            disponible = true
+            disponible = true,
+            logos = "[AB][EU]"
         )
     )
 

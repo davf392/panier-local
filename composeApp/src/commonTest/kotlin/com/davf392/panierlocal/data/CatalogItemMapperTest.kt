@@ -102,8 +102,8 @@ class CatalogItemMapperTest {
         assertEquals("50 cl", result.conditionnement)
         assertEquals("Liqueur", result.famille)
         assertEquals("Distillerie Botanique", result.fournisseurNom)
-        assertTrue(result.isBio)
         assertTrue(result.disponible)
+        assertEquals(listOf(ProductLogo.AB), result.productLogos)
         assertEquals("Saint-Martin-en-Haut", result.communeFournisseur)
     }
 
@@ -147,4 +147,35 @@ class CatalogItemMapperTest {
         val invalidResult = CatalogItemMapper.mapToBoutiqueProduct(invalidDto)
         assertEquals(null, invalidResult)
     }
+
+    @Test
+    fun `test parseProductLogos with multiple bracketed labels`() {
+        val logos = CatalogItemMapper.parseProductLogos("[NP][AB]")
+        assertEquals(listOf(ProductLogo.NP, ProductLogo.AB), logos)
+    }
+
+    @Test
+    fun `test parseProductLogos with all supported labels`() {
+        val logos = CatalogItemMapper.parseProductLogos("[NP][EU][AP][AB]")
+        assertEquals(listOf(ProductLogo.NP, ProductLogo.EU, ProductLogo.AP, ProductLogo.AB), logos)
+    }
+
+    @Test
+    fun `test parseProductLogos deduplication`() {
+        val logos = CatalogItemMapper.parseProductLogos("[NP][NP][AB][AB]")
+        assertEquals(listOf(ProductLogo.NP, ProductLogo.AB), logos)
+    }
+
+    @Test
+    fun `test parseProductLogos ignores unknown labels`() {
+        val logos = CatalogItemMapper.parseProductLogos("[XYZ][AP][FOO]")
+        assertEquals(listOf(ProductLogo.AP), logos)
+    }
+
+    @Test
+    fun `test parseProductLogos with delimiter fallback`() {
+        val logos = CatalogItemMapper.parseProductLogos("NP, EU")
+        assertEquals(listOf(ProductLogo.NP, ProductLogo.EU), logos)
+    }
 }
+
